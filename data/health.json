@@ -1,0 +1,125 @@
+{
+  "lastUpdated": "2026-09-24",
+  "fitness": {
+    "title": "Fitness & Activity",
+    "description": "Workouts, step counts, and fitness metrics",
+    "currentWeight": 72,
+    "weightChange": -3.5,
+    "height": 175,
+    "bmi": 23.5,
+    "bodyFatPct": 14,
+    "workoutFrequency": "5 days/week",
+    "workoutsThisWeek": 4,
+    "weeklyGoal": 5,
+    "monthlyWorkoutCount": 21,
+    "activities": [
+      { "type": "Running", "frequency": "3x/week", "duration": "30-45 min", "distance": "5-8 km" },
+      { "type": "Strength Training", "frequency": "2x/week", "duration": "45-60 min", "focus": "Full body" },
+      { "type": "Cycling (Himalayan rides)", "frequency": "Weekends", "duration": "2-4 hours", "distance": "40-100 km" }
+    ],
+    "prRecords": [
+      { "activity": "5K Run", "time": "22:30", "date": "2026-08-15" },
+      { "activity": "10K Run", "time": "48:15", "date": "2026-07-20" },
+      { "activity": "Half Marathon", "time": "1:45:00", "date": "2025-12-10" }
+    ],
+    "stepCount": {
+      "today": 8743,
+      "weeklyAvg": 9200,
+      "monthlyAvg": 8900
+    }
+  },
+  "nutrition": {
+    "title": "Nutrition & Diet",
+    "description": "Daily intake, macros, and dietary habits",
+    "dailyCalories": {
+      "target": 2400,
+      "avgIntake": 2250,
+      "today": 2100
+    },
+    "macros": {
+      "protein": { "target": 150, "avg": 140, "unit": "g" },
+      "carbs": { "target": 280, "avg": 260, "unit": "g" },
+      "fat": { "target": 65, "avg": 60, "unit": "g" },
+      "water": { "target": 3500, "avg": 3200, "unit": "ml" }
+    },
+    "dietaryHabits": [
+      "No sugar after 6 PM",
+      "Protein in every meal",
+      "Intermittent fasting 16:8 (3x/week)",
+      "Home-cooked meals 5x/week",
+      "2 cheat meals per week"
+    ],
+    "supplements": [
+      { "name": "Whey Protein", "dose": "1 scoop post-workout", "reason": "Muscle recovery" },
+      { "name": "Multivitamin", "dose": "1 tablet daily", "reason": "Micronutrient cover" },
+      { "name": "Vitamin D3", "dose": "2000 IU daily", "reason": "Sunlight deficit" }
+    ]
+  },
+  "sleep": {
+    "title": "Sleep & Recovery",
+    "description": "Sleep quality, duration, and recovery tracking",
+    "avgSleepHours": 7.2,
+    "targetHours": 7.5,
+    "sleepQuality": "Good",
+    "thisWeekAvg": 7.0,
+    "deepSleepPct": 22,
+    "bedtime": "23:00",
+    "wakeTime": "06:30",
+    "consistencyScore": 85,
+    "notes": "Trying to improve from 7.0 to 7.5 hrs consistently. Weekend sleep debt is the main issue."
+  },
+  "mental": {
+    "title": "Mental Wellness",
+    "description": "Meditation, mood, stress, and mindfulness",
+    "meditationMinutes": {
+      "today": 12,
+      "weeklyAvg": 18,
+      "target": 20
+    },
+    "moodThisWeek": {
+      "mon": "Good", "tue": "Great", "wed": "Good", "thu": "Okay", "fri": "Great", "sat": "Good", "sun": "Good"
+    },
+    "stressLevel": "Low-Medium",
+    "stressSources": [
+      "Work deadlines (moderate)",
+      "Upcoming travel planning (low)"
+    ],
+    "stressReliefActivities": [
+      "Running — clearing head",
+      "Journaling before bed",
+      "Music / YouTube editing as flow state",
+      "Weekend rides on Toothless"
+    ],
+    "journalEntriesThisMonth": 12,
+    "gratitudePractice": "3 things daily (morning)"
+  },
+  "vitals": {
+    "title": "Vitals & Health Metrics",
+    "description": "Blood pressure, heart rate, medical checks",
+    "recentChecks": [
+      { "metric": "Blood Pressure", "value": "118/76", "date": "2026-09-10", "status": "Normal" },
+      { "metric": "Resting Heart Rate", "value": "58 bpm", "date": "2026-09-24", "status": "Excellent" },
+      { "metric": "Blood Sugar (Fasting)", "value": "88 mg/dL", "date": "2026-08-05", "status": "Normal" },
+      { "metric": "Cholesterol", "value": "185 mg/dL", "date": "2026-08-05", "status": "Normal" },
+      { "metric": "Hemoglobin", "value": "14.8 g/dL", "date": "2026-08-05", "status": "Normal" }
+    ],
+    "nextCheckup": "2027-02 (annual)",
+    "vaccinations": [
+      { "name": "COVID Booster", "date": "2025-03" },
+      { "name": "Tetanus", "date": "2024-06" }
+    ],
+    "healthInsurance": {
+      "provider": "Star Health",
+      "policyNo": "SH-****",
+      "coverage": 500000,
+      "renewDate": "2027-01"
+    }
+  },
+  "healthGoals": [
+    { "name": "Maintain weight at 72 kg", "target": "72 ± 2 kg", "current": "72 kg", "done": true, "date": "2026-09" },
+    { "name": "Run a full marathon", "target": "42.195 km", "current": "Half marathon done", "done": false, "date": "2027-01" },
+    { "name": "Improve sleep to 7.5 hrs avg", "target": "7.5 hrs", "current": "7.2 hrs", "done": false, "date": "2026-12" },
+    { "name": "Meditate 20 min/day consistently", "target": "20 min", "current": "18 min avg", "done": false, "date": "2026-12" },
+    { "name": "Complete a 100 km bike ride", "target": "100 km", "current": "80 km best", "done": false, "date": "2027-06" }
+  ]
+}

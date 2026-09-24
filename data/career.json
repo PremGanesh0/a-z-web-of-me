@@ -1,0 +1,109 @@
+{
+  "lastUpdated": "2026-09-24",
+  "currentRole": {
+    "title": "Current Role & Employment",
+    "description": "Present position, employer, and responsibilities",
+    "company": "Tech Solutions India (fictional — replace with real)",
+    "role": "Senior Software Engineer",
+    "department": "Engineering — Platform Team",
+    "startDate": "2023-03",
+    "tenureMonths": 42,
+    "location": "Remote / Hybrid (Andhra Pradesh)",
+    "resume": "https://github.com/PremGanesh0/resume",
+    "keyResponsibilities": [
+      "Design and build microservices with NestJS",
+      "Frontend development with Flutter & BLoC",
+      "API design: REST + GraphQL + gRPC",
+      "CI/CD pipeline management",
+      "Mentoring junior developers"
+    ]
+  },
+  "skills": {
+    "title": "Skills Inventory",
+    "description": "Technical and soft skills with proficiency levels",
+    "technical": [
+      { "skill": "Flutter / Dart", "level": 92, "category": "Mobile", "years": 4, "status": "expert" },
+      { "skill": "NestJS / Node.js", "level": 85, "category": "Backend", "years": 3, "status": "advanced" },
+      { "skill": "TypeScript", "level": 88, "category": "Language", "years": 4, "status": "advanced" },
+      { "skill": "Firebase", "level": 80, "category": "Backend-as-a-Service", "years": 3, "status": "advanced" },
+      { "skill": "GraphQL", "level": 75, "category": "API", "years": 2, "status": "intermediate" },
+      { "skill": "gRPC", "level": 70, "category": "API", "years": 2, "status": "intermediate" },
+      { "skill": "REST API Design", "level": 90, "category": "API", "years": 5, "status": "expert" },
+      { "skill": "Microservices Architecture", "level": 82, "category": "Architecture", "years": 3, "status": "advanced" },
+      { "skill": "Git / CI/CD", "level": 85, "category": "DevOps", "years": 5, "status": "advanced" },
+      { "skill": "SQL / PostgreSQL", "level": 72, "category": "Database", "years": 4, "status": "intermediate" },
+      { "skill": "Cloud (GCP / Firebase)", "level": 74, "category": "Cloud", "years": 3, "status": "intermediate" },
+      { "skill": "Linux / Terminal", "level": 80, "category": "DevOps", "years": 5, "status": "advanced" }
+    ],
+    "soft": [
+      { "skill": "Problem Solving", "level": 88, "category": "Soft" },
+      { "skill": "Communication", "level": 82, "category": "Soft" },
+      { "skill": "Team Leadership", "level": 75, "category": "Soft" },
+      { "skill": "Time Management", "level": 85, "category": "Soft" },
+      { "skill": "Adaptability", "level": 87, "category": "Soft" }
+    ]
+  },
+  "achievements": {
+    "title": "Achievements & Milestones",
+    "description": "Career wins, recognitions, and milestone events",
+    "milestones": [
+      { "year": 2020, "event": "First Full-time Dev Role", "type": "career" },
+      { "year": 2021, "event": "Became Team Lead (internal project)", "type": "promotion" },
+      { "year": 2022, "event": "Launched first Flutter app to 5K+ users", "type": "project" },
+      { "year": 2023, "event": "Joined current company — Senior Engineer", "type": "promotion" },
+      { "year": 2024, "event": "Built Bike Guardian — Flutter + NestJS", "type": "project" },
+      { "year": 2025, "event": "YouTube channel: 1K subscribers (Dusty Tires)", "type": "content" },
+      { "year": 2026, "event": "Completed Himalayan 411 purchase — Toothless", "type": "personal" }
+    ],
+    "awards": [
+      { "title": "Best Performer Q3 2024", "org": "Current Company", "year": 2024 },
+      { "title": "Innovation Award — Internal Hackathon", "org": "Current Company", "year": 2025 }
+    ]
+  },
+  "learning": {
+    "title": "Learning & Certifications",
+    "description": "Courses completed, certifications, and current learning",
+    "certifications": [
+      { "name": "AWS Cloud Practitioner", "issuer": "Amazon Web Services", "year": 2024, "status": "earned" },
+      { "name": "Firebase Developer Certificate", "issuer": "Google", "year": 2023, "status": "earned" }
+    ],
+    "coursesCompleted": [
+      { "name": "Advanced Flutter State Management (BLoC)", "platform": "Udemy", "year": 2024 },
+      { "name": "NestJS: Zero to Hero", "platform": "Udemy", "year": 2023 },
+      { "name": "GraphQL with Apollo & NestJS", "platform": "Coursera", "year": 2024 }
+    ],
+    "currentlyLearning": [
+      { "skill": "Kubernetes (K8s)", "progress": "40%", "resource": "KodeKloud" },
+      { "skill": "Rust — Basics", "progress": "25%", "resource": "Rust Book" },
+      { "skill": "Advanced Photography", "progress": "50%", "resource": "YouTube / Practice" }
+    ],
+    "booksRead": [
+      { "title": "Clean Code", "author": "Robert C. Martin", "year": 2022 },
+      { "title": "The Pragmatic Programmer", "author": "Hunt & Thomas", "year": 2023 },
+      { "title": "Atomic Habits", "author": "James Clear", "year": 2024 }
+    ]
+  },
+  "careerGoals": [
+    { "name": "Promoted to Tech Lead within 2 years", "target": "Tech Lead", "current": "Senior Engineer", "done": false, "timeline": "2028" },
+    { "name": "Build and launch a standalone product (SaaS)", "target": "Revenue-generating product", "current": "Bike Guardian MVP", "done": false, "timeline": "2027" },
+    { "name": "Speak at a tech conference", "target": "Conference talk", "current": "0 talks", "done": false, "timeline": "2027" },
+    { "name": "Reach $5K/month passive income", "target": "$5000/month", "current": "~$15K/month active", "done": false, "timeline": "2028" },
+    { "name": "Transition to remote-first / digital nomad lifestyle", "target": "Location-independent", "current": "Hybrid remote", "done": false, "timeline": "2027" }
+  ],
+  "network": {
+    "title": "Professional Network & Relationships",
+    "description": "Mentors, peers, and industry connections",
+    "mentors": [
+      { "name": "Senior Dev at current company", "relationship": "Mentor — architecture guidance" },
+      { "name": "Flutter community member (online)", "relationship": "Peer mentor — Flutter best practices" }
+    ],
+    "peers": [
+      { "name": "Backend teammate", "relationship": "Collaborator on NestJS microservices" },
+      { "name": "Flutter dev friend", "relationship": "Code review partner" }
+    ],
+    "community": [
+      { "name": "Flutter India community", "role": "Member", "activity": "Monthly meetups" },
+      { "name": "YouTube creator circle", "role": "Member", "activity": "Weekly collabs" }
+    ]
+  }
+}

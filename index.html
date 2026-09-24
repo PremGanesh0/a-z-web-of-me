@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A-Z Web of Me — Ganesh's Life Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="fas fa-compass"></i>
+        <span>A-Z Web</span>
+      </div>
+      <button class="toggle-btn" id="toggleSidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <div class="sidebar-nav">
+      <a href="#dashboard" class="nav-link active" data-section="dashboard">
+        <i class="fas fa-th-large"></i> Dashboard
+      </a>
+      <a href="#finances" class="nav-link" data-section="finances">
+        <i class="fas fa-coins"></i> Finances
+      </a>
+      <a href="#health" class="nav-link" data-section="health">
+        <i class="fas fa-heartbeat"></i> Health
+      </a>
+      <a href="#career" class="nav-link" data-section="career">
+        <i class="fas fa-briefcase"></i> Career
+      </a>
+      <hr class="nav-divider">
+      <a href="#a-z" class="nav-link" data-section="az">
+        <i class="fas fa-list-alphabetical"></i> A-Z Index
+      </a>
+    </div>
+    <div class="sidebar-footer">
+      <span class="nav-link" id="lastUpdated">
+        <i class="fas fa-sync-alt"></i> Loading...
+      </span>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <!-- Dashboard / Overview -->
+    <section id="section-dashboard" class="content-section active">
+      <div class="section-header">
+        <h1><i class="fas fa-th-large"></i> Life Dashboard</h1>
+        <p class="subtitle">Your complete A-Z overview at a glance</p>
+      </div>
+      <div class="stats-grid" id="dashboardStats">
+        <!-- Populated by JS -->
+      </div>
+      <div class="dashboard-cards">
+        <div class="card card-large">
+          <h3><i class="fas fa-coins"></i> Financial Snapshot</h3>
+          <div id="financeOverview"></div>
+        </div>
+        <div class="card card-large">
+          <h3><i class="fas fa-heartbeat"></i> Health Snapshot</h3>
+          <div id="healthOverview"></div>
+        </div>
+        <div class="card card-large">
+          <h3><i class="fas fa-briefcase"></i> Career Snapshot</h3>
+          <div id="careerOverview"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Finances Section (A-Z) -->
+    <section id="section-finances" class="content-section">
+      <div class="section-header">
+        <h1><i class="fas fa-coins"></i> Finances — A to Z</h1>
+        <p class="subtitle">Every financial dimension tracked end to end</p>
+      </div>
+      <div class="finances-layout">
+        <div class="card">
+          <h3><i class="fas fa-wallet"></i> Income &amp; Earnings</h3>
+          <div id="incomeBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-shopping-cart"></i> Expenses</h3>
+          <div id="expenseBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-piggy-bank"></i> Savings &amp; Net Worth</h3>
+          <div id="savingsBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-chart-line"></i> Investments</h3>
+          <div id="investmentsBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-tasks"></i> Financial Goals</h3>
+          <div id="financialGoals"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-credit-card"></i> Liabilities &amp; Debts</h3>
+          <div id="liabilitiesBreakdown"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Health Section (A-Z) -->
+    <section id="section-health" class="content-section">
+      <div class="section-header">
+        <h1><i class="fas fa-heartbeat"></i> Health — A to Z</h1>
+        <p class="subtitle">Physical, mental, and wellness tracking</p>
+      </div>
+      <div class="health-layout">
+        <div class="card">
+          <h3><i class="fas fa-running"></i> Fitness &amp; Activity</h3>
+          <div id="fitnessBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-apple-alt"></i> Nutrition &amp; Diet</h3>
+          <div id="nutritionBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-bed"></i> Sleep &amp; Recovery</h3>
+          <div id="sleepBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-brain"></i> Mental Wellness</h3>
+          <div id="mentalBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-temperature-low"></i> Vitals &amp; Metrics</h3>
+          <div id="vitalsBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-calendar-check"></i> Health Goals</h3>
+          <div id="healthGoals"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Career Section (A-Z) -->
+    <section id="section-career" class="content-section">
+      <div class="section-header">
+        <h1><i class="fas fa-briefcase"></i> Career — A to Z</h1>
+        <p class="subtitle">Professional growth, skills, and trajectory</p>
+      </div>
+      <div class="career-layout">
+        <div class="card">
+          <h3><i class="fas fa-briefcase"></i> Current Role &amp; Employment</h3>
+          <div id="currentRole"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-code"></i> Skills Inventory</h3>
+          <div id="skillsBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-trophy"></i> Achievements &amp; Milestones</h3>
+          <div id="achievementsBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-chalkboard-teacher"></i> Learning &amp; Certifications</h3>
+          <div id="learningBreakdown"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-chart-bar"></i> Career Goals</h3>
+          <div id="careerGoals"></div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-users"></i> Network &amp; Relationships</h3>
+          <div id="networkBreakdown"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A-Z Index -->
+    <section id="section-az" class="content-section">
+      <div class="section-header">
+        <h1><i class="fas fa-list-alphabetical"></i> A-Z Index of My Life</h1>
+        <p class="subtitle">Every letter, every dimension — browse the full spectrum</p>
+      </div>
+      <div class="az-grid" id="azGrid">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal for editing -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitle">Edit</h3>
+        <button class="close-modal" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelModal">Cancel</button>
+        <button class="btn btn-primary" id="saveModal">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/finances.js"></script>
+  <script src="js/health.js"></script>
+  <script src="js/career.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

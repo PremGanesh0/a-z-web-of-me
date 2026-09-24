@@ -1,0 +1,126 @@
+{
+  "lastUpdated": "2026-09-24",
+  "income": {
+    "title": "Income & Earnings",
+    "description": "All income streams, monthly and yearly breakdown",
+    "monthlyTotal": 185000,
+    "yearlyTotal": 2220000,
+    "streams": [
+      { "source": "Full-time Employment (Tech)", "monthly": 120000, "type": "salary", "status": "active" },
+      { "source": "Freelance / Consulting", "monthly": 35000, "type": "freelance", "status": "active" },
+      { "source": "Bike Guardian — App Revenue", "monthly": 15000, "type": "business", "status": "active" },
+      { "source": "YouTube (Dusty Tires)", "monthly": 8000, "type": "content", "status": "active" },
+      { "source": "Dividends / Interest", "monthly": 7000, "type": "passive", "status": "active" }
+    ],
+    "history": [
+      { "month": "2026-01", "total": 165000 },
+      { "month": "2026-02", "total": 172000 },
+      { "month": "2026-03", "total": 178000 },
+      { "month": "2026-04", "total": 170000 },
+      { "month": "2026-05", "total": 180000 },
+      { "month": "2026-06", "total": 183000 },
+      { "month": "2026-07", "total": 185000 },
+      { "month": "2026-08", "total": 187000 },
+      { "month": "2026-09", "total": 185000 }
+    ]
+  },
+  "expenses": {
+    "title": "Expenses",
+    "description": "Monthly spending across all categories",
+    "monthlyTotal": 92000,
+    "budget": 100000,
+    "remaining": 8000,
+    "categories": [
+      { "name": "Housing (Rent + Utilities)", "amount": 28000, "budgeted": 30000, "pct": 28 },
+      { "name": "Food & Groceries", "amount": 18000, "budgeted": 20000, "pct": 18 },
+      { "name": "Transport & Fuel", "amount": 9000, "budgeted": 10000, "pct": 9 },
+      { "name": "Entertainment & Subscriptions", "amount": 7000, "budgeted": 8000, "pct": 7 },
+      { "name": "Health & Fitness", "amount": 6000, "budgeted": 7000, "pct": 6 },
+      { "name": "Shopping & Personal", "amount": 8000, "budgeted": 10000, "pct": 8 },
+      { "name": "Travel & Trips", "amount": 10000, "budgeted": 12000, "pct": 10 },
+      { "name": "Savings & Investments (auto)", "amount": 6000, "budgeted": 6000, "pct": 6 }
+    ],
+    "history": [
+      { "month": "2026-01", "total": 98000 },
+      { "month": "2026-02", "total": 95000 },
+      { "month": "2026-03", "total": 102000 },
+      { "month": "2026-04", "total": 94000 },
+      { "month": "2026-05", "total": 90000 },
+      { "month": "2026-06", "total": 88000 },
+      { "month": "2026-07", "total": 91000 },
+      { "month": "2026-08", "total": 93000 },
+      { "month": "2026-09", "total": 92000 }
+    ]
+  },
+  "savings": {
+    "title": "Savings & Net Worth",
+    "description": "Emergency fund, savings goals, and net worth",
+    "netWorth": 4250000,
+    "netWorthChange": 180000,
+    "components": {
+      "cash": 1200000,
+      "investments": 2100000,
+      "realEstate": 0,
+      "otherAssets": 950000
+    },
+    "liabilities": {
+      "total": 200000,
+      "creditCard": 0,
+      "personalLoan": 0,
+      "bikeLoan": 50000,
+      "other": 150000
+    },
+    "emergencyFund": {
+      "target": 600000,
+      "current": 580000,
+      "monthsCovered": 6.3
+    },
+    "savingsGoals": [
+      { "name": "Emergency Fund (6 months)", "target": 600000, "current": 580000, "done": false },
+      { "name": "Bike Upgrade Fund", "target": 250000, "current": 120000, "done": false },
+      { "name": "Travel Fund — Europe 2027", "target": 500000, "current": 180000, "done": false },
+      { "name": "Investment Capital Goal", "target": 3000000, "current": 2100000, "done": false }
+    ]
+  },
+  "investments": {
+    "title": "Investments",
+    "description": "Portfolio breakdown by asset class",
+    "totalValue": 2100000,
+    "totalReturn": 280000,
+    "returnPct": 15.5,
+    "holdings": [
+      { "name": "Nifty 50 Index Fund", "value": 650000, "returnPct": 18.2, "allocation": 31 },
+      { "name": "Midcap Fund", "value": 400000, "returnPct": 22.0, "allocation": 19 },
+      { "name": "Smallcap Fund", "value": 250000, "returnPct": 28.5, "allocation": 12 },
+      { "name": "Gold ETF", "value": 200000, "returnPct": 8.0, "allocation": 10 },
+      { "name": "Fixed Deposit (FD)", "value": 350000, "returnPct": 6.5, "allocation": 17 },
+      { "name": "PPF", "value": 150000, "returnPct": 7.1, "allocation": 7 },
+      { "name": "US Stocks (ETF)", "value": 100000, "returnPct": 12.0, "allocation": 4 }
+    ],
+    "contributionHistory": [
+      { "month": "2026-01", "amount": 25000 },
+      { "month": "2026-02", "amount": 30000 },
+      { "month": "2026-03", "amount": 28000 },
+      { "month": "2026-04", "amount": 32000 },
+      { "month": "2026-05", "amount": 30000 },
+      { "month": "2026-06", "amount": 35000 },
+      { "month": "2026-07", "amount": 32000 },
+      { "month": "2026-08", "amount": 30000 },
+      { "month": "2026-09", "amount": 33000 }
+    ]
+  },
+  "taxes": {
+    "title": "Tax Planning",
+    "description": "Tax liability, deductions, and planning",
+    "year": 2026,
+    "estimatedLiability": 185000,
+    "deductionsClaimed": 120000,
+    "sections": [
+      { "section": "80C (PPF, LIC, ELSS)", "claimed": 150000, "max": 150000 },
+      { "section": "80D (Health Insurance)", "claimed": 25000, "max": 25000 },
+      { "section": "80E (Education Loan)", "claimed": 0, "max": 0 },
+      { "section": "NPS (80CCD)", "claimed": 50000, "max": 50000 },
+      { "section": "Standard Deduction", "claimed": 50000, "max": 50000 }
+    ]
+  }
+}

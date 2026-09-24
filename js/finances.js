@@ -253,6 +253,83 @@ const Finances = (() => {
     el.innerHTML = html;
   }
 
+  function renderBikeFund() {
+    const el = document.getElementById('bikeFundBreakdown');
+    if (!data || !data.bikeFund) { el.style.display = 'none'; return; }
+    const b = data.bikeFund;
+    const totalSpent = b.modsSpent + (b.purchasePrice - b.loanBalance);
+    let html = `
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.7rem;margin-bottom:1rem;">
+        <div class="stat-card" style="padding:0.9rem;">
+          <div class="stat-label">Bike</div>
+          <div style="font-size:1rem;font-weight:700;color:var(--accent-light);">Toothless</div>
+          <div style="font-size:0.72rem;color:var(--fg-dim);">RE Himalayan 411</div>
+        </div>
+        <div class="stat-card" style="padding:0.9rem;">
+          <div class="stat-label">Purchase Price</div>
+          <div class="stat-value accent" style="font-size:1.2rem;">₹${b.purchasePrice.toLocaleString('en-IN')}</div>
+          <div style="font-size:0.72rem;color:var(--fg-dim);">${b.purchaseDate}</div>
+        </div>
+        <div class="stat-card" style="padding:0.9rem;">
+          <div class="stat-label">Loan Balance</div>
+          <div class="stat-value" style="font-size:1.2rem;color:var(--amber);">₹${b.loanBalance.toLocaleString('en-IN')}</div>
+          <div style="font-size:0.72rem;color:var(--fg-dim);">Paying off</div>
+        </div>
+        <div class="stat-card" style="padding:0.9rem;">
+          <div class="stat-label">Mods Spent</div>
+          <div class="stat-value blue" style="font-size:1.2rem;">₹${b.modsSpent.toLocaleString('en-IN')}</div>
+          <div style="font-size:0.72rem;color:var(--fg-dim);">${b.modsPlanned.filter(m=>m.status==='done').length} done, ${b.modsPlanned.filter(m=>m.status==='planned').length} planned</div>
+        </div>
+      </div>
+      <div style="font-size:0.78rem;color:var(--fg-muted);margin-bottom:0.5rem;">Monthly Running Costs</div>
+      <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:0.8rem;font-size:0.9rem;">
+        <span><span style="color:var(--fg-dim);">Fuel:</span><strong style="color:var(--fg);"> ₹${b.monthlyFuel.toLocaleString('en-IN')}/month</strong></span>
+        <span><span style="color:var(--fg-dim);">Maintenance:</span><strong style="color:var(--fg);"> ₹${b.annualMaintenance.toLocaleString('en-IN')}/year</strong></span>
+        <span><span style="color:var(--fg-dim);">Total all-in:</span><strong style="color:var(--accent-light);"> ~₹${(b.monthlyFuel + b.annualMaintenance/12).toLocaleString('en-IN')}/month</strong></span>
+      </div>
+      <div style="font-size:0.78rem;color:var(--fg-muted);margin-bottom:0.5rem;">Mods — Done</div>
+      <table class="data-table">
+        <thead><tr><th>Modification</th><th>Cost</th><th>Status</th></tr></thead>
+        <tbody>
+    `;
+    b.modsPlanned.filter(m => m.status === 'done').forEach(m => {
+      html += `<tr>
+        <td style="font-weight:500;">${m.name}</td>
+        <td class="mono">₹${m.cost.toLocaleString('en-IN')}</td>
+        <td><span class="tag tag-green">✓ Done</span></td>
+      </tr>`;
+    });
+    html += `</tbody></table>
+      <div style="font-size:0.78rem;color:var(--fg-muted);margin:0.8rem 0 0.5rem;">Mods — Planned</div>
+      <table class="data-table">
+        <thead><tr><th>Modification</th><th>Cost</th><th>Status</th></tr></thead>
+        <tbody>
+    `;
+    b.modsPlanned.filter(m => m.status === 'planned').forEach(m => {
+      html += `<tr>
+        <td style="font-weight:500;">${m.name}</td>
+        <td class="mono">₹${m.cost.toLocaleString('en-IN')}</td>
+        <td><span class="tag tag-amber">Planned</span></td>
+      </tr>`;
+    });
+    html += `</tbody></table>
+      <div style="font-size:0.78rem;color:var(--fg-muted);margin:0.8rem 0 0.5rem;">Notable Rides — ${new Date().getFullYear()}</div>
+      <table class="data-table">
+        <thead><tr><th>Route</th><th>Distance</th><th>Date</th></tr></thead>
+        <tbody>
+    `;
+    b.ridesThisYear.forEach(r => {
+      html += `<tr>
+        <td style="font-weight:500;">${r.route}</td>
+        <td class="mono">${r.km} km</td>
+        <td style="color:var(--fg-dim);">${r.date}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+
+    el.innerHTML = html;
+  }
+
   function renderTaxes() {
     const el = document.getElementById('taxesBreakdown');
     if (!data) return;
@@ -297,7 +374,8 @@ const Finances = (() => {
       renderSavings();
       renderInvestments();
       if (data.taxes) renderTaxes();
-    },
+      if (data.bikeFund) renderBikeFund();
+      },
 
     get data() { return data; }
   };

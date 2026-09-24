@@ -3,12 +3,12 @@
   "currentRole": {
     "title": "Current Role & Employment",
     "description": "Present position, employer, and responsibilities",
-    "company": "Tech Solutions India (fictional — replace with real)",
+    "company": "Confidential — Tech Company (India)",
     "role": "Senior Software Engineer",
-    "department": "Engineering — Platform Team",
+    "department": "Engineering — Platform & Mobile",
     "startDate": "2023-03",
     "tenureMonths": 42,
-    "location": "Remote / Hybrid (Andhra Pradesh)",
+    "location": "Remote / Hybrid — Andhra Pradesh, India",
     "resume": "https://github.com/PremGanesh0/resume",
     "keyResponsibilities": [
       "Design and build microservices with NestJS",

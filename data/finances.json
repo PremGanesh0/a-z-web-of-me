@@ -3,124 +3,149 @@
   "income": {
     "title": "Income & Earnings",
     "description": "All income streams, monthly and yearly breakdown",
-    "monthlyTotal": 185000,
-    "yearlyTotal": 2220000,
+    "monthlyTotal": 175000,
+    "yearlyTotal": 2100000,
     "streams": [
-      { "source": "Full-time Employment (Tech)", "monthly": 120000, "type": "salary", "status": "active" },
-      { "source": "Freelance / Consulting", "monthly": 35000, "type": "freelance", "status": "active" },
+      { "source": "Full-time Employment (Tech)", "monthly": 110000, "type": "salary", "status": "active" },
+      { "source": "Freelance / Consulting", "monthly": 30000, "type": "freelance", "status": "active" },
       { "source": "Bike Guardian — App Revenue", "monthly": 15000, "type": "business", "status": "active" },
-      { "source": "YouTube (Dusty Tires)", "monthly": 8000, "type": "content", "status": "active" },
-      { "source": "Dividends / Interest", "monthly": 7000, "type": "passive", "status": "active" }
+      { "source": "YouTube (Dusty Tires)", "monthly": 12000, "type": "content", "status": "active" },
+      { "source": "Dividends / Interest", "monthly": 8000, "type": "passive", "status": "active" }
     ],
     "history": [
-      { "month": "2026-01", "total": 165000 },
-      { "month": "2026-02", "total": 172000 },
-      { "month": "2026-03", "total": 178000 },
-      { "month": "2026-04", "total": 170000 },
-      { "month": "2026-05", "total": 180000 },
-      { "month": "2026-06", "total": 183000 },
-      { "month": "2026-07", "total": 185000 },
-      { "month": "2026-08", "total": 187000 },
-      { "month": "2026-09", "total": 185000 }
+      { "month": "2026-01", "total": 155000 },
+      { "month": "2026-02", "total": 162000 },
+      { "month": "2026-03", "total": 168000 },
+      { "month": "2026-04", "total": 160000 },
+      { "month": "2026-05", "total": 170000 },
+      { "month": "2026-06", "total": 173000 },
+      { "month": "2026-07", "total": 175000 },
+      { "month": "2026-08", "total": 178000 },
+      { "month": "2026-09", "total": 175000 }
     ]
   },
   "expenses": {
     "title": "Expenses",
     "description": "Monthly spending across all categories",
-    "monthlyTotal": 92000,
-    "budget": 100000,
-    "remaining": 8000,
+    "monthlyTotal": 88000,
+    "budget": 95000,
+    "remaining": 7000,
     "categories": [
-      { "name": "Housing (Rent + Utilities)", "amount": 28000, "budgeted": 30000, "pct": 28 },
-      { "name": "Food & Groceries", "amount": 18000, "budgeted": 20000, "pct": 18 },
-      { "name": "Transport & Fuel", "amount": 9000, "budgeted": 10000, "pct": 9 },
-      { "name": "Entertainment & Subscriptions", "amount": 7000, "budgeted": 8000, "pct": 7 },
-      { "name": "Health & Fitness", "amount": 6000, "budgeted": 7000, "pct": 6 },
-      { "name": "Shopping & Personal", "amount": 8000, "budgeted": 10000, "pct": 8 },
-      { "name": "Travel & Trips", "amount": 10000, "budgeted": 12000, "pct": 10 },
+      { "name": "Housing (Rent + Utilities)", "amount": 25000, "budgeted": 28000, "pct": 26 },
+      { "name": "Food & Groceries", "amount": 17000, "budgeted": 18000, "pct": 18 },
+      { "name": "Transport & Fuel (Toothless)", "amount": 8000, "budgeted": 10000, "pct": 9 },
+      { "name": "Entertainment & Subscriptions", "amount": 6000, "budgeted": 7000, "pct": 6 },
+      { "name": "Health & Fitness", "amount": 7000, "budgeted": 8000, "pct": 7 },
+      { "name": "Shopping & Personal", "amount": 7000, "budgeted": 9000, "pct": 7 },
+      { "name": "Travel & Trips (Himalayan rides)", "amount": 12000, "budgeted": 15000, "pct": 12 },
       { "name": "Savings & Investments (auto)", "amount": 6000, "budgeted": 6000, "pct": 6 }
     ],
     "history": [
-      { "month": "2026-01", "total": 98000 },
-      { "month": "2026-02", "total": 95000 },
-      { "month": "2026-03", "total": 102000 },
-      { "month": "2026-04", "total": 94000 },
-      { "month": "2026-05", "total": 90000 },
-      { "month": "2026-06", "total": 88000 },
-      { "month": "2026-07", "total": 91000 },
-      { "month": "2026-08", "total": 93000 },
-      { "month": "2026-09", "total": 92000 }
+      { "month": "2026-01", "total": 95000 },
+      { "month": "2026-02", "total": 92000 },
+      { "month": "2026-03", "total": 98000 },
+      { "month": "2026-04", "total": 90000 },
+      { "month": "2026-05", "total": 87000 },
+      { "month": "2026-06", "total": 85000 },
+      { "month": "2026-07", "total": 89000 },
+      { "month": "2026-08", "total": 91000 },
+      { "month": "2026-09", "total": 88000 }
     ]
   },
   "savings": {
     "title": "Savings & Net Worth",
     "description": "Emergency fund, savings goals, and net worth",
-    "netWorth": 4250000,
-    "netWorthChange": 180000,
+    "netWorth": 3850000,
+    "netWorthChange": 175000,
     "components": {
-      "cash": 1200000,
-      "investments": 2100000,
+      "cash": 1000000,
+      "investments": 1950000,
       "realEstate": 0,
-      "otherAssets": 950000
+      "otherAssets": 900000
     },
     "liabilities": {
-      "total": 200000,
+      "total": 150000,
       "creditCard": 0,
       "personalLoan": 0,
       "bikeLoan": 50000,
-      "other": 150000
+      "other": 100000
     },
     "emergencyFund": {
-      "target": 600000,
-      "current": 580000,
-      "monthsCovered": 6.3
+      "target": 500000,
+      "current": 500000,
+      "monthsCovered": 5.7
     },
     "savingsGoals": [
-      { "name": "Emergency Fund (6 months)", "target": 600000, "current": 580000, "done": false },
-      { "name": "Bike Upgrade Fund", "target": 250000, "current": 120000, "done": false },
-      { "name": "Travel Fund — Europe 2027", "target": 500000, "current": 180000, "done": false },
-      { "name": "Investment Capital Goal", "target": 3000000, "current": 2100000, "done": false }
+      { "name": "Emergency Fund (6 months expenses)", "target": 530000, "current": 500000, "done": false },
+      { "name": "Bike Upgrade — Next Himalayan Mod", "target": 300000, "current": 120000, "done": false },
+      { "name": "Travel Fund — Long Distance 2027", "target": 500000, "current": 180000, "done": false },
+      { "name": "Investment Capital Goal", "target": 3000000, "current": 1950000, "done": false },
+      { "name": "Financial Independence Cove (FIRE floor)", "target": 10000000, "current": 3850000, "done": false }
     ]
   },
   "investments": {
     "title": "Investments",
-    "description": "Portfolio breakdown by asset class",
-    "totalValue": 2100000,
-    "totalReturn": 280000,
-    "returnPct": 15.5,
+    "description": "Portfolio breakdown by asset class — Indian market focus",
+    "totalValue": 1950000,
+    "totalReturn": 265000,
+    "returnPct": 15.6,
     "holdings": [
-      { "name": "Nifty 50 Index Fund", "value": 650000, "returnPct": 18.2, "allocation": 31 },
-      { "name": "Midcap Fund", "value": 400000, "returnPct": 22.0, "allocation": 19 },
-      { "name": "Smallcap Fund", "value": 250000, "returnPct": 28.5, "allocation": 12 },
-      { "name": "Gold ETF", "value": 200000, "returnPct": 8.0, "allocation": 10 },
-      { "name": "Fixed Deposit (FD)", "value": 350000, "returnPct": 6.5, "allocation": 17 },
-      { "name": "PPF", "value": 150000, "returnPct": 7.1, "allocation": 7 },
-      { "name": "US Stocks (ETF)", "value": 100000, "returnPct": 12.0, "allocation": 4 }
+      { "name": "Nifty 50 Index Fund (Direct)", "value": 600000, "returnPct": 18.2, "allocation": 31 },
+      { "name": "Nifty Next 50 / Midcap Fund", "value": 380000, "returnPct": 22.0, "allocation": 19 },
+      { "name": "Smallcap Fund", "value": 250000, "returnPct": 28.5, "allocation": 13 },
+      { "name": "Gold ETF (SOFIA / Quantum)", "value": 180000, "returnPct": 8.0, "allocation": 9 },
+      { "name": "Fixed Deposit (FD) — ₹3.5L", "value": 350000, "returnPct": 6.5, "allocation": 18 },
+      { "name": "PPF — Ongoing", "value": 140000, "returnPct": 7.1, "allocation": 7 },
+      { "name": "US Tech ETF (Nasdaq 100)", "value": 50000, "returnPct": 14.0, "allocation": 3 }
     ],
     "contributionHistory": [
-      { "month": "2026-01", "amount": 25000 },
-      { "month": "2026-02", "amount": 30000 },
-      { "month": "2026-03", "amount": 28000 },
-      { "month": "2026-04", "amount": 32000 },
-      { "month": "2026-05", "amount": 30000 },
-      { "month": "2026-06", "amount": 35000 },
-      { "month": "2026-07", "amount": 32000 },
-      { "month": "2026-08", "amount": 30000 },
-      { "month": "2026-09", "amount": 33000 }
+      { "month": "2026-01", "amount": 22000 },
+      { "month": "2026-02", "amount": 25000 },
+      { "month": "2026-03", "amount": 24000 },
+      { "month": "2026-04", "amount": 28000 },
+      { "month": "2026-05", "amount": 26000 },
+      { "month": "2026-06", "amount": 30000 },
+      { "month": "2026-07", "amount": 28000 },
+      { "month": "2026-08", "amount": 27000 },
+      { "month": "2026-09", "amount": 30000 }
     ]
   },
   "taxes": {
-    "title": "Tax Planning",
-    "description": "Tax liability, deductions, and planning",
+    "title": "Tax Planning — Indian Context",
+    "description": "Tax liability, deductions, and planning under old / new regime",
     "year": 2026,
-    "estimatedLiability": 185000,
-    "deductionsClaimed": 120000,
+    "regime": "Old (chosen for deductions)",
+    "estimatedLiability": 165000,
+    "deductionsClaimed": 110000,
     "sections": [
-      { "section": "80C (PPF, LIC, ELSS)", "claimed": 150000, "max": 150000 },
-      { "section": "80D (Health Insurance)", "claimed": 25000, "max": 25000 },
-      { "section": "80E (Education Loan)", "claimed": 0, "max": 0 },
-      { "section": "NPS (80CCD)", "claimed": 50000, "max": 50000 },
-      { "section": "Standard Deduction", "claimed": 50000, "max": 50000 }
+      { "section": "80C — PPF + ELSS + LIC (combined)", "claimed": 150000, "max": 150000 },
+      { "section": "80D — Health Insurance (self)", "claimed": 25000, "max": 25000 },
+      { "section": "80E — Education Loan (nil)", "claimed": 0, "max": 0 },
+      { "section": "80CCD(1B) — NPS additional", "claimed": 50000, "max": 50000 },
+      { "section": "Standard Deduction", "claimed": 50000, "max": 50000 },
+      { "section": "HRA (rent component)", "claimed": 40000, "max": 60000 }
+    ]
+  },
+  "bikeFund": {
+    "title": "Bike Fund — Toothless (Royal Enfield Himalayan 411)",
+    "description": "Tracking bike-related expenses: fuel, maintenance, mods, rides",
+    "purchaseDate": "2026-03",
+    "purchasePrice": 215000,
+    "loanBalance": 50000,
+    "monthlyFuel": 3500,
+    "annualMaintenance": 8000,
+    "modsSpent": 45000,
+    "modsPlanned": [
+      { "name": "Suspension upgrade (YoYah / Rebound)", "cost": 18000, "status": "done" },
+      { "name": "Engine guard + skid plate", "cost": 8000, "status": "done" },
+      { "name": "Windshield / Muvger", "cost": 6000, "status": "planned" },
+      { "name": "Upgraded seat / luggage rack", "cost": 10000, "status": "planned" },
+      { "name": "LED lighting + Cali wiring", "cost": 5000, "status": "planned" }
+    ],
+    "ridesThisYear": [
+      { "route": "Chennai → Araku Valley", "km": 720, "date": "2026-04" },
+      { "route": "Coimbatore → Munnar circuit", "km": 480, "date": "2026-06" },
+      { "route": "Local weekend — Nadu trails", "km": 180, "date": "2026-08" }
     ]
   }
 }

@@ -1,258 +1,366 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A-Z Web of Me — Ganesh's Life Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>PREM OS — Personal Operating System</title>
+  <meta name="description" content="My life. My work. My money. My journey. — A personal operating system tracking finances, health, career, and more.">
+  <meta name="theme-color" content="#0B0D0F">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230B0D0F'/><text x='50' y='68' font-size='55' text-anchor='middle' font-family='system-ui' font-weight='700' fill='%236c5ce7'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // Inline seed data — loaded before app.js so Database can use it
+    window.__PREMONOS_SEED__ = {
+      "version": "1.0.0",
+      "lastSynced": "2026-09-25T00:00:00Z",
+      "entities": {
+        "profile": [
+          {
+            "id": "profile-001",
+            "name": "Prem Ganesh Darabala",
+            "bio": "Flutter Developer · Engineer · Photographer · Rider · Creator",
+            "location": "Hyderabad, India",
+            "profession": "Senior Software Engineer (Flutter & Dart)",
+            "tagline": "My life. My work. My money. My journey.",
+            "website": "https://premganesh0.github.io",
+            "github": "PremGanesh0",
+            "linkedin": "",
+            "youtube": "Dusty Tires",
+            "instagram": "",
+            "profilePhoto": "",
+            "interests": ["Flutter", "Dart", "NestJS", "Motorcycles", "Travel", "Photography", "Video Editing", "Fitness", "Finance"],
+            "skills": ["Flutter", "Dart", "BLoC", "Firebase", "NestJS", "Node.js", "TypeScript", "GraphQL", "gRPC", "REST APIs", "Microservices", "Git", "CI/CD", "Linux", "Photography", "Video Editing", "Running", "Fitness"],
+            "created_at": "2026-09-25T00:00:00Z",
+            "updated_at": "2026-09-25T00:00:00Z",
+            "status": "active"
+          }
+        ],
+        "employments": [
+          {
+            "id": "emp-001",
+            "company": "Tech Company (India) — Confidential",
+            "role": "Senior Software Engineer",
+            "start_date": "2023-03-01",
+            "end_date": null,
+            "location": "Hyderabad, India",
+            "salary": 1100000,
+            "status_record": "active",
+            "technologies": ["Flutter", "Dart", "BLoC", "NestJS", "Node.js", "TypeScript", "GraphQL", "gRPC", "Firebase", "MongoDB"],
+            "responsibilities": ["Design and build microservices with NestJS", "Frontend development with Flutter & BLoC", "API design: REST + GraphQL + gRPC", "CI/CD pipeline management", "Mentoring junior developers"],
+            "achievements": ["Best Performer Q3 2024", "Innovation Award — Internal Hackathon"],
+            "notes": "Full-stack development with Flutter frontend and NestJS backend microservices.",
+            "created_at": "2026-09-25T00:00:00Z",
+            "updated_at": "2026-09-25T00:00:00Z"
+          }
+        ],
+        "skills": [
+          {"id": "skill-001", "name": "Flutter", "category": "Mobile", "proficiency": 92, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-002", "name": "Dart", "category": "Language", "proficiency": 90, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-003", "name": "BLoC", "category": "State Management", "proficiency": 88, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-004", "name": "Firebase", "category": "Backend-as-a-Service", "proficiency": 80, "yearsExperience": 3, "certified": true, "lastUsed": "2026-09-24"},
+          {"id": "skill-005", "name": "NestJS", "category": "Backend", "proficiency": 78, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-006", "name": "Node.js", "category": "Backend", "proficiency": 75, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-007", "name": "TypeScript", "category": "Language", "proficiency": 85, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-008", "name": "GraphQL", "category": "API", "proficiency": 70, "yearsExperience": 2, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-009", "name": "gRPC", "category": "API", "proficiency": 65, "yearsExperience": 2, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-010", "name": "REST API Design", "category": "API", "proficiency": 90, "yearsExperience": 5, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-011", "name": "Microservices", "category": "Architecture", "proficiency": 75, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-012", "name": "Git / CI/CD", "category": "DevOps", "proficiency": 85, "yearsExperience": 5, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-013", "name": "SQL / PostgreSQL", "category": "Database", "proficiency": 68, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-014", "name": "Linux / Terminal", "category": "DevOps", "proficiency": 80, "yearsExperience": 5, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-015", "name": "Photography", "category": "Creative", "proficiency": 72, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-016", "name": "Video Editing", "category": "Creative", "proficiency": 75, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24"},
+          {"id": "skill-017", "name": "Running", "category": "Fitness", "proficiency": 68, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24"}
+        ],
+        "projects": [
+          {
+            "id": "proj-001", "name": "Bike Guardian",
+            "description": "Flutter mobile app + NestJS backend for motorcycle tracking and safety",
+            "status": "building", "priority": "high",
+            "start_date": "2024-01-01", "target_date": "2026-12-31",
+            "progress": 70,
+            "technology": ["Flutter", "Dart", "NestJS", "Node.js", "Firebase", "MongoDB"],
+            "repository": "https://github.com/PremGanesh0/bike-guardian",
+            "website": "", "notes": "Main side project. Flutter app with BLoC state management.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "proj-002", "name": "Dusty Tires YouTube Channel",
+            "description": "Motorcycle travel and adventure content on YouTube",
+            "status": "building", "priority": "medium",
+            "start_date": "2025-01-01", "target_date": null,
+            "progress": 50,
+            "technology": ["Video Editing", "Photography", "YouTube"],
+            "repository": "", "website": "https://youtube.com/@dustytires",
+            "notes": "Growing channel covering motorcycle trips and adventure travel.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "proj-003", "name": "PREM OS",
+            "description": "Personal operating system — this application itself",
+            "status": "building", "priority": "high",
+            "start_date": "2026-09-25", "target_date": "2026-12-31",
+            "progress": 20,
+            "technology": ["HTML", "CSS", "JavaScript", "JSON"],
+            "repository": "https://github.com/PremGanesh0/a-z-web-of-me",
+            "website": "https://premganesh0.github.io/a-z-web-of-me",
+            "notes": "Current rebuild — transforming from A-Z Web of Me to PREM OS.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          }
+        ],
+        "finance_accounts": [
+          {
+            "id": "facct-001", "name": "IDFC FIRST Bank — Personal Loan",
+            "type": "loan", "institution": "IDFC FIRST Bank",
+            "account_number": "178300148", "currency": "INR",
+            "current_balance": 535482, "credit_limit": null, "interest_rate": null,
+            "opened_date": "2025-10-28", "closed_date": null, "status": "active",
+            "notes": "Personal loan — EMI ₹18,103/month. 41 payments remaining.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "facct-002", "name": "ICICI Bank Credit Card #1",
+            "type": "credit_card", "institution": "ICICI Bank",
+            "account_number": "0000000028153949", "currency": "INR",
+            "current_balance": 89232, "credit_limit": 120000, "interest_rate": null,
+            "opened_date": "2023-09-08", "closed_date": null, "status": "active",
+            "notes": "High utilization — 74.4%. Priority to pay down.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "facct-003", "name": "ICICI Bank Credit Card #2",
+            "type": "credit_card", "institution": "ICICI Bank",
+            "account_number": "0000000027556897", "currency": "INR",
+            "current_balance": 4275, "credit_limit": 120000, "interest_rate": null,
+            "opened_date": "2023-07-16", "closed_date": null, "status": "active",
+            "notes": "Low balance. Had DPD in 2025, now clear.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "facct-004", "name": "Axis Bank Credit Card",
+            "type": "credit_card", "institution": "Axis Bank",
+            "account_number": "152000006403253", "currency": "INR",
+            "current_balance": 7818, "credit_limit": 22000, "interest_rate": null,
+            "opened_date": "2024-05-06", "closed_date": null, "status": "active",
+            "notes": "Mar 2026 had 22 days DPD. Confirm with bank.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "facct-005", "name": "Kotak Bank Credit Card",
+            "type": "credit_card", "institution": "Kotak Bank",
+            "account_number": "9406455008988567", "currency": "INR",
+            "current_balance": 0, "credit_limit": 70000, "interest_rate": null,
+            "opened_date": "2022-10-20", "closed_date": null, "status": "active",
+            "notes": "Clean card. Oldest (Oct 2022). Keep active.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "facct-006", "name": "IDFC Personal Loan (Closed)",
+            "type": "loan", "institution": "IDFC FIRST Bank",
+            "account_number": "CRED-138663330", "currency": "INR",
+            "current_balance": 0, "credit_limit": null, "interest_rate": null,
+            "opened_date": "2023-12-01", "closed_date": "2026-04-06", "status": "closed",
+            "notes": "Closed successfully. Original ₹65,000.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          }
+        ],
+        "finance_categories": [
+          {"id": "cat-001", "name": "Salary", "type": "income", "icon": "💰", "color": "#63d39b", "budget_monthly": null},
+          {"id": "cat-002", "name": "Freelance", "type": "income", "icon": "💻", "color": "#63d39b", "budget_monthly": null},
+          {"id": "cat-005", "name": "Rent", "type": "expense", "icon": "🏠", "color": "#ff7d86", "budget_monthly": 7500},
+          {"id": "cat-006", "name": "Groceries", "type": "expense", "icon": "🛒", "color": "#f3c969", "budget_monthly": 5000},
+          {"id": "cat-007", "name": "Fuel", "type": "expense", "icon": "⛽", "color": "#72a7ff", "budget_monthly": 3000},
+          {"id": "cat-009", "name": "EMI", "type": "expense", "icon": "🔄", "color": "#ff7d86", "budget_monthly": 18103},
+          {"id": "cat-010", "name": "Food", "type": "expense", "icon": "🍽️", "color": "#f3c969", "budget_monthly": 3000},
+          {"id": "cat-011", "name": "Shopping", "type": "expense", "icon": "🛍️", "color": "#f3c969", "budget_monthly": 1000},
+          {"id": "cat-012", "name": "Subscriptions", "type": "expense", "icon": "📱", "color": "#8B929A", "budget_monthly": 500},
+          {"id": "cat-013", "name": "Bike", "type": "expense", "icon": "🏍️", "color": "#72a7ff", "budget_monthly": 2000},
+          {"id": "cat-014", "name": "Travel", "type": "expense", "icon": "✈️", "color": "#72a7ff", "budget_monthly": 3000},
+          {"id": "cat-015", "name": "Photography", "type": "expense", "icon": "📸", "color": "#8B929A", "budget_monthly": 1000},
+          {"id": "cat-017", "name": "Medical", "type": "expense", "icon": "🏥", "color": "#ff7d86", "budget_monthly": 500},
+          {"id": "cat-020", "name": "Other", "type": "expense", "icon": "📌", "color": "#8B929A", "budget_monthly": 500}
+        ],
+        "finance_transactions": [
+          {
+            "id": "txn-001", "date": "2026-09-21", "amount": 46000,
+            "type": "income", "category_id": "cat-001", "category_name": "Salary",
+            "account_id": "facct-001", "description": "Monthly salary",
+            "merchant": null, "payment_method": "Bank Transfer",
+            "tags": ["salary", "employment"], "notes": "September 2026 salary",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          }
+        ],
+        "loans": [
+          {
+            "id": "loan-001", "name": "IDFC FIRST Bank — Personal Loan",
+            "institution": "IDFC FIRST Bank",
+            "original_amount": 620180, "current_balance": 535482,
+            "emi": 18103, "interest_rate": null, "tenure_months": 48,
+            "remaining_payments": 41,
+            "start_date": "2025-10-28", "end_date": "2029-10-28",
+            "status": "active", "account_number": "178300148",
+            "collateral": null,
+            "notes": "Active personal loan. 41 payments remaining.",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          }
+        ],
+        "financial_goals": [
+          {
+            "id": "fg-001", "title": "Become Debt-Free",
+            "description": "Pay off IDFC personal loan completely",
+            "category": "debt", "target_amount": 535482, "current_amount": 0,
+            "currency": "INR", "deadline": "2027-09-21",
+            "status": "active", "priority": "high",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "fg-002", "title": "Build Emergency Fund",
+            "description": "Save 6 months of expenses as emergency buffer",
+            "category": "savings", "target_amount": 300000, "current_amount": 0,
+            "currency": "INR", "deadline": "2027-03-31",
+            "status": "active", "priority": "high",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "fg-003", "title": "Travel Fund — 2027",
+            "description": "Save for Himalayan and across-India bike travel",
+            "category": "savings", "target_amount": 500000, "current_amount": 0,
+            "currency": "INR", "deadline": "2027-12-31",
+            "status": "active", "priority": "medium",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          },
+          {
+            "id": "fg-004", "title": "Photography Gear Fund",
+            "description": "Save for new camera and lens upgrades",
+            "category": "savings", "target_amount": 100000, "current_amount": 0,
+            "currency": "INR", "deadline": "2027-12-31",
+            "status": "active", "priority": "medium",
+            "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"
+          }
+        ],
+        "budgets": [
+          {"id": "bud-001", "month": "2026-09", "category_id": "cat-005", "allocated": 7500, "spent": 7500, "remaining": 0},
+          {"id": "bud-002", "month": "2026-09", "category_id": "cat-007", "allocated": 3000, "spent": 3000, "remaining": 0},
+          {"id": "bud-003", "month": "2026-09", "category_id": "cat-009", "allocated": 18103, "spent": 18103, "remaining": 0}
+        ],
+        "social_accounts": [
+          {"id": "soc-001", "platform": "youtube", "username": "dustytires", "profile_url": "https://youtube.com/@dustytires", "display_name": "Dusty Tires", "followers": 0, "following": 0, "posts": 0, "subscribers": 0, "last_updated": "2026-09-25T00:00:00Z", "update_method": "manual"},
+          {"id": "soc-002", "platform": "github", "username": "PremGanesh0", "profile_url": "https://github.com/PremGanesh0", "display_name": "Prem Ganesh", "followers": 0, "following": 0, "posts": 0, "subscribers": 0, "last_updated": "2026-09-25T00:00:00Z", "update_method": "manual"}
+        ],
+        "health_metrics": [
+          {"id": "hmet-001", "date": "2026-09-24", "type": "weight", "value": 72, "unit": "kg", "notes": "Current weight", "source": "manual"},
+          {"id": "hmet-002", "date": "2026-09-24", "type": "bmi", "value": 23.5, "unit": "", "notes": "Normal BMI", "source": "manual"},
+          {"id": "hmet-003", "date": "2026-09-24", "type": "body_fat", "value": 14, "unit": "%", "notes": "Fit range", "source": "manual"},
+          {"id": "hmet-004", "date": "2026-09-24", "type": "blood_pressure_systolic", "value": 118, "unit": "mmHg", "notes": "Normal", "source": "manual"},
+          {"id": "hmet-005", "date": "2026-09-24", "type": "blood_pressure_diastolic", "value": 76, "unit": "mmHg", "notes": "Normal", "source": "manual"},
+          {"id": "hmet-006", "date": "2026-09-24", "type": "blood_sugar", "value": 88, "unit": "mg/dL", "notes": "Fasting — normal", "source": "manual"},
+          {"id": "hmet-007", "date": "2026-09-24", "type": "cholesterol_total", "value": 185, "unit": "mg/dL", "notes": "Normal", "source": "manual"},
+          {"id": "hmet-008", "date": "2026-09-24", "type": "resting_heart_rate", "value": 58, "unit": "bpm", "notes": "Excellent", "source": "manual"}
+        ],
+        "habits": [
+          {"id": "hab-001", "name": "Daily Running", "description": "Run at least 30 minutes", "frequency": "daily", "target_days_per_week": 5, "current_streak": 4, "best_streak": 14, "status": "active", "last_completed_date": "2026-09-24"},
+          {"id": "hab-002", "name": "Meditation", "description": "10-15 minutes daily", "frequency": "daily", "target_days_per_week": 7, "current_streak": 3, "best_streak": 21, "status": "active", "last_completed_date": "2026-09-23"},
+          {"id": "hab-003", "name": "No Sugar After 6 PM", "description": "Avoid sugar after evening", "frequency": "daily", "target_days_per_week": 7, "current_streak": 12, "best_streak": 12, "status": "active", "last_completed_date": "2026-09-24"},
+          {"id": "hab-004", "name": "Protein in Every Meal", "description": "Ensure protein in all meals", "frequency": "daily", "target_days_per_week": 7, "current_streak": 8, "best_streak": 8, "status": "active", "last_completed_date": "2026-09-24"}
+        ],
+        "goals": [
+          {"id": "goal-001", "title": "Complete a Full Marathon", "description": "Run 42.195 km", "category": "health", "target": "42.195 km", "current_value": 21.1, "unit": "distance", "deadline": "2027-01-01", "status": "active", "priority": "high"},
+          {"id": "goal-002", "title": "Become Tech Lead", "description": "Grow into a Tech Lead position", "category": "career", "target": "Tech Lead", "current_value": "Senior Engineer", "unit": "position", "deadline": "2028-03-01", "status": "active", "priority": "high"},
+          {"id": "goal-003", "title": "Build a Standalone Product", "description": "Create a revenue-generating product", "category": "projects", "target": "₹10K/month", "current_value": "₹0", "unit": "revenue", "deadline": "2027-06-01", "status": "active", "priority": "critical"},
+          {"id": "goal-004", "title": "Reach ₹50K/month Passive Income", "description": "Build passive income streams", "category": "finance", "target": 50000, "current_value": 8000, "unit": "income", "deadline": "2028-03-01", "status": "active", "priority": "high"},
+          {"id": "goal-005", "title": "Travel to 5 New States", "description": "Explore 5 new Indian states by motorcycle", "category": "travel", "target": 5, "current_value": 2, "unit": "states", "deadline": "2027-12-31", "status": "active", "priority": "medium", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+          {"id": "goal-006", "title": "100 km Bike Ride", "description": "Complete a 100 km non-stop ride", "category": "travel", "target": 100, "current_value": 80, "unit": "distance", "deadline": "2027-06-01", "status": "active", "priority": "medium", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+          {"id": "goal-007", "title": "Meditate 20 min/day", "description": "Build daily meditation habit", "category": "health", "target": 20, "current_value": 12, "unit": "time", "deadline": "2026-12-31", "status": "active", "priority": "medium", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+        ],
+        "tasks": [
+          {"id": "task-001", "title": "Pay IDFC EMI", "description": "Monthly EMI — ₹18,103", "status": "pending", "priority": "high", "due_date": "2026-10-28", "completed_date": null, "project_id": null, "goal_id": "fg-001", "tags": ["finance", "emi", "idfc"]},
+          {"id": "task-002", "title": "Pay down ICICI #1 Card", "description": "Reduce balance from ₹89K to below ₹36K", "status": "in_progress", "priority": "high", "due_date": "2026-12-31", "completed_date": null, "project_id": null, "goal_id": null, "tags": ["finance", "credit_card", "cibil"]},
+          {"id": "task-003", "title": "Weekly Running Target", "description": "Complete 5 running sessions this week", "status": "in_progress", "priority": "medium", "due_date": "2026-10-01", "completed_date": null, "project_id": null, "goal_id": null, "tags": ["health", "fitness", "running"]},
+          {"id": "task-004", "title": "Meditate Today", "description": "Complete today's meditation session", "status": "pending", "priority": "low", "due_date": "2026-09-25", "completed_date": null, "project_id": null, "goal_id": null, "tags": ["health", "meditation"]},
+          {"id": "task-005", "title": "Update CIBIL Report", "description": "Check and update CIBIL data", "status": "completed", "priority": "medium", "due_date": "2026-09-25", "completed_date": "2026-09-25", "project_id": null, "goal_id": null, "tags": ["finance", "cibil"]},
+          {"id": "task-006", "title": "Plan Maharashtra Trip", "description": "Plan next motorcycle trip", "status": "pending", "priority": "medium", "due_date": "2026-11-01", "completed_date": null, "project_id": "proj-002", "goal_id": null, "tags": ["travel", "maharashtra", "bike"]}
+        ],
+        "trip": [
+          {"id": "trip-001", "name": "Maharashtra Monsoon Ride 2026", "description": "Week-long motorcycle trip through Maharashtra", "start_date": "2026-08-25", "end_date": "2026-08-31", "locations": ["Pune", "Nashik", "Mumbai", "Harishchandragad"], "route": "Hyderabad → Pune → Nashik → Mumbai → Hyderabad", "distance_km": 1200, "duration_days": 7, "transport": "Royal Enfield Himalayan 411 (Toothless)", "accommodation": "Guest houses and tent camping", "total_cost": 25000, "status": "completed", "notes": "Memorable monsoon ride through Western Ghats.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+        ],
+        "memories": [
+          {"id": "mem-001", "title": "First Ride on Toothless", "date": "2026-03-15", "location": "Hyderabad", "content": "First ride on my new Royal Enfield Himalayan 411 — Toothless. Felt the power and comfort of the 411 engine.", "photos": [], "tags": ["bike", "toothless", "himalayan", "first-ride"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+          {"id": "mem-002", "title": "Crossed 1000 km on Toothless", "date": "2026-06-20", "location": "Chennai", "content": "Completed 1000 km milestone on Toothless. From Hyderabad to Chennai and back. The Himalayan performed flawlessly.", "photos": [], "tags": ["bike", "toothless", "milestone", "1000-km"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+          {"id": "mem-003", "title": "Dusty Tires YouTube Channel Launched", "date": "2025-01-01", "location": "Hyderabad", "content": "Started the Dusty Tires YouTube channel. First video was about my Royal Enfield Himalayan 411.", "photos": [], "tags": ["youtube", "dusty-tires", "content-creation", "milestone"], "privacy": "public", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+        ],
+        "journal_entries": [
+          {"id": "journal-001", "date": "2026-09-24", "title": "Reflective Monday — Planning the week ahead", "content": "Today I reflected on my financial situation. The CIBIL report shows a score of 741, which is decent but there's room for improvement. The ICICI #1 card balance is concerning — at 74% utilization, it's dragging down my score. Need to focus on paying that down.\n\nAlso reviewed my career goals. The Tech Lead goal is still 2 years away. Need to make sure I'm building the right skills and taking on the right responsibilities.\n\nOn the fitness front, feeling good. Running consistently, meditation practice is building.", "mood": "Reflective", "tags": ["reflection", "finance", "career", "fitness"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+          {"id": "journal-002", "date": "2026-09-20", "title": "Maharashtra Trip — Looking back", "content": "The Maharashtra monsoon ride was incredible. From Pune to Malshej Ghat — the scenery was breathtaking. Met some amazing people along the way.\n\nKey takeaways:\n- Planning is everything for a trip this size\n- Toothless performed flawlessly over 1200 km\n- Need to build more content from this trip for YouTube\n- The monsoon adds a whole new dimension to riding", "mood": "Grateful", "tags": ["travel", "maharashtra", "reflection", "bike"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+        ],
+        "documents": [
+          {"id": "doc-001", "title": "IDFC Personal Loan Agreement", "type": "pdf", "description": "Personal loan agreement from IDFC FIRST Bank", "file_url": "", "category": "finance", "tags": ["finance", "loan", "idfc", "legal"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z"},
+          {"id": "doc-002", "title": "CIBIL Report — Sep 2026", "type": "pdf", "description": "CIBIL credit report extracted on 21 Sep 2026", "file_url": "", "category": "finance", "tags": ["finance", "cibil", "credit"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z"}
+        ],
+        "activity_logs": [
+          {"id": "act-001", "timestamp": "2026-09-25T00:00:00Z", "action": "created", "entity_type": "project", "entity_id": "proj-003", "entity_name": "PREM OS", "change_summary": "Project created — PREM OS rebuild in progress", "old_value": null, "new_value": "Building", "performed_by": "Prem", "ip_address": null, "metadata": {}, "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z", "created_by": "Prem", "updated_by": "Prem", "status": "active"}
+        ]
+      }
+    };
+  </script>
 </head>
 <body>
+  <!-- Mobile sidebar backdrop -->
+  <div id="sidebarBackdrop" style="display:none;"></div>
+
   <!-- Sidebar Navigation -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="logo">
-        <i class="fas fa-compass"></i>
-        <span>A-Z Web</span>
+        <div class="logo-icon">P</div>
+        <span class="logo-text">PREM OS</span>
       </div>
-      <button class="toggle-btn" id="toggleSidebar">
+      <button class="toggle-btn" id="toggleSidebar" aria-label="Toggle sidebar">
         <i class="fas fa-bars"></i>
       </button>
     </div>
-    <div class="sidebar-nav">
-      <a href="#dashboard" class="nav-link active" data-section="dashboard">
-        <i class="fas fa-th-large"></i> Dashboard
-      </a>
-      <a href="#finances" class="nav-link" data-section="finances">
-        <i class="fas fa-coins"></i> Finances
-      </a>
-      <a href="#health" class="nav-link" data-section="health">
-        <i class="fas fa-heartbeat"></i> Health
-      </a>
-      <a href="#career" class="nav-link" data-section="career">
-        <i class="fas fa-briefcase"></i> Career
-      </a>
-      <a href="#cibil" class="nav-link" data-section="cibil">
-        <i class="fas fa-id-card"></i> CIBIL / Credit
-      </a>
-      <hr class="nav-divider">
-      <a href="#a-z" class="nav-link" data-section="az">
-        <i class="fas fa-list-alphabetical"></i> A-Z Index
-      </a>
+
+    <div class="sidebar-nav" id="mainNav">
+      <!-- Dynamically rendered -->
     </div>
+
     <div class="sidebar-footer">
-      <span class="nav-link" id="lastUpdated">
-        <i class="fas fa-sync-alt"></i> Loading...
-      </span>
+      <div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.75rem;font-size:0.72rem;color:var(--fg-dim);">
+        <i class="fas fa-lock"></i>
+        <span>Local storage only</span>
+      </div>
     </div>
   </nav>
 
   <!-- Main Content -->
   <main class="main-content" id="mainContent">
-    <!-- Dashboard / Overview -->
-    <section id="section-dashboard" class="content-section active">
-      <div class="section-header">
-        <h1><i class="fas fa-th-large"></i> Life Dashboard</h1>
-        <p class="subtitle">Your complete A-Z overview at a glance</p>
-      </div>
-      <div class="stats-grid" id="dashboardStats">
-        <!-- Populated by JS -->
-      </div>
-      <div class="dashboard-cards">
-        <div class="card card-large">
-          <h3><i class="fas fa-coins"></i> Financial Snapshot</h3>
-          <div id="financeOverview"></div>
-        </div>
-        <div class="card card-large">
-          <h3><i class="fas fa-heartbeat"></i> Health Snapshot</h3>
-          <div id="healthOverview"></div>
-        </div>
-        <div class="card card-large">
-          <h3><i class="fas fa-briefcase"></i> Career Snapshot</h3>
-          <div id="careerOverview"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Finances Section (A-Z) -->
-    <section id="section-finances" class="content-section">
-      <div class="section-header">
-        <h1><i class="fas fa-coins"></i> Finances — A to Z</h1>
-        <p class="subtitle">Every financial dimension tracked end to end</p>
-      </div>
-      <div class="finances-layout">
-        <div class="card">
-          <h3><i class="fas fa-wallet"></i> Income &amp; Earnings</h3>
-          <div id="incomeBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-shopping-cart"></i> Expenses</h3>
-          <div id="expenseBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-piggy-bank"></i> Savings &amp; Net Worth</h3>
-          <div id="savingsBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-chart-line"></i> Investments</h3>
-          <div id="investmentsBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-tasks"></i> Financial Goals</h3>
-          <div id="financialGoals"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-credit-card"></i> Liabilities &amp; Debts</h3>
-          <div id="liabilitiesBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-motorcycle"></i> Bike Fund — Toothless</h3>
-          <div id="bikeFundBreakdown"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Health Section (A-Z) -->
-    <section id="section-health" class="content-section">
-      <div class="section-header">
-        <h1><i class="fas fa-heartbeat"></i> Health — A to Z</h1>
-        <p class="subtitle">Physical, mental, and wellness tracking</p>
-      </div>
-      <div class="health-layout">
-        <div class="card">
-          <h3><i class="fas fa-running"></i> Fitness &amp; Activity</h3>
-          <div id="fitnessBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-apple-alt"></i> Nutrition &amp; Diet</h3>
-          <div id="nutritionBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-bed"></i> Sleep &amp; Recovery</h3>
-          <div id="sleepBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-brain"></i> Mental Wellness</h3>
-          <div id="mentalBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-temperature-low"></i> Vitals &amp; Metrics</h3>
-          <div id="vitalsBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-calendar-check"></i> Health Goals</h3>
-          <div id="healthGoals"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Career Section (A-Z) -->
-    <section id="section-career" class="content-section">
-      <div class="section-header">
-        <h1><i class="fas fa-briefcase"></i> Career — A to Z</h1>
-        <p class="subtitle">Professional growth, skills, and trajectory</p>
-      </div>
-      <div class="career-layout">
-        <div class="card">
-          <h3><i class="fas fa-briefcase"></i> Current Role &amp; Employment</h3>
-          <div id="currentRole"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-code"></i> Skills Inventory</h3>
-          <div id="skillsBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-trophy"></i> Achievements &amp; Milestones</h3>
-          <div id="achievementsBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-chalkboard-teacher"></i> Learning &amp; Certifications</h3>
-          <div id="learningBreakdown"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-chart-bar"></i> Career Goals</h3>
-          <div id="careerGoals"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-users"></i> Network &amp; Relationships</h3>
-          <div id="networkBreakdown"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CIBIL / Credit Section -->
-    <section id="section-cibil" class="content-section">
-      <div class="section-header">
-        <h1><i class="fas fa-id-card"></i> CIBIL / Credit Report</h1>
-        <p class="subtitle">Your credit score, accounts, payment history, and enquiries — sourced from your CIBIL report (Control No: 11,67,80,16,405)</p>
-      </div>
-      <div class="cibil-layout">
-        <div class="card">
-          <h3><i class="fas fa-star"></i> Credit Score</h3>
-          <div id="cibilScore"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-user"></i> Personal Information</h3>
-          <div id="cibilPersonal"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-address-card"></i> Addresses</h3>
-          <div id="cibilAddresses"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-university"></i> Open Accounts</h3>
-          <div id="cibilOpenAccounts"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-undo-alt"></i> Closed Accounts</h3>
-          <div id="cibilClosedAccounts"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-search"></i> Enquiries (Hard Pulls)</h3>
-          <div id="cibilEnquiries"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-chart-pie"></i> Score Factors</h3>
-          <div id="cibilFactors"></div>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-check-circle"></i> Recommended Actions</h3>
-          <div id="cibilActions"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- A-Z Index -->
-    <section id="section-az" class="content-section">
-      <div class="section-header">
-        <h1><i class="fas fa-list-alphabetical"></i> A-Z Index of My Life</h1>
-        <p class="subtitle">Every letter, every dimension — browse the full spectrum</p>
-      </div>
-      <div class="az-grid" id="azGrid">
-        <!-- Populated by JS -->
-      </div>
-    </section>
+    <!-- Rendered by app.js -->
   </main>
 
-  <!-- Modal for editing -->
-  <div class="modal-overlay" id="modalOverlay" style="display:none;">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 id="modalTitle">Edit</h3>
-        <button class="close-modal" id="closeModal">&times;</button>
-      </div>
-      <div class="modal-body" id="modalBody"></div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" id="cancelModal">Cancel</button>
-        <button class="btn btn-primary" id="saveModal">Save</button>
-      </div>
-    </div>
-  </div>
+  <!-- FAB -->
+  <button class="fab" id="fabMain" style="display:none;" onclick="handleFAB()" aria-label="Quick actions">
+    <i class="fas fa-plus"></i>
+  </button>
 
-  <script src="js/finances.js"></script>
-  <script src="js/health.js"></script>
-  <script src="js/career.js"></script>
-  <script src="js/cibil.js"></script>
-  <script src="js/dashboard.js"></script>
+  <!-- Toast container -->
+  <div id="toastContainer" style="display:none;"></div>
+
+  <script type="module" src="js/app.js"></script>
+  <style>
+    /* Critical inline styles for immediate render */
+    .main-content { animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .fa-spin { animation: spin 1s linear infinite; }
+    @media (max-width: 768px) {
+      .main-content { padding-left: 0 !important; padding-top: 4rem !important; }
+    }
+  </style>
 </body>
 </html>

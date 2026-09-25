@@ -1,0 +1,179 @@
+{
+  "version": "1.0.0",
+  "lastSynced": "2026-09-25T00:00:00Z",
+  "entities": {
+    "profile": {
+      "id": "profile-001",
+      "name": "Prem Ganesh Darabala",
+      "bio": "Flutter Developer · Engineer · Photographer · Rider · Creator",
+      "location": "Hyderabad, Telangana · Originally from Kakinada, Andhra Pradesh",
+      "profession": "Senior Software Engineer (Flutter & Dart)",
+      "tagline": "My life. My work. My money. My journey.",
+      "website": "https://premganesh0.github.io",
+      "github": "PremGanesh0",
+      "linkedin": "",
+      "youtube": "Dusty Tires",
+      "instagram": "",
+      "profilePhoto": "",
+      "interests": ["Flutter", "Dart", "NestJS", "Motorcycles", "Travel", "Photography", "Video Editing", "Fitness", "Finance"],
+      "skills": ["Flutter", "Dart", "BLoC", "Firebase", "NestJS", "Node.js", "TypeScript", "GraphQL", "gRPC", "REST APIs", "Microservices", "Git", "CI/CD", "Linux", "Photography", "Video Editing", "Running", "Fitness"],
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z",
+      "status": "active"
+    },
+    "employments": [
+      {
+        "id": "emp-001",
+        "company": "Confidential — Tech Company (India)",
+        "role": "Senior Software Engineer",
+        "start_date": "2023-03-01",
+        "end_date": null,
+        "location": "Remote / Hybrid — Andhra Pradesh, India",
+        "salary": 110000,
+        "status_record": "active",
+        "technologies": ["Flutter", "Dart", "BLoC", "NestJS", "Node.js", "TypeScript", "GraphQL", "gRPC", "Firebase", "MongoDB"],
+        "responsibilities": ["Design and build microservices with NestJS", "Frontend development with Flutter & BLoC", "API design: REST + GraphQL + gRPC", "CI/CD pipeline management", "Mentoring junior developers"],
+        "achievements": ["Best Performer Q3 2024", "Innovation Award — Internal Hackathon"],
+        "notes": "Working on full-stack development with Flutter frontend and NestJS backend microservices.",
+        "created_at": "2026-09-25T00:00:00Z",
+        "updated_at": "2026-09-25T00:00:00Z"
+      }
+    ],
+    "skills": [
+      {"id": "skill-001", "name": "Flutter", "category": "Mobile", "proficiency": 92, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-002", "name": "Dart", "category": "Language", "proficiency": 90, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-003", "name": "BLoC", "category": "State Management", "proficiency": 88, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-004", "name": "Firebase", "category": "Backend-as-a-Service", "proficiency": 80, "yearsExperience": 3, "certified": true, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-005", "name": "NestJS", "category": "Backend", "proficiency": 78, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-006", "name": "Node.js", "category": "Backend", "proficiency": 75, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-007", "name": "TypeScript", "category": "Language", "proficiency": 85, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-008", "name": "GraphQL", "category": "API", "proficiency": 70, "yearsExperience": 2, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-009", "name": "gRPC", "category": "API", "proficiency": 65, "yearsExperience": 2, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-010", "name": "REST API Design", "category": "API", "proficiency": 90, "yearsExperience": 5, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-011", "name": "Microservices Architecture", "category": "Architecture", "proficiency": 75, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-012", "name": "Git / CI/CD", "category": "DevOps", "proficiency": 85, "yearsExperience": 5, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-013", "name": "SQL / PostgreSQL", "category": "Database", "proficiency": 68, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-014", "name": "Cloud (GCP)", "category": "Cloud", "proficiency": 70, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-015", "name": "Linux / Terminal", "category": "DevOps", "proficiency": 80, "yearsExperience": 5, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-016", "name": "Photography", "category": "Creative", "proficiency": 72, "yearsExperience": 4, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-017", "name": "Video Editing", "category": "Creative", "proficiency": 75, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "skill-018", "name": "Running", "category": "Fitness", "proficiency": 68, "yearsExperience": 3, "certified": false, "lastUsed": "2026-09-24", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "projects": [
+      {"id": "proj-001", "name": "Bike Guardian", "description": "Flutter mobile app + NestJS backend for motorcycle tracking and safety", "status": "building", "priority": "high", "start_date": "2024-01-01", "target_date": "2026-12-31", "progress": 70, "technology": ["Flutter", "Dart", "NestJS", "Node.js", "Firebase", "MongoDB"], "repository": "https://github.com/PremGanesh0/bike-guardian", "website": "", "notes": "Main side project. Flutter app with BLoC state management, NestJS microservice backend.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "proj-002", "name": "Dusty Tires YouTube Channel", "description": "Motorcycle travel and adventure content on YouTube", "status": "building", "priority": "medium", "start_date": "2025-01-01", "target_date": null, "progress": 50, "technology": ["Video Editing", "Photography", "YouTube"], "repository": "", "website": "https://youtube.com/@dustytires", "notes": "Growing channel covering motorcycle trips, Himalayan rides, and adventure travel.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "proj-003", "name": "Personal Finance Dashboard (PremOS)", "description": "Self-hosted personal finance and life tracking system", "status": "building", "priority": "high", "start_date": "2026-09-25", "target_date": "2026-12-31", "progress": 15, "technology": ["HTML", "CSS", "JavaScript", "JSON"], "repository": "https://github.com/PremGanesh0/a-z-web-of-me", "website": "https://premganesh0.github.io/a-z-web-of-me", "notes": "Current rebuild — transforming from A-Z Web of Me to PREM OS personal operating system.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "finance_accounts": [
+      {"id": "facct-001", "name": "IDFC FIRST Bank — Personal Loan", "type": "loan", "institution": "IDFC FIRST Bank", "account_number": "178300148", "currency": "INR", "current_balance": 535482, "credit_limit": null, "interest_rate": null, "opened_date": "2025-10-28", "closed_date": null, "status": "active", "notes": "Personal loan — being paid off. EMI ₹18,103/month.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "facct-002", "name": "ICICI Bank Credit Card #1", "type": "credit_card", "institution": "ICICI Bank", "account_number": "0000000028153949", "currency": "INR", "current_balance": 89232, "credit_limit": 120000, "interest_rate": null, "opened_date": "2023-09-08", "closed_date": null, "status": "active", "notes": "High utilization — 74.4%. Priority to pay down.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "facct-003", "name": "ICICI Bank Credit Card #2", "type": "credit_card", "institution": "ICICI Bank", "account_number": "0000000027556897", "currency": "INR", "current_balance": 4275, "credit_limit": 120000, "interest_rate": null, "opened_date": "2023-07-16", "closed_date": null, "status": "active", "notes": "Low balance. Had DPD in 2025, now clear.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "facct-004", "name": "Axis Bank Credit Card", "type": "credit_card", "institution": "Axis Bank", "account_number": "152000006403253", "currency": "INR", "current_balance": 7818, "credit_limit": 22000, "interest_rate": null, "opened_date": "2024-05-06", "closed_date": null, "status": "active", "notes": "Mar 2026 had 22 days DPD. Confirm payment reporting with bank.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "facct-005", "name": "Kotak Bank Credit Card", "type": "credit_card", "institution": "Kotak Bank", "account_number": "9406455008988567", "currency": "INR", "current_balance": 0, "credit_limit": 70000, "interest_rate": null, "opened_date": "2022-10-20", "closed_date": null, "status": "active", "notes": "Clean card. Oldest — 4+ years. Keep active for credit age.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "facct-006", "name": "IDFC FIRST Bank — Personal Loan (Closed)", "type": "loan", "institution": "IDFC FIRST Bank", "account_number": "CRED-138663330", "currency": "INR", "current_balance": 0, "credit_limit": null, "interest_rate": null, "opened_date": "2023-12-01", "closed_date": "2026-04-06", "status": "closed", "notes": "Closed successfully. Original ₹65,000.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "finance_categories": [
+      {"id": "cat-001", "name": "Salary", "type": "income", "icon": "💰", "color": "#63d39b", "budget_monthly": null, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-002", "name": "Freelance", "type": "income", "icon": "💻", "color": "#63d39b", "budget_monthly": null, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-003", "name": "Business", "type": "income", "icon": "🏢", "color": "#63d39b", "budget_monthly": null, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-004", "name": "Investments", "type": "income", "icon": "📈", "color": "#63d39b", "budget_monthly": null, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-005", "name": "Rent", "type": "expense", "icon": "🏠", "color": "#ff7d86", "budget_monthly": 7500, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-006", "name": "Groceries", "type": "expense", "icon": "🛒", "color": "#f3c969", "budget_monthly": 5000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-007", "name": "Fuel", "type": "expense", "icon": "⛽", "color": "#72a7ff", "budget_monthly": 3000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-008", "name": "Transport", "type": "expense", "icon": "🚗", "color": "#72a7ff", "budget_monthly": 3000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-009", "name": "EMI", "type": "expense", "icon": "🔄", "color": "#ff7d86", "budget_monthly": 18103, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-010", "name": "Food", "type": "expense", "icon": "🍽️", "color": "#f3c969", "budget_monthly": 3000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-011", "name": "Shopping", "type": "expense", "icon": "🛍️", "color": "#f3c969", "budget_monthly": 1000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-012", "name": "Subscriptions", "type": "expense", "icon": "📱", "color": "#8B929A", "budget_monthly": 500, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-013", "name": "Bike", "type": "expense", "icon": "🏍️", "color": "#72a7ff", "budget_monthly": 2000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-014", "name": "Travel", "type": "expense", "icon": "✈️", "color": "#72a7ff", "budget_monthly": 3000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-015", "name": "Photography", "type": "expense", "icon": "📸", "color": "#8B929A", "budget_monthly": 1000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-016", "name": "Entertainment", "type": "expense", "icon": "🎬", "color": "#8B929A", "budget_monthly": 1000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-017", "name": "Medical", "type": "expense", "icon": "🏥", "color": "#ff7d86", "budget_monthly": 500, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-018", "name": "Bills", "type": "expense", "icon": "📄", "color": "#8B929A", "budget_monthly": 500, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-019", "name": "Savings", "type": "income", "icon": "💳", "color": "#63d39b", "budget_monthly": null, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "cat-020", "name": "Other", "type": "expense", "icon": "📌", "color": "#8B929A", "budget_monthly": 500, "created_at": "2026-09-25T00:00:00Z"}
+    ],
+    "finance_transactions": [
+      {"id": "txn-001", "date": "2026-09-21", "amount": 46000, "type": "income", "category_id": "cat-001", "category_name": "Salary", "account_id": "facct-001", "description": "Monthly salary from current employment", "merchant": null, "payment_method": "Bank Transfer", "tags": ["salary", "employment"], "notes": "September salary credit", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z", "created_by": "Prem", "updated_by": "Prem"}
+    ],
+    "loans": [
+      {"id": "loan-001", "name": "IDFC FIRST Bank — Personal Loan", "institution": "IDFC FIRST Bank", "original_amount": 620180, "current_balance": 535482, "emi": 18103, "interest_rate": null, "tenure_months": 48, "remaining_payments": 41, "start_date": "2025-10-28", "end_date": "2029-10-28", "status": "active", "account_number": "178300148", "collateral": null, "notes": "Active personal loan. Started 28 Oct 2025. 41 payments remaining.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "financial_goals": [
+      {"id": "fg-001", "title": "Become Debt-Free", "description": "Pay off IDFC personal loan completely", "category": "debt", "target_amount": 535482, "current_amount": 0, "currency": "INR", "deadline": "2027-09-21", "status": "active", "priority": "high", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "fg-002", "title": "Build Emergency Fund", "description": "Save 6 months of expenses as emergency buffer", "category": "savings", "target_amount": 300000, "current_amount": 0, "currency": "INR", "deadline": "2027-03-31", "status": "active", "priority": "high", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "fg-003", "title": "Travel Fund — Long Distance 2027", "description": "Save for Himalayan and across-India bike travel", "category": "savings", "target_amount": 500000, "current_amount": 0, "currency": "INR", "deadline": "2027-12-31", "status": "active", "priority": "medium", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "fg-004", "title": "Photography Gear Fund", "description": "Save for new camera and lens upgrades", "category": "savings", "target_amount": 100000, "current_amount": 0, "currency": "INR", "deadline": "2027-12-31", "status": "active", "priority": "medium", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "budgets": [
+      {"id": "bud-001", "month": "2026-09", "category_id": "cat-005", "allocated": 7500, "spent": 7500, "remaining": 0, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "bud-002", "month": "2026-09", "category_id": "cat-007", "allocated": 3000, "spent": 3000, "remaining": 0, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "bud-003", "month": "2026-09", "category_id": "cat-002", "allocated": 30000, "spent": 0, "remaining": 30000, "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "bud-004", "month": "2026-09", "category_id": "cat-009", "allocated": 18103, "spent": 18103, "remaining": 0, "created_at": "2026-09-25T00:00:00Z"}
+    ],
+    "social_accounts": [
+      {"id": "soc-001", "platform": "youtube", "username": "dustytires", "profile_url": "https://youtube.com/@dustytires", "display_name": "Dusty Tires", "followers": 0, "following": 0, "posts": 0, "subscribers": 0, "last_updated": "2026-09-25T00:00:00Z", "update_method": "manual", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "soc-002", "platform": "github", "username": "PremGanesh0", "profile_url": "https://github.com/PremGanesh0", "display_name": "Prem Ganesh", "followers": 0, "following": 0, "posts": 0, "subscribers": 0, "last_updated": "2026-09-25T00:00:00Z", "update_method": "manual", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "soc-003", "platform": "instagram", "username": "", "profile_url": "", "display_name": "", "followers": 0, "following": 0, "posts": 0, "subscribers": 0, "last_updated": "2026-09-25T00:00:00Z", "update_method": "manual", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "soc-004", "platform": "linkedin", "username": "", "profile_url": "", "display_name": "", "followers": 0, "following": 0, "posts": 0, "subscribers": 0, "last_updated": "2026-09-25T00:00:00Z", "update_method": "manual", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "health_metrics": [
+      {"id": "hmet-001", "date": "2026-09-24", "type": "weight", "value": 72, "unit": "kg", "notes": "Current weight — target range 70-74 kg", "source": "manual", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "hmet-002", "date": "2026-09-24", "type": "bmi", "value": 23.5, "unit": "", "notes": "Normal BMI range", "source": "manual", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "hmet-003", "date": "2026-09-24", "type": "body_fat", "value": 14, "unit": "%", "notes": "Fit range for male", "source": "manual", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "hmet-004", "date": "2026-09-24", "type": "blood_pressure", "value": "118/76", "unit": "mmHg", "notes": "Normal blood pressure", "source": "manual", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "hmet-005", "date": "2026-09-24", "type": "blood_sugar", "value": 88, "unit": "mg/dL", "notes": "Fasting blood sugar — normal", "source": "manual", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "hmet-006", "date": "2026-09-24", "type": "cholesterol", "value": 185, "unit": "mg/dL", "notes": "Normal cholesterol level", "source": "manual", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "hmet-007", "date": "2026-09-24", "type": "resting_heart_rate", "value": 58, "unit": "bpm", "notes": "Excellent resting heart rate", "source": "manual", "created_at": "2026-09-25T00:00:00Z"}
+    ],
+    "habits": [
+      {"id": "hab-001", "name": "Daily Running", "description": "Run at least 30 minutes daily", "frequency": "daily", "target_days_per_week": 5, "current_streak": 4, "best_streak": 14, "status": "active", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "hab-002", "name": "Meditation", "description": "10-15 minutes of meditation daily", "frequency": "daily", "target_days_per_week": 7, "current_streak": 3, "best_streak": 21, "status": "active", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "hab-003", "name": "No Sugar After 6 PM", "description": "Avoid sugar after evening", "frequency": "daily", "target_days_per_week": 7, "current_streak": 12, "best_streak": 12, "status": "active", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "hab-004", "name": "Protein in Every Meal", "description": "Ensure protein in all meals", "frequency": "daily", "target_days_per_week": 7, "current_streak": 8, "best_streak": 8, "status": "active", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "goals": [
+      {"id": "goal-001", "title": "Complete a Full Marathon", "description": "Run 42.195 km in one go — current best is half marathon", "category": "health", "target": "42.195 km", "current_value": "21.1 km (half marathon)", "unit": "distance", "deadline": "2027-01-01", "status": "active", "priority": "high", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "goal-002", "become": "Tech Lead", "description": "Grow into a Tech Lead position within 2 years", "category": "career", "target": "Tech Lead", "current_value": "Senior Engineer", "unit": "position", "deadline": "2028-03-01", "status": "active", "priority": "high", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "goal-003", "title": "Build and Launch a Standalone Product", "description": "Create a revenue-generating SaaS or mobile product", "category": "projects", "target": "₹10,000/month revenue", "current_value": "₹0", "unit": "revenue", "deadline": "2027-06-01", "status": "active", "priority": "critical", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "goal-004", "title": "Reach ₹50K/month Passive Income", "description": "Build dividend, rental, and investment income streams", "category": "finance", "target": "₹50,000/month", "current_value": "₹8,000/month", "unit": "income", "deadline": "2028-03-01", "status": "active", "priority": "high", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "goal-005", "title": "Travel to 5 New States", "description": "Explore 5 new Indian states by motorcycle", "category": "travel", "target": "5 states", "current_value": "2 states (Telangana, Andhra)", "unit": "states", "deadline": "2027-12-31", "status": "active", "priority": "medium", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "goal-006", "title": "100 km Bike Ride", "description": "Complete a 100 km non-stop ride on Toothless", "category": "travel", "target": "100 km", "current_value": "80 km", "unit": "distance", "deadline": "2027-06-01", "status": "active", "priority": "medium", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "goal-007", "title": "Mediat 20 min/day Consistently", "description": "Build daily meditation habit to 20 minutes", "category": "health", "target": "20 min/day", "current_value": "12 min/day avg", "unit": "time", "deadline": "2026-12-31", "status": "active", "priority": "medium", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "tasks": [
+      {"id": "task-001", "title": "Pay IDFC EMI", "description": "Monthly EMI payment — ₹18,103", "status": "pending", "priority": "high", "due_date": "2026-10-28", "completed_date": null, "project_id": null, "goal_id": "fg-001", "tags": ["finance", "emi", "idfc"], "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "task-002", "title": "Pay down ICICI #1 Card", "description": "Reduce balance from ₹89,232 to below ₹36,000 (30% utilization)", "status": "in_progress", "priority": "high", "due_date": "2026-12-31", "completed_date": null, "project_id": null, "goal_id": null, "tags": ["finance", "credit_card", "cibil"], "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "task-003", "title": "Weekly Running Target", "description": "Complete 5 running sessions this week", "status": "in_progress", "priority": "medium", "due_date": "2026-10-01", "completed_date": null, "project_id": null, "goal_id": null, "tags": ["health", "fitness", "running"], "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "task-004", "title": "Meditate Today", "description": "Complete today's meditation session", "status": "pending", "priority": "low", "due_date": "2026-09-25", "completed_date": null, "project_id": null, "goal_id": null, "tags": ["health", "meditation"], "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "task-005", "title": "Update CIBIL Report", "description": "Check and update CIBIL score and report data", "status": "completed", "priority": "medium", "due_date": "2026-09-25", "completed_date": "2026-09-25", "project_id": null, "goal_id": null, "tags": ["finance", "cibil"], "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "task-006", "title": "Plan Maharashtra Trip", "description": "Plan the next motorcycle trip to Maharashtra", "status": "pending", "priority": "medium", "due_date": "2026-11-01", "completed_date": null, "project_id": "proj-002", "goal_id": null, "tags": ["travel", "maharashtra", "bike"], "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "trip": [
+      {"id": "trip-001", "name": "Maharashtra Monsoon Ride 2026", "description": "Week-long motorcycle trip through Maharashtra during monsoon", "start_date": "2026-08-25", "end_date": "2026-08-31", "locations": ["Pune", "Devkund", "Kumbhe", "Raigad", "Kalu", "Harishchandragad", "Malshej", "Shirdi"], "route": "Hyderabad → Pune → Nashik → Mumbai → Hyderabad", "distance_km": 1200, "duration_days": 7, "transport": "Royal Enfield Himalayan 411 (Toothless)", "accommodation": "Guest houses and tent camping", "total_cost": 25000, "status": "completed", "photos": [], "videos": [], "notes": "Memorable monsoon ride through Western Ghats. Met interesting people in every stop.", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "trip_expenses": [
+      {"id": "texp-001", "trip_id": "trip-001", "date": "2026-08-25", "amount": 3500, "category": "fuel", "description": "Fuel for Hyderabad to Pune leg", "payment_method": "ICICI Card #1", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "texp-002", "trip_id": "trip-001", "date": "2026-08-26", "amount": 2000, "category": "food", "description": "Meals in Pune", "payment_method": "Cash", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "texp-003", "trip_id": "trip-001", "date": "2026-08-27", "amount": 1500, "category": "accommodation", "description": "Guest house in Nashik", "payment_method": "Cash", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "texp-004", "trip_id": "trip-001", "date": "2026-08-28", "amount": 1000, "category": "activity", "description": "Entry fees at Harishchandragad", "payment_method": "Cash", "created_at": "2026-09-25T00:00:00Z"}
+    ],
+    "memories": [
+      {"id": "mem-001", "title": "First Ride on Toothless", "date": "2026-03-15", "location": "Hyderabad", "content": "First ride on my new Royal Enfield Himalayan 411 — Toothless. Felt the power and comfort of the 411 engine. Perfect for long-distance travel.", "photos": [], "tags": ["bike", "toothless", "himalayan", "first-ride"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "mem-002", "title": "Crossed 1000 km on Toothless", "date": "2026-06-20", "location": "Chennai", "content": "Completed 1000 km milestone on Toothless. From Hyderabad to Chennai and back. The Himalayan performed flawlessly.", "photos": [], "tags": ["bike", "toothless", "milestone", "1000-km"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "mem-003", "title": "YouTube Channel: Dusty Tires Launched", "date": "2025-01-01", "location": "Hyderabad", "content": "Started the Dusty Tires YouTube channel. First video was about my Royal Enfield Himalayan 411. Planning to grow the channel with motorcycle travel content.", "photos": [], "tags": ["youtube", "dusty-tires", "content-creation", "milestone"], "privacy": "public", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "journal_entries": [
+      {"id": "journal-001", "date": "2026-09-24", "title": "Reflective Monday — Planning the week ahead", "content": "Today I reflected on my financial situation. The CIBIL report shows a score of 741, which is decent but there's room for improvement. The ICICI #1 card balance is concerning — at 74% utilization, it's dragging down my score. Need to focus on paying that down.\n\nAlso reviewed my career goals. The Tech Lead goal is still 2 years away. Need to make sure I'm building the right skills and taking on the right responsibilities.\n\nOn the fitness front, feeling good. Running consistently, meditation practice is building. Need to keep the momentum.", "mood": "Reflective", "tags": ["reflection", "finance", "career", "fitness"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"},
+      {"id": "journal-002", "date": "2026-09-20", "title": "Maharashtra Trip — Looking back", "content": "The Maharashtra monsoon ride was incredible. From Pune to Malshej Ghat — the scenery was breathtaking. Met some amazing people along the way.\n\nKey takeaways:\n- Planning is everything for a trip this size\n- Toothless performed flawlessly over 1200 km\n- Need to build more content from this trip for YouTube\n- The monsoon adds a whole new dimension to riding", "mood": "Grateful", "tags": ["travel", "maharashtra", "reflection", "bike"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z", "updated_at": "2026-09-25T00:00:00Z"}
+    ],
+    "documents": [
+      {"id": "doc-001", "title": "IDFC Personal Loan Agreement", "type": "pdf", "description": "Personal loan agreement document from IDFC FIRST Bank", "file_url": "", "category": "finance", "tags": ["finance", "loan", "idfc", "legal"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z"},
+      {"id": "doc-002", "title": "CIBIL Report — Sep 2026", "type": "pdf", "description": "CIBIL credit report extracted on 21 Sep 2026", "file_url": "", "category": "finance", "tags": ["finance", "cibil", "credit"], "privacy": "private", "created_at": "2026-09-25T00:00:00Z"}
+    ],
+    "activity_logs": [
+      {"id": "act-001", "timestamp": "2026-09-25T00:00:00Z", "action": "created", "entity_type": "project", "entity_id": "proj-003", "entity_name": "Personal Finance Dashboard (PremOS)", "change_summary": "Project created — PREM OS rebuild in progress", "old_value": null, "new_value": "Building", "performed_by": "Prem", "ip_address": null, "metadata": {}}
+    ]
+  }
+}

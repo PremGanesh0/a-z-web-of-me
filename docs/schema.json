@@ -1,0 +1,414 @@
+{
+  "$schema": "https://premganesh0.github.io/a-z-web-of-me/docs/schema.json",
+  "version": "1.0.0",
+  "description": "PREM OS — Personal Operating System Data Schema",
+  "entities": {
+    "profile": {
+      "description": "Your personal profile information",
+      "fields": {
+        "id": "string (uuid)",
+        "name": "string",
+        "bio": "string",
+        "location": "string",
+        "profession": "string",
+        "tagline": "string",
+        "website": "string (url)",
+        "github": "string (username)",
+        "linkedin": "string (username)",
+        "youtube": "string (channel name)",
+        "instagram": "string (username)",
+        "profilePhoto": "string (url)",
+        "interests": "string[]",
+        "skills": "string[]",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601",
+        "status": "active | archived"
+      }
+    },
+    "employment": {
+      "description": "Job/employment history",
+      "fields": {
+        "id": "string (uuid)",
+        "company": "string",
+        "role": "string",
+        "start_date": "YYYY-MM-DD",
+        "end_date": "YYYY-MM-DD | null",
+        "location": "string",
+        "salary": "number (monthly)",
+        "status": "active | past | upcoming",
+        "technologies": "string[]",
+        "responsibilities": "string[]",
+        "achievements": "string[]",
+        "notes": "string",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601",
+        "status_record": "active | past"
+      }
+    },
+    "skills": {
+      "description": "Skills inventory with proficiency",
+      "fields": {
+        "id": "string (uuid)",
+        "name": "string",
+        "category": "string (e.g. 'Flutter', 'Backend', 'Design')",
+        "proficiency": "number (0-100)",
+        "yearsExperience": "number",
+        "certified": "boolean",
+        "lastUsed": "YYYY-MM-DD",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "projects": {
+      "description": "Projects you work on",
+      "fields": {
+        "id": "string (uuid)",
+        "name": "string",
+        "description": "string",
+        "status": "idea | planning | building | paused | completed | archived",
+        "priority": "low | medium | high | critical",
+        "start_date": "YYYY-MM-DD | null",
+        "target_date": "YYYY-MM-DD | null",
+        "progress": "number (0-100)",
+        "technology": "string[]",
+        "repository": "string (url)",
+        "website": "string (url)",
+        "notes": "string",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "finance_account": {
+      "description": "Bank accounts, credit cards, investments",
+      "fields": {
+        "id": "string (uuid)",
+        "name": "string",
+        "type": "bank | credit_card | investment | cash | other",
+        "institution": "string",
+        "account_number": "string (masked)",
+        "currency": "string (ISO 4217)",
+        "current_balance": "number",
+        "credit_limit": "number | null",
+        "interest_rate": "number | null",
+        "opened_date": "YYYY-MM-DD",
+        "closed_date": "YYYY-MM-DD | null",
+        "status": "active | closed | dormant",
+        " notes": "string",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "finance_category": {
+      "description": "Configurable spending/income categories",
+      "fields": {
+        "id": "string (uuid)",
+        "name": "string",
+        "type": "expense | income",
+        "icon": "string (emoji or icon name)",
+        "color": "string (hex)",
+        "budget_monthly": "number | null",
+        "created_at": "ISO8601"
+      }
+    },
+    "finance_transaction": {
+      "description": "Every financial movement",
+      "fields": {
+        "id": "string (uuid)",
+        "date": "YYYY-MM-DD",
+        "amount": "number",
+        "type": "income | expense | transfer | refund | investment | loan_payment",
+        "category_id": "string (ref: finance_category.id)",
+        "category_name": "string (denormalized)",
+        "account_id": "string (ref: finance_account.id)",
+        "description": "string",
+        "merchant": "string | null",
+        "payment_method": "string",
+        "tags": "string[]",
+        "notes": "string",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601",
+        "created_by": "string",
+        "updated_by": "string"
+      }
+    },
+    "loan": {
+      "description": "Loan tracking (personal loans, bike loans, etc.)",
+      "fields": {
+        "id": "string (uuid)",
+        "name": "string",
+        "institution": "string",
+        "original_amount": "number",
+        "current_balance": "number",
+        "emi": "number",
+        "interest_rate": "number | null",
+        "tenure_months": "number",
+        "remaining_payments": "number",
+        "start_date": "YYYY-MM-DD",
+        "end_date": "YYYY-MM-DD | null",
+        "status": "active | closed | defaulted",
+        "account_number": "string",
+        "collateral": "string | null",
+        "notes": "string",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "financial_goal": {
+      "description": "Money-related goals",
+      "fields": {
+        "id": "string (uuid)",
+        "title": "string",
+        "description": "string",
+        "category": "savings | debt | investment | budgeting",
+        "target_amount": "number",
+        "current_amount": "number",
+        "currency": "string",
+        "deadline": "YYYY-MM-DD | null",
+        "status": "active | achieved | abandoned",
+        "priority": "low | medium | high",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "budget": {
+      "description": "Monthly budget allocations",
+      "fields": {
+        "id": "string (uuid)",
+        "month": "YYYY-MM",
+        "category_id": "string (ref: finance_category.id)",
+        "allocated": "number",
+        "spent": "number (calculated)",
+        "remaining": "number (calculated)",
+        "created_at": "ISO8601"
+      }
+    },
+    "health_metric": {
+      "description": "Health tracking measurements",
+      "fields": {
+        "id": "string (uuid)",
+        "date": "YYYY-MM-DD",
+        "type": "weight | bmi | body_fat | blood_pressure | blood_sugar | cholesterol | workout | sleep | meditation | other",
+        "value": "number | string",
+        "unit": "string",
+        "notes": "string",
+        "source": "manual | device | integration",
+        "created_at": "ISO8601"
+      }
+    },
+    "habit": {
+      "description": "Daily/weekly habits to track",
+      "fields": {
+        "id": "string (uuid)",
+        "name": "string",
+        "description": "string",
+        "frequency": "daily | weekly | custom",
+        "target_days_per_week": "number",
+        "current_streak": "number",
+        "best_streak": "number",
+        "status": "active | paused | completed",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "habit_log": {
+      "description": "Daily habit completion logs",
+      "fields": {
+        "id": "string (uuid)",
+        "habit_id": "string (ref: habit.id)",
+        "date": "YYYY-MM-DD",
+        "completed": "boolean",
+        "notes": "string",
+        "created_at": "ISO8601"
+      }
+    },
+    "social_account": {
+      "description": "Social media profiles",
+      "fields": {
+        "id": "string (uuid)",
+        "platform": "instagram | youtube | github | linkedin | twitter | youtube | other",
+        "username": "string",
+        "profile_url": "string (url)",
+        "display_name": "string",
+        "followers": "number",
+        "following": "number",
+        "posts": "number | null",
+        "subscribers": "number | null",
+        "last_updated": "ISO8601",
+        "update_method": "manual | api",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "trip": {
+      "description": "Travel trips with full details",
+      "fields": {
+        "id": "string (uuid)",
+        "name": "string",
+        "description": "string",
+        "start_date": "YYYY-MM-DD",
+        "end_date": "YYYY-MM-DD",
+        "locations": "string[]",
+        "route": "string",
+        "distance_km": "number | null",
+        "duration_days": "number | null",
+        "transport": "string",
+        "accommodation": "string | null",
+        "total_cost": "number | null",
+        "status": "planned | in_progress | completed | archived",
+        "photos": "string[] (urls)",
+        "videos": "string[] (urls)",
+        "notes": "string",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "trip_expense": {
+      "description": "Expenses within a trip",
+      "fields": {
+        "id": "string (uuid)",
+        "trip_id": "string (ref: trip.id)",
+        "date": "YYYY-MM-DD",
+        "amount": "number",
+        "category": "fuel | accommodation | food | transport | shopping | activity | other",
+        "description": "string",
+        "payment_method": "string",
+        "created_at": "ISO8601"
+      }
+    },
+    "memory": {
+      "description": "Life memories, moments, milestones",
+      "fields": {
+        "id": "string (uuid)",
+        "title": "string",
+        "date": "YYYY-MM-DD",
+        "location": "string | null",
+        "content": "string (markdown)",
+        "photos": "string[] (urls)",
+        "tags": "string[]",
+        "privacy": "public | private",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "photo": {
+      "description": "Photography portfolio items",
+      "fields": {
+        "id": "string (uuid)",
+        "title": "string",
+        "description": "string",
+        "location": "string | null",
+        "date_taken": "YYYY-MM-DD",
+        "image_url": "string",
+        "thumbnail_url": "string",
+        "category": "travel | portrait | landscape | street | wildlife | other",
+        "tags": "string[]",
+        "privacy": "public | private",
+        "created_at": "ISO8601"
+      }
+    },
+    "content": {
+      "description": "Content creation tracking (videos, posts, articles)",
+      "fields": {
+        "id": "string (uuid)",
+        "title": "string",
+        "type": "video | blog | post | podcast | photo | other",
+        "platform": "youtube | blog | instagram | linkedin | other",
+        "status": "idea | drafting | published | archived",
+        "publish_date": "YYYY-MM-DD | null",
+        "url": "string | null",
+        "views": "number | null",
+        "engagement": "string",
+        "notes": "string",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "goal": {
+      "description": "Unified goals (non-financial)",
+      "fields": {
+        "id": "string (uuid)",
+        "title": "string",
+        "description": "string",
+        "category": "finance | career | health | travel | creator | projects | personal",
+        "target": "string | number | null",
+        "current_value": "string | number | null",
+        "unit": "string",
+        "deadline": "YYYY-MM-DD | null",
+        "status": "active | achieved | abandoned",
+        "priority": "low | medium | high | critical",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "task": {
+      "description": "To-do tasks and action items",
+      "fields": {
+        "id": "string (uuid)",
+        "title": "string",
+        "description": "string",
+        "status": "pending | in_progress | completed | cancelled",
+        "priority": "low | medium | high | urgent",
+        "due_date": "YYYY-MM-DD | null",
+        "completed_date": "YYYY-MM-DD | null",
+        "project_id": "string (ref: projects.id) | null",
+        "goal_id": "string (ref: goals.id) | null",
+        "tags": "string[]",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "journal_entry": {
+      "description": "Personal journal entries",
+      "fields": {
+        "id": "string (uuid)",
+        "date": "YYYY-MM-DD",
+        "title": "string",
+        "content": "string (markdown)",
+        "mood": "string",
+        "tags": "string[]",
+        "privacy": "public | private",
+        "created_at": "ISO8601",
+        "updated_at": "ISO8601"
+      }
+    },
+    "document": {
+      "description": "Stored documents (PDFs, images, notes)",
+      "fields": {
+        "id": "string (uuid)",
+        "title": "string",
+        "type": "pdf | image | text | spreadsheet | other",
+        "description": "string",
+        "file_url": "string",
+        "category": "finance | health | career | legal | personal | other",
+        "tags": "string[]",
+        "privacy": "public | private",
+        "created_at": "ISO8601"
+      }
+    },
+    "setting": {
+      "description": "Application settings",
+      "fields": {
+        "key": "string",
+        "value": "any (JSON)",
+        "updated_at": "ISO8601"
+      }
+    },
+    "activity_log": {
+      "description": "Audit trail of all changes",
+      "fields": {
+        "id": "string (uuid)",
+        "timestamp": "ISO8601",
+        "action": "string (created | updated | deleted | restored | archived)",
+        "entity_type": "string (e.g. finance_transaction, goal, project)",
+        "entity_id": "string",
+        "entity_name": "string (for display)",
+        "change_summary": "string (what changed)",
+        "old_value": "string | null",
+        "new_value": "string | null",
+        "performed_by": "string",
+        "ip_address": "string | null",
+        "metadata": "object"
+      }
+    }
+  }
+}

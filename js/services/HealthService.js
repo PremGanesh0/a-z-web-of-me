@@ -22,7 +22,11 @@ export class HealthService {
   getLatestMetric(type) {
     const metrics = this.getMetricsByType(type);
     if (!metrics.length) return null;
-    return metrics.sort((a, b) => b.date.localeCompare(a.date) || b.created_at.localeCompare(b.created_at))[0];
+    return metrics.sort((a, b) => {
+      const ad = a.date || a.created_at || '';
+      const bd = b.date || b.created_at || '';
+      return bd.localeCompare(ad) || (b.created_at || '').localeCompare(a.created_at || '');
+    })[0];
   }
 
   getMetricHistory(type, days = 30) {

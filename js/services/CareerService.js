@@ -239,16 +239,21 @@ export class CareerService {
   getEmploymentTimeline() {
     return [...this.getAllEmployment()]
       .sort((a, b) => new Date(b.start_date) - new Date(a.start_date))
-      .map(emp => ({
-        ...emp,
-        startDate: emp.start_date,
-        endDate: emp.end_date || 'Present',
-        duration: emp.tenureMonths,
-        durationDisplay: emp.tenureMonths >= 12
-          ? `${Math.floor(emp.tenureMonths / 12)}y ${emp.tenureMonths % 12}m`
-          : `${emp.tenureMonths}m`,
-        isActive: emp.status_record === 'active'
-      }));
+      .map(emp => {
+        const start = new Date(emp.start_date);
+        const end = emp.end_date ? new Date(emp.end_date) : new Date();
+        const tenureMonths = Math.max(0, (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth()) + (end.getDate() - start.getDate()) / 30);
+        return {
+          ...emp,
+          startDate: emp.start_date,
+          endDate: emp.end_date || 'Present',
+          duration: tenureMonths,
+          durationDisplay: tenureMonths >= 12
+            ? `${Math.floor(tenureMonths / 12)}y ${Math.round(tenureMonths % 12)}m`
+            : `${Math.round(tenureMonths)}m`,
+          isActive: emp.status_record === 'active'
+        };
+      });
   }
 
   // ── Salary History ───────────────────────────────────────────

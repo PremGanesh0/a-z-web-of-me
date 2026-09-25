@@ -337,9 +337,9 @@ export class CareerService {
         technologies: active.technologies
       } : null,
       totalExperienceMonths,
-      totalExperienceDisplay: totalExperienceMonths >= 12
-        ? `${Math.floor(totalExperienceMonths / 12)} years ${totalExperienceMonths % 12} months`
-        : `${totalExperienceMonths} months`,
+      totalExperienceDisplay: Math.round(totalExperienceMonths) >= 12
+        ? `${Math.floor(Math.round(totalExperienceMonths) / 12)} years ${Math.round(totalExperienceMonths) % 12} months`
+        : `${Math.round(totalExperienceMonths)} months`,
       skillCount: skills.length,
       expertSkillCount: expertSkills.length,
       topSkills: this.getTopSkills(5),

@@ -116,7 +116,20 @@ const AZ_INDEX = [
   { letter: 'T3', title: 'Teach / Share', desc: 'Blog posts, talks, documentation written', section: 'career' },
   { letter: 'V', title: 'Videos / Content Created', desc: 'Dusty Tires YouTube — tech + motorcycle', section: 'career' },
   { letter: 'W2', title: 'Work Wins', desc: 'Quarterly highlights and delivered impact', section: 'career' },
-  { letter: 'X', title: 'X-factor / Unique Value', desc: 'What sets this career apart', section: 'career' }
+  { letter: 'X', title: 'X-factor / Unique Value', desc: 'What sets this career apart', section: 'career' },
+
+  // Credit / CIBIL
+  { letter: 'C8', title: 'CIBIL Score', desc: 'Credit score: 741 / 900 — from your CIBIL report', section: 'credit' },
+  { letter: 'C9', title: 'Credit Cards — Full List', desc: 'ICICI, Axis, Kotak — limits, balances, DPD history', section: 'credit' },
+  { letter: 'C10', title: 'Credit Utilization', desc: '72.6% overall — ICICI #1 at 74.4% is the priority to reduce', section: 'credit' },
+  { letter: 'D3', title: 'Debts — CIBIL Accounts', desc: 'All open + closed credit accounts from your report', section: 'credit' },
+  { letter: 'E4', title: 'Enquiries — Hard Pulls', desc: '4 hard enquiries Sep-Oct 2025 — IDFC, PiramalFin, HDFC', section: 'credit' },
+  { letter: 'I5', title: 'IDFC Personal Loan — Active', desc: '₹5.35L balance, ₹18,103 EMI, opened 28/10/2025', section: 'credit' },
+  { letter: 'I6', title: 'IDFC Personal Loan — Closed', desc: '₹65K original, closed 06/04/2026 — repaid successfully', section: 'credit' },
+  { letter: 'K3', title: 'KBank — Kotak Credit Card', desc: '₹70K limit, ₹0 balance, oldest card (Oct 2022) — keep active', section: 'credit' },
+  { letter: 'P4', title: 'Payment History — DPD Analysis', desc: 'Days Past Due across all accounts — where to dispute', section: 'credit' },
+  { letter: 'S7', title: 'Score Factors Breakdown', desc: 'Payment history, utilization, mix, enquiries, credit age', section: 'credit' },
+  { letter: 'V2', title: 'Verification — Personal Info', desc: 'Name, DOB, PAN, voter ID, addresses from CIBIL report', section: 'credit' }
 ];
 
 /* ---- Render A-Z Grid ---- */
@@ -128,7 +141,8 @@ const AZ_INDEX = [
   const sections = {
     finances: { label: 'Finances', icon: 'fa-coins', items: [] },
     health: { label: 'Health', icon: 'fa-heartbeat', items: [] },
-    career: { label: 'Career', icon: 'fa-briefcase', items: [] }
+    career: { label: 'Career', icon: 'fa-briefcase', items: [] },
+    credit: { label: 'CIBIL / Credit', icon: 'fa-id-card', items: [] }
   };
 
   AZ_INDEX.forEach(item => {
@@ -190,7 +204,7 @@ const AZ_INDEX = [
   statEl.innerHTML = '<i class="fas fa-sync-alt"></i> Loading...';
 
   try {
-    await Promise.all([Finances.init(), Health.init(), Career.init()]);
+    await Promise.all([Finances.init(), Health.init(), Career.init(), CIBIL.init()]);
   } catch (e) {
     console.error('Failed to initialize modules:', e);
     statEl.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error loading data';
@@ -273,6 +287,12 @@ function buildDashboardStats() {
       value: `${c.careerGoals.filter(g => g.done).length} / ${c.careerGoals.length}`,
       change: `${c.careerGoals.filter(g => !g.done).length} in progress`,
       cls: 'blue'
+    },
+    {
+      label: 'CIBIL Score',
+      value: `${CIBIL.data ? CIBIL.data.score : '—'} / 900`,
+      change: `Control No: ${CIBIL.data ? CIBIL.data.controlNumber : '—'}`,
+      cls: CIBIL.data && CIBIL.data.score >= 750 ? 'green' : CIBIL.data && CIBIL.data.score >= 700 ? 'amber' : 'red'
     }
   ];
 

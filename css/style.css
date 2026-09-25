@@ -237,6 +237,33 @@ body {
   gap: 1.25rem;
 }
 
+.cibil-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+/* ---- Score Ring (CIBIL) ---- */
+.ring {
+  position: relative;
+  border-radius: 50%;
+  background: conic-gradient(var(--c, var(--green)) var(--p, 0%), var(--bg) 0);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.ring-spark {
+  position: absolute; inset: 6px;
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+/* ---- Layout helpers (PremOS compat) ---- */
+.flex { display: flex; align-items: center; gap: 1rem; }
+.two { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.kpi { display: flex; justify-content: space-between; align-items: baseline; padding: 0.15rem 0; }
+.pill { display: inline-block; padding: 0.12rem 0.5rem; border-radius: 999px; font-size: 0.7rem; font-weight: 500; }
+
 /* ---- A-Z Grid ---- */
 .az-grid {
   display: grid;

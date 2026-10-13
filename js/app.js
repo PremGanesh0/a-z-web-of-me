@@ -1253,7 +1253,7 @@ async function renderMemories() {
           </div>
           <div style="font-size:0.72rem;color:var(--fg-muted);">${UI.fmtDate(m.date)} · ${m.location || ''}</div>
           <div style="font-size:0.75rem;color:var(--fg);margin-top:0.25rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${m.content}</div>
-          ${m.tags?.length ? `<div style="display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.35rem;">${m.tags.map(t => UI.tagPill(t, 'var(--accent)")).join('')}</div>` : ''}
+          ${m.tags?.length ? `<div style="display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.35rem;">${m.tags.map(t => UI.tagPill(t, 'var(--accent)')).join('')}</div>` : ''}
         </div>
       </div>
     `).join('')

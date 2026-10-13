@@ -55,7 +55,7 @@ const App = {
 /* ---- Init Database & Services ---- */
 async function init() {
   try {
-    App.db = Database.init();
+    App.db = await Database.initialize();
     // Load seed data if empty
     const seed = window.__PREMONOS_SEED__;
     if (seed && seed.entities) {
@@ -73,7 +73,7 @@ async function init() {
         }
       }
       Database.setData(db);
-      App.db = Database.init();
+      App.db = await Database.initialize();
     }
     App.finance = new FinanceService();
     App.health = new HealthService();

@@ -1,0 +1,645 @@
+<meta charset="utf-8">
+<title>PREM OS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: fixed left rail of modules, a working canvas on paper. Ink for primary actions, a small amber "AI" mark for anything the agent wrote that still needs your eye. */
+:root{
+  --paper:#EDEAE1; --paper-2:#E4E0D4; --card:#F6F4EE; --ink:#1B2133; --ink-2:#3A4155; --muted:#7A7768; --line:#D5D0C2;
+  --on-ink:#F1EEE5; --ai:#B9771E; --ai-bg:#F3E3C6; --pos:#3E7D57; --neg:#A4483A; --bar:#3A4155;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif; --serif:"Instrument Serif",Georgia,serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#14171F;--paper-2:#1B1F29;--card:#1F2430;--ink:#ECE7DA;--ink-2:#C9C4B6;--muted:#8C8A80;--line:#2E3340;--on-ink:#14171F;--ai:#E0A54B;--ai-bg:#3A2E1A;--pos:#7DC197;--neg:#E08C7D;--bar:#C9C4B6;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#14171F;--paper-2:#1B1F29;--card:#1F2430;--ink:#ECE7DA;--ink-2:#C9C4B6;--muted:#8C8A80;--line:#2E3340;--on-ink:#14171F;--ai:#E0A54B;--ai-bg:#3A2E1A;--pos:#7DC197;--neg:#E08C7D;--bar:#C9C4B6;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--display);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+em{font-family:var(--serif);font-style:italic;font-weight:400}
+.mono{font-family:var(--mono)}
+.num{font-variant-numeric:tabular-nums}
+
+.app{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100%}
+.rail{position:sticky;top:0;height:100vh;padding:22px 14px;padding-left:max(14px,env(safe-area-inset-left,0px));border-right:1px solid var(--line);display:flex;flex-direction:column;gap:4px;background:var(--paper)}
+.logo{display:flex;align-items:center;gap:10px;padding:6px 10px 22px;text-decoration:none;color:inherit}
+.logo b{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--on-ink);display:grid;place-items:center;font-family:var(--mono);font-size:11px}
+.logo span{font-weight:800;letter-spacing:-.02em;font-size:18px}
+.logo small{display:block;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em}
+.nav{all:unset;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;font-weight:600;font-size:14.5px;color:var(--ink-2);cursor:pointer}
+.nav:hover{background:var(--paper-2)}
+.nav[aria-current="page"]{background:var(--ink);color:var(--on-ink)}
+.nav:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.nav .count{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:999px;background:var(--ai-bg);color:var(--ai)}
+.nav[aria-current="page"] .count{background:var(--ai);color:var(--on-ink)}
+.rail .foot{margin-top:auto;display:grid;gap:8px;padding:10px;font-size:12.5px;color:var(--muted)}
+.mode{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+.mode i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.mode.live i{background:var(--pos)}
+.mode.demo i{background:var(--ai)}
+.linkbtn{all:unset;cursor:pointer;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;font-size:12.5px}
+
+main{min-width:0;padding-block:26px 80px;padding-left:max(16px,min(40px,4vw));padding-right:max(16px,env(safe-area-inset-right,0px),min(40px,4vw))}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.top h1{margin:0;font-size:clamp(34px,4.6vw,56px);font-weight:800;letter-spacing:-.04em;line-height:.95}
+.top h1 em{color:var(--muted)}
+.top p{margin:8px 0 0;color:var(--muted);font-size:14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:9px 16px;border:1px solid var(--ink);background:transparent;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;color:var(--ink)}
+.btn.solid{background:var(--ink);color:var(--on-ink)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn.ghost{border-color:var(--line)}
+.btn.warn{border-color:var(--neg);color:var(--neg)}
+.btn:focus-visible,.chip:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,tr[tabindex]:focus-visible,.pcard:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+.banner{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 16px;border-radius:14px;background:var(--ai-bg);color:var(--ink);margin-bottom:20px;font-size:14px}
+.banner b{color:var(--ai)}
+
+.grid{display:grid;gap:14px}
+.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+.two{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.two,.three{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0}
+.card h2{margin:0 0 12px;font-size:15px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.card h2 small{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:400}
+.kpi .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kpi .val{font-size:clamp(26px,2.8vw,36px);font-weight:800;letter-spacing:-.035em;margin-top:8px;font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:13px;color:var(--muted);margin-top:2px}
+.kpi.hot{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.kpi.hot .lbl,.kpi.hot .sub{color:color-mix(in srgb,var(--on-ink) 65%,transparent)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+
+.bars{display:grid;gap:9px}
+.bar{display:grid;grid-template-columns:110px minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:13.5px}
+.bar .track{height:10px;border-radius:6px;background:var(--paper-2);overflow:hidden}
+.bar .fill{height:100%;border-radius:6px;background:var(--bar)}
+.bar .amt{text-align:right;font-variant-numeric:tabular-nums}
+.empty{padding:22px;text-align:center;color:var(--muted);font-size:14px;border:1px dashed var(--line);border-radius:14px}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.month{display:flex;align-items:center;gap:6px;font-weight:600}
+.month button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer}
+
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400;padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--paper-2)}
+tr.archived td{opacity:.5}
+td.r,th.r{text-align:right}
+.badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.badge.ai{background:var(--ai-bg);border-color:transparent;color:var(--ai)}
+.badge.ok{color:var(--pos)}
+.desc b{font-weight:600}
+.desc small{display:block;color:var(--muted);font-size:12.5px}
+
+.review{display:grid;gap:10px}
+.ritem{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 16px;border-radius:16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ai);border-top-left-radius:6px;border-bottom-left-radius:6px}
+.ritem .what b{display:block;font-weight:600}
+.ritem .what span{color:var(--muted);font-size:13px}
+@media (max-width:640px){.ritem{grid-template-columns:1fr}}
+
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+@media (max-width:1100px){.board{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.board{grid-template-columns:1fr}}
+.col h3{margin:0 0 10px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400;display:flex;justify-content:space-between}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer;display:grid;gap:8px}
+.pcard b{font-size:16px;letter-spacing:-.01em}
+.pcard .next{font-size:13px;color:var(--ink-2)}
+.prog{height:6px;border-radius:4px;background:var(--paper-2);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--ink)}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:16px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.tile .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tile .val{font-size:26px;font-weight:800;letter-spacing:-.03em;margin-top:6px;font-variant-numeric:tabular-nums}
+.tile .val small{font-size:13px;font-weight:600;color:var(--muted);margin-left:4px}
+.tile .sub{font-size:12.5px;color:var(--muted)}
+.spark{width:100%;height:34px;margin-top:6px}
+
+.feed{display:grid;gap:0}
+.ev{display:grid;grid-template-columns:64px 18px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.ev:last-child{border-bottom:0}
+.ev time{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding-top:2px}
+.ev .dot{width:9px;height:9px;border-radius:50%;margin-top:6px;background:var(--ink)}
+.ev .dot.ai{background:var(--ai)}
+.ev .diff{font-family:var(--mono);font-size:12px;color:var(--ink-2);margin-top:3px}
+.ev .diff s{color:var(--muted)}
+.day{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:16px 0 4px}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(20,23,31,.35);z-index:40;display:flex;justify-content:flex-end}
+.drawer{width:min(460px,100%);height:100%;background:var(--paper);border-left:1px solid var(--line);padding:22px;padding-top:calc(22px + env(safe-area-inset-top,0px));padding-right:max(22px,env(safe-area-inset-right,0px));padding-bottom:calc(22px + env(safe-area-inset-bottom,0px));overflow-y:auto;display:flex;flex-direction:column;gap:16px}
+.drawer h2{margin:0;font-size:28px;letter-spacing:-.03em;font-weight:800}
+.drawer h2 em{color:var(--muted)}
+.form{display:grid;gap:12px}
+.field{display:grid;gap:5px}
+.field label{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card)}
+.field textarea{min-height:72px;resize:vertical}
+.field .err{color:var(--neg);font-size:12.5px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.meta{font-size:12.5px;color:var(--muted);display:grid;gap:4px;padding:12px;border-radius:12px;background:var(--paper-2)}
+.drawer .foot{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;margin-top:auto}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 12px;border-radius:12px;border:1px solid var(--neg);color:var(--neg);font-size:13.5px}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--on-ink);padding:10px 18px;border-radius:999px;font-weight:600;font-size:14px;z-index:60}
+
+/* login */
+.gate{min-height:100%;display:grid;place-items:center;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px))}
+.gate .card{max-width:420px;padding:30px;display:grid;gap:14px;text-align:left}
+.gate h1{margin:0;font-size:44px;letter-spacing:-.04em;font-weight:800;line-height:.95}
+
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .rail{position:sticky;top:0;z-index:20;height:auto;flex-direction:row;align-items:center;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));padding-top:calc(10px + env(safe-area-inset-top,0px))}
+  .logo{padding:0 8px 0 0}.logo small,.logo span{display:none}
+  .nav{white-space:nowrap;padding:8px 12px}
+  .rail .foot{display:none}
+}
+@media (prefers-reduced-motion:no-preference){.drawer{animation:slide .28s cubic-bezier(.2,.8,.2,1)}@keyframes slide{from{transform:translateX(30px);opacity:.4}}}
+</style>
+
+<div id="root"></div>
+
+<!-- Firebase: Hosting serves the SDK and this project's config from these reserved URLs. Outside Firebase Hosting they 404 and the page runs on demo data. -->
+<script src="/__/firebase/10.12.2/firebase-app-compat.js" onerror="window.__noFirebase=true"></script>
+<script src="/__/firebase/10.12.2/firebase-auth-compat.js" onerror="window.__noFirebase=true"></script>
+<script src="/__/firebase/10.12.2/firebase-firestore-compat.js" onerror="window.__noFirebase=true"></script>
+<script src="/__/firebase/init.js" onerror="window.__noFirebase=true"></script>
+
+<script>
+"use strict";
+/* ================= Config ================= */
+// The one account allowed in. Create it in Firebase console → Authentication → Users → Add user (email + password).
+const OWNER_EMAIL = "premganesh2655@gmail.com"; // keep in sync with firestore.rules
+
+/* ================= Schema (shared shape with premos-mcp) ================= */
+const CATEGORIES = ["Salary","Freelance","Food","Rent","Fuel","Bike","Travel","Shopping","Subscriptions","EMI","Bills","Photography","Entertainment","Medical","Investment","Other"];
+const ACCOUNTS = ["HDFC Savings","Credit Card","UPI / Cash","Investments"];
+const TX_TYPES = ["expense","income","transfer","investment","refund","loan_payment"];
+const HEALTH = {weight:"kg",sleep:"hrs",steps:"steps",workout:"min",water:"L",resting_hr:"bpm",mood:"/5"};
+const PLATFORMS = ["instagram","youtube","facebook","x"];
+const SOCIAL_METRICS = ["followers","views","likes","posts","subscribers"];
+const P_STATUS = ["idea","active","paused","done"];
+const P_AREA = ["work","personal","content","startup"];
+
+const SCHEMA = {
+  transactions:{label:"Finance",one:"transaction",title:r=>r.description||r.category,
+    fields:[
+      {k:"date",l:"Date",t:"date",req:1},{k:"type",l:"Type",t:"select",o:TX_TYPES,req:1},
+      {k:"amount",l:"Amount (₹)",t:"number",req:1,min:0.01},{k:"category",l:"Category",t:"select",o:CATEGORIES,req:1},
+      {k:"account",l:"Account",t:"select",o:ACCOUNTS},{k:"description",l:"Description",t:"text",req:1},
+      {k:"merchant",l:"Merchant",t:"text"},{k:"tags",l:"Tags",t:"tags"},{k:"notes",l:"Notes",t:"textarea"}]},
+  health:{label:"Health",one:"health log",title:r=>`${labelMetric(r.metric)} ${fmtNum(r.value)} ${r.unit||""}`,
+    fields:[{k:"date",l:"Date",t:"date",req:1},{k:"metric",l:"Metric",t:"select",o:Object.keys(HEALTH),req:1},
+      {k:"value",l:"Value",t:"number",req:1,min:0},{k:"note",l:"Note",t:"textarea"}]},
+  social:{label:"Social",one:"social metric",title:r=>`${cap(r.platform)} ${r.metric}`,
+    fields:[{k:"date",l:"Date",t:"date",req:1},{k:"platform",l:"Platform",t:"select",o:PLATFORMS,req:1},
+      {k:"metric",l:"Metric",t:"select",o:SOCIAL_METRICS,req:1},{k:"value",l:"Value",t:"number",req:1,min:0},{k:"note",l:"Note",t:"textarea"}]},
+  projects:{label:"Projects",one:"project",title:r=>r.name,
+    fields:[{k:"name",l:"Name",t:"text",req:1},{k:"stage",l:"Stage",t:"select",o:P_STATUS,req:1},{k:"area",l:"Area",t:"select",o:P_AREA},
+      {k:"progress",l:"Progress %",t:"number",min:0,max:100},{k:"due",l:"Due",t:"date"},{k:"next_step",l:"Next step",t:"text"},
+      {k:"link",l:"Link",t:"url"},{k:"notes",l:"Notes",t:"textarea"}]},
+};
+const COLS = Object.keys(SCHEMA);
+
+/* ================= Helpers ================= */
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const cap = s=>s?String(s)[0].toUpperCase()+String(s).slice(1).replace(/_/g," "):"";
+const labelMetric = m=>({resting_hr:"Resting HR"}[m]||cap(m));
+const inr = new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0});
+const fmtNum = n=>new Intl.NumberFormat("en-IN",{maximumFractionDigits:1}).format(+n||0);
+const localISO = d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+// "Today" is always the IST calendar day, the same as the MCP server, wherever the browser is.
+const today = ()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata"}).format(new Date());
+const daysAgo = n=>{const d=new Date(today()+"T00:00:00Z");d.setUTCDate(d.getUTCDate()-n);return d.toISOString().slice(0,10)};
+const isDate = v=>{if(typeof v!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(v))return false;const d=new Date(v+"T00:00:00Z");return !isNaN(d.getTime())&&d.toISOString().slice(0,10)===v};
+const isNum = v=>(typeof v==="number"&&isFinite(v))||(typeof v==="string"&&v.trim()!==""&&isFinite(Number(v)));
+const monthKey = d=>String(d).slice(0,7);
+const fmtDate = d=>d?new Date(d+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"}):"";
+const fmtTime = iso=>new Date(iso).toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+const fmtDay = iso=>{const d=new Date(iso),t=new Date();const y=new Date();y.setDate(t.getDate()-1);
+  if(d.toDateString()===t.toDateString())return"Today";if(d.toDateString()===y.toDateString())return"Yesterday";
+  return d.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"})};
+const uid = ()=>(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
+
+/* ================= Validation (same rules the MCP server applies) ================= */
+function validate(col,data){
+  const errs={};
+  for(const f of SCHEMA[col].fields){
+    const v=data[f.k];
+    const empty=v===undefined||v===null||v===""||(Array.isArray(v)&&!v.length);
+    if(f.req&&empty){errs[f.k]="Required";continue}
+    if(empty)continue;
+    if(f.t==="number"){const n=Number(v);if(!isNum(v))errs[f.k]="Enter a number";else if(f.min!==undefined&&n<f.min)errs[f.k]=`Must be at least ${f.min}`;else if(f.max!==undefined&&n>f.max)errs[f.k]=`Must be at most ${f.max}`}
+    if(f.t==="date"&&!isDate(v))errs[f.k]="Enter a real date";
+    if(f.t==="select"&&!f.o.includes(v))errs[f.k]="Pick one of the options";
+    if(f.t==="url"&&!/^https?:\/\//.test(v))errs[f.k]="Start with https://";
+  }
+  return errs;
+}
+function clean(col,data){
+  const out={};
+  for(const f of SCHEMA[col].fields){
+    let v=data[f.k];
+    if(v===undefined||v==="")continue;
+    if(f.t==="number")v=Number(v);
+    if(f.t==="tags")v=Array.isArray(v)?v:String(v).split(",").map(s=>s.trim()).filter(Boolean);
+    out[f.k]=v;
+  }
+  if(col==="health"&&out.metric)out.unit=HEALTH[out.metric];
+  return out;
+}
+
+/* ================= Backends ================= */
+class MemoryBackend{
+  constructor(seed){this.data=seed;this.subs=[]}
+  watch(cb){this.subs.push(cb);cb(this.data)}
+  emit(){this.subs.forEach(cb=>cb(this.data))}
+  async write(col,id,doc,ev){this.data[col]=this.data[col]||{};this.data[col][id]={...(this.data[col][id]||{}),...doc};this.data.activity[ev.id]=ev;this.emit()}
+}
+class FirestoreBackend{
+  constructor(db){this.db=db;this.data={activity:{}};COLS.forEach(c=>this.data[c]={})}
+  watch(cb){
+    const listen=(col,q)=>q.onSnapshot(snap=>{const m={};snap.forEach(d=>m[d.id]={...d.data()});this.data[col]=m;cb(this.data)},e=>toast("Sync error: "+e.code));
+    COLS.forEach(c=>listen(c,this.db.collection(c)));
+    listen("activity",this.db.collection("activity").orderBy("at","desc").limit(300));
+  }
+  // Record and its activity entry commit together, or not at all.
+  async write(col,id,doc,ev){const b=this.db.batch();b.set(this.db.collection(col).doc(id),doc,{merge:true});b.set(this.db.collection("activity").doc(ev.id),ev);await b.commit()}
+}
+
+/* ================= Repository: every write goes through here ================= */
+const Repo={
+  backend:null,actor:"Prem",
+  rows(col){return Object.entries(store[col]||{}).map(([id,r])=>({id,...r}))},
+  async create(col,data){
+    const errs=validate(col,data);if(Object.keys(errs).length)throw{errs};
+    const now=new Date().toISOString(),id=uid();
+    const doc={...clean(col,data),status:"active",source:"manual",needs_review:false,created_at:now,updated_at:now,created_by:this.actor,updated_by:this.actor};
+    await this.backend.write(col,id,doc,this.ev("create",col,id,`Added ${SCHEMA[col].one}: ${SCHEMA[col].title(doc)}`));
+    return id;
+  },
+  async update(col,id,data){
+    const errs=validate(col,data);if(Object.keys(errs).length)throw{errs};
+    const old=store[col][id],next=clean(col,data),diff={};
+    for(const f of SCHEMA[col].fields){const a=old[f.k],b=next[f.k];if(JSON.stringify(a??"")!==JSON.stringify(b??""))diff[f.k]=[a??null,b??null]}
+    const patch={...next,updated_at:new Date().toISOString(),updated_by:this.actor};
+    SCHEMA[col].fields.forEach(f=>{if(!(f.k in next))patch[f.k]=null});
+    if(old.needs_review){patch.needs_review=false;patch.reviewed_at=patch.updated_at}
+    if(!Object.keys(diff).length&&!old.needs_review)return;
+    await this.backend.write(col,id,patch,this.ev(old.needs_review?"correct":"update",col,id,`${old.needs_review?"Corrected AI entry":"Edited"}: ${SCHEMA[col].title({...old,...next})}`,diff));
+  },
+  async approve(col,id){
+    const now=new Date().toISOString();
+    await this.backend.write(col,id,{needs_review:false,reviewed_at:now,updated_at:now,updated_by:this.actor},this.ev("approve",col,id,`Approved AI entry: ${SCHEMA[col].title(store[col][id])}`));
+  },
+  async archive(col,id){
+    const now=new Date().toISOString();
+    await this.backend.write(col,id,{status:"archived",needs_review:false,updated_at:now,updated_by:this.actor},this.ev("archive",col,id,`Archived: ${SCHEMA[col].title(store[col][id])}`));
+  },
+  async restore(col,id){
+    const now=new Date().toISOString();
+    await this.backend.write(col,id,{status:"active",updated_at:now,updated_by:this.actor},this.ev("restore",col,id,`Restored: ${SCHEMA[col].title(store[col][id])}`));
+  },
+  ev(action,col,id,summary,diff){
+    const ev={id:uid(),at:new Date().toISOString(),actor:this.actor,action,collection:col,record_id:id,summary};
+    if(diff&&Object.keys(diff).length)ev.diff=diff;
+    return ev;
+  },
+};
+
+/* ================= Demo data (only when Firebase is unavailable) ================= */
+function demoSeed(){
+  const d={transactions:{},health:{},social:{},projects:{},activity:{}};
+  const now=new Date().toISOString();
+  const add=(col,r,ai)=>{const id=uid();d[col][id]={status:"active",source:ai?"ai":"manual",needs_review:!!ai,created_at:now,updated_at:now,created_by:ai?"AI":"Prem",updated_by:ai?"AI":"Prem",...r};
+    d.activity[uid()]={at:new Date(Date.now()-Math.random()*5*864e5).toISOString(),actor:ai?"AI":"Prem",action:"create",collection:col,record_id:id,summary:`Added ${SCHEMA[col].one}: ${SCHEMA[col].title(r)}`}};
+  const tx=[[0,"income",85000,"Salary","HDFC Savings","Monthly salary"],[1,"expense",18000,"Rent","HDFC Savings","House rent"],[2,"expense",850,"Fuel","Credit Card","Himalayan fuel"],[3,"expense",420,"Food","UPI / Cash","Biryani with team"],
+    [5,"expense",649,"Subscriptions","Credit Card","YouTube Premium + iCloud"],[6,"expense",2400,"Bike","UPI / Cash","Chain lube & service"],[8,"expense",1350,"Fuel","Credit Card","Weekend ride fuel"],[9,"investment",5000,"Investment","Investments","SIP"],
+    [11,"expense",3200,"Photography","Credit Card","ND filters"],[13,"expense",780,"Food","UPI / Cash","Groceries"],[15,"income",12000,"Freelance","HDFC Savings","Flutter consulting"],[18,"expense",1999,"Bills","HDFC Savings","Electricity + internet"]];
+  tx.forEach(([a,type,amount,category,account,description])=>add("transactions",{date:daysAgo(a),type,amount,category,account,description}));
+  add("transactions",{date:today(),type:"expense",amount:450,category:"Food",account:"UPI / Cash",description:"Petrol bunk tea + snacks",notes:"From Telegram: 'spent 450 on snacks'"},1);
+  add("transactions",{date:daysAgo(1),type:"expense",amount:1200,category:"Fuel",account:"Credit Card",description:"Fuel",notes:"From Telegram: 'fuel 1200 yesterday'"},1);
+  [72.4,72.1,72.0,71.8,71.9,71.6].forEach((w,i)=>add("health",{date:daysAgo(25-i*5),metric:"weight",value:w,unit:"kg"}));
+  [6.5,7.2,5.9,7.8,6.9,7.1,6.4].forEach((h,i)=>add("health",{date:daysAgo(6-i),metric:"sleep",value:h,unit:"hrs"}));
+  add("health",{date:today(),metric:"steps",value:8420,unit:"steps"},1);
+  add("health",{date:daysAgo(1),metric:"workout",value:45,unit:"min",note:"Gym: push day"});
+  [[30,"instagram",1180],[0,"instagram",1265],[30,"youtube",420],[0,"youtube",468]].forEach(([a,p,v],i)=>add("social",{date:daysAgo(a),platform:p,metric:p==="youtube"?"subscribers":"followers",value:v},i===3));
+  add("social",{date:daysAgo(2),platform:"youtube",metric:"views",value:3120,note:"Last ride vlog, first 48h"});
+  [["PREM OS","active","personal",35,"Connect Hermes to the MCP server","https://github.com/PremGanesh0/a-z-web-of-me"],["Portfolio redesign","done","personal",100,"Deploy to Firebase",""],["BikeGuardian","active","personal",50,"Rotate MongoDB Atlas credentials",""],
+   ["Balancer","paused","startup",60,"Decide on launch scope",""],["Dusty Tires: Araku vlog","active","content",20,"Edit A-roll from Insta360",""],["Shorebird code push","idea","work",0,"Spike on a test app",""]]
+   .forEach(([name,status,area,progress,next_step,link])=>add("projects",{name,stage:status,area,progress,next_step,...(link?{link}:{})}));
+  return d;
+}
+
+/* ================= State & routing ================= */
+let store={transactions:{},health:{},social:{},projects:{},activity:{}};
+let mode="demo",user=null;
+const ui={view:"overview",month:monthKey(today()),txType:"all",showArchived:false,drawer:null,confirm:false};
+try{const v=sessionStorage.getItem("premos_view");if(v)ui.view=v}catch(e){}
+if(/^#(overview|review|transactions|health|social|projects|activity)$/.test(location.hash))ui.view=location.hash.slice(1);
+
+const active=col=>Repo.rows(col).filter(r=>r.status!=="archived");
+const reviewQueue=()=>COLS.flatMap(c=>active(c).filter(r=>r.needs_review).map(r=>({...r,col:c}))).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));
+const visible=col=>Repo.rows(col).filter(r=>ui.showArchived||r.status!=="archived");
+
+/* ================= Rendering ================= */
+const VIEWS=[["overview","Overview"],["review","Review"],["transactions","Finance"],["health","Health"],["social","Social"],["projects","Projects"],["activity","Activity"]];
+
+function render(){
+  const root=$("#root");
+  if(mode==="gate"){root.innerHTML=gateHTML();bindGate();return}
+  const q=reviewQueue().length;
+  root.innerHTML=`<div class="app">
+    <nav class="rail" aria-label="Modules">
+      <a class="logo" href="../"><b>PG</b><span>PREM OS<small>LIFE DASHBOARD</small></span></a>
+      ${VIEWS.map(([k,l])=>`<button class="nav" data-view="${k}" ${ui.view===k?'aria-current="page"':""}>${l}${k==="review"&&q?`<span class="count">${q}</span>`:""}</button>`).join("")}
+      <div class="foot">
+        <span class="mode ${mode}"><i></i>${mode==="live"?"Live · Firebase":"Demo data · not saved"}</span>
+        ${user?`<span>${esc(user.email)}</span><button class="linkbtn" id="signout">Sign out</button>`:""}
+      </div>
+    </nav>
+    <main id="main">${viewHTML()}</main>
+  </div>${ui.drawer?drawerHTML():""}`;
+  bind();
+}
+
+function header(title,sub,actions=""){return `<div class="top"><div><h1>${title}</h1>${sub?`<p>${sub}</p>`:""}</div><div class="actions">${actions}</div></div>`}
+function demoBanner(){return mode==="demo"?`<div class="banner"><span><b>Demo data.</b> Changes stay in this tab. On premganeshd.web.app/premos you sign in and everything syncs with your AI agent.</span></div>`:""}
+
+function viewHTML(){
+  switch(ui.view){
+    case "review":return reviewView();
+    case "transactions":return financeView();
+    case "health":return healthView();
+    case "social":return socialView();
+    case "projects":return projectsView();
+    case "activity":return activityView();
+    default:return overviewView();
+  }
+}
+
+function monthTotals(m){
+  const tx=active("transactions").filter(t=>monthKey(t.date)===m);
+  const sum=t=>tx.filter(x=>x.type===t).reduce((a,x)=>a+(+x.amount||0),0);
+  const income=sum("income")+sum("refund"),expense=sum("expense")+sum("loan_payment"),invest=sum("investment");
+  const cats={};tx.filter(x=>x.type==="expense"||x.type==="loan_payment").forEach(x=>cats[x.category]=(cats[x.category]||0)+(+x.amount||0));
+  return {tx,income,expense,invest,saved:income-expense-invest,cats};
+}
+function catBars(cats){
+  const e=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  if(!e.length)return `<div class="empty">No spending recorded this month.</div>`;
+  const max=e[0][1];
+  return `<div class="bars">${e.slice(0,8).map(([c,v])=>`<div class="bar"><span>${esc(c)}</span><div class="track"><div class="fill" style="width:${(v/max*100).toFixed(1)}%"></div></div><span class="amt">${inr.format(v)}</span></div>`).join("")}</div>`;
+}
+function latest(col,pred){return active(col).filter(pred).sort((a,b)=>String(b.date).localeCompare(String(a.date)))[0]}
+
+function overviewView(){
+  const m=monthTotals(ui.month=monthKey(today()));
+  const q=reviewQueue();
+  const w=latest("health",r=>r.metric==="weight");
+  const sleep=active("health").filter(r=>r.metric==="sleep"&&r.date>=daysAgo(6));
+  const avgSleep=sleep.length?sleep.reduce((a,r)=>a+r.value,0)/sleep.length:null;
+  const steps=latest("health",r=>r.metric==="steps");
+  const proj=active("projects").filter(p=>p.stage==="active");
+  const ig=latest("social",r=>r.platform==="instagram"&&r.metric==="followers"),yt=latest("social",r=>r.platform==="youtube"&&r.metric==="subscribers");
+  const recent=Object.values(store.activity).sort((a,b)=>b.at.localeCompare(a.at)).slice(0,6);
+  const monthName=new Date(ui.month+"-01").toLocaleDateString("en-IN",{month:"long"});
+  return header(`Good ${greet()}, <em>Prem.</em>`,`${new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"})}`,`<button class="btn solid" data-add="transactions">+ Expense</button><button class="btn ghost" data-add="health">+ Health</button>`)
+  +demoBanner()
+  +`<div class="grid kpis">
+      <div class="card kpi"><div class="lbl">Spent in ${monthName}</div><div class="val">${inr.format(m.expense)}</div><div class="sub">${m.tx.filter(t=>t.type==="expense").length} expenses</div></div>
+      <div class="card kpi"><div class="lbl">Income</div><div class="val">${inr.format(m.income)}</div><div class="sub">Invested ${inr.format(m.invest)}</div></div>
+      <div class="card kpi"><div class="lbl">Left this month</div><div class="val ${m.saved<0?"neg":""}">${inr.format(m.saved)}</div><div class="sub">${m.income?Math.round(m.saved/m.income*100)+"% of income":"No income yet"}</div></div>
+      <button class="card kpi ${q.length?"hot":""}" data-view="review" style="text-align:left;cursor:pointer;font:inherit"><div class="lbl">AI entries to review</div><div class="val">${q.length}</div><div class="sub">${q.length?"Check what the agent added":"All caught up"}</div></button>
+    </div>
+    <div class="grid two" style="margin-top:14px">
+      <div class="card"><h2>Where the money went <small>${monthName}</small></h2>${catBars(m.cats)}</div>
+      <div class="card"><h2>Body <small>latest</small></h2>
+        <div class="tiles" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:0">
+          <div><div class="lbl mono" style="font-size:10.5px;color:var(--muted);letter-spacing:.1em">WEIGHT</div><div style="font-size:24px;font-weight:800" class="num">${w?fmtNum(w.value):"–"}<small style="font-size:12px;color:var(--muted)"> kg</small></div></div>
+          <div><div class="lbl mono" style="font-size:10.5px;color:var(--muted);letter-spacing:.1em">SLEEP 7D</div><div style="font-size:24px;font-weight:800" class="num">${avgSleep?fmtNum(avgSleep):"–"}<small style="font-size:12px;color:var(--muted)"> hrs</small></div></div>
+          <div><div class="lbl mono" style="font-size:10.5px;color:var(--muted);letter-spacing:.1em">STEPS</div><div style="font-size:24px;font-weight:800" class="num">${steps?fmtNum(steps.value):"–"}</div></div>
+        </div>
+        <h2 style="margin-top:18px">Audience</h2>
+        <div class="bars">${[["Instagram",ig],["YouTube",yt]].map(([n,r])=>`<div class="bar" style="grid-template-columns:110px 1fr"><span>${n}</span><span class="num" style="font-weight:600">${r?fmtNum(r.value)+" "+r.metric:"No data yet"}</span></div>`).join("")}</div>
+      </div>
+    </div>
+    <div class="grid two" style="margin-top:14px">
+      <div class="card"><h2>Active projects <small>${proj.length}</small></h2>${proj.length?proj.slice(0,5).map(p=>`<div style="display:grid;gap:6px;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer" data-edit="projects:${p.id}"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(p.name)}</b><span class="mono num" style="font-size:12px;color:var(--muted)">${p.progress||0}%</span></div><div class="prog"><i style="width:${p.progress||0}%"></i></div>${p.next_step?`<small style="color:var(--muted)">Next: ${esc(p.next_step)}</small>`:""}</div>`).join(""):`<div class="empty">No active projects.</div>`}</div>
+      <div class="card"><h2>Recent activity</h2><div class="feed">${recent.length?recent.map(evHTML).join(""):`<div class="empty">Nothing yet.</div>`}</div></div>
+    </div>`;
+}
+function greet(){const h=new Date().getHours();return h<12?"morning":h<17?"afternoon":"evening"}
+
+function sourceBadge(r){return r.needs_review?`<span class="badge ai">AI · review</span>`:r.source==="ai"?`<span class="badge ok">AI · checked</span>`:`<span class="badge">You</span>`}
+
+function reviewView(){
+  const q=reviewQueue();
+  return header(`Review <em>queue.</em>`,"Everything your AI agent added that you haven't checked yet. Approve it, fix it, or archive it.")+demoBanner()
+  +(q.length?`<div class="review">${q.map(r=>`<div class="ritem">
+      <span class="badge ai">${esc(SCHEMA[r.col].label)}</span>
+      <div class="what"><b>${esc(SCHEMA[r.col].title(r))}${r.col==="transactions"?` · ${inr.format(r.amount)}`:""}</b><span>${esc(r.date?fmtDate(r.date):"")}${r.notes?" · "+esc(r.notes):r.note?" · "+esc(r.note):""}</span></div>
+      <div class="actions"><button class="btn sm solid" data-approve="${r.col}:${r.id}">Approve</button><button class="btn sm ghost" data-edit="${r.col}:${r.id}">Fix</button><button class="btn sm ghost" data-archive="${r.col}:${r.id}">Archive</button></div>
+    </div>`).join("")}</div>`:`<div class="empty">Nothing to review. When Hermes adds something from Telegram, it shows up here first.</div>`);
+}
+
+function archToggle(){return `<button class="chip" id="arch" aria-pressed="${ui.showArchived}">Show archived</button>`}
+
+function financeView(){
+  const m=monthTotals(ui.month);
+  let rows=visible("transactions").filter(t=>monthKey(t.date)===ui.month);
+  if(ui.txType!=="all")rows=rows.filter(t=>t.type===ui.txType);
+  rows.sort((a,b)=>String(b.date).localeCompare(String(a.date))||String(b.created_at).localeCompare(String(a.created_at)));
+  const label=new Date(ui.month+"-01").toLocaleDateString("en-IN",{month:"long",year:"numeric"});
+  return header(`Money <em>in & out.</em>`,"Every number below is calculated from your transactions. Click a row to correct it.",`<button class="btn solid" data-add="transactions">+ Add transaction</button>`)+demoBanner()
+  +`<div class="grid kpis" style="margin-bottom:14px">
+     <div class="card kpi"><div class="lbl">Income</div><div class="val pos">${inr.format(m.income)}</div></div>
+     <div class="card kpi"><div class="lbl">Spent</div><div class="val">${inr.format(m.expense)}</div></div>
+     <div class="card kpi"><div class="lbl">Invested</div><div class="val">${inr.format(m.invest)}</div></div>
+     <div class="card kpi"><div class="lbl">Left</div><div class="val ${m.saved<0?"neg":""}">${inr.format(m.saved)}</div></div></div>
+   <div class="grid two" style="margin-bottom:14px"><div class="card"><h2>By category <small>${label}</small></h2>${catBars(m.cats)}</div>
+   <div class="card"><h2>By account</h2>${accountBars(m.tx)}</div></div>
+   <div class="toolbar"><div class="month"><button data-month="-1" aria-label="Previous month">‹</button><span>${label}</span><button data-month="1" aria-label="Next month">›</button></div>
+   <div class="chips">${["all",...TX_TYPES].map(t=>`<button class="chip" data-txtype="${t}" aria-pressed="${ui.txType===t}">${cap(t)}</button>`).join("")}${archToggle()}</div></div>
+   ${table(rows,["Date","Description","Category","Account","Source","Amount"],r=>[
+     `<span class="num">${fmtDate(r.date)}</span>`,`<div class="desc"><b>${esc(r.description)}</b>${r.merchant?`<small>${esc(r.merchant)}</small>`:""}</div>`,esc(r.category),esc(r.account||"–"),sourceBadge(r),
+     `<span class="num ${r.type==="income"||r.type==="refund"?"pos":""}">${r.type==="income"||r.type==="refund"?"+":"−"}${inr.format(r.amount)}</span>`],"transactions",[5],"No transactions this month. Add one, or tell Hermes “spent ₹850 on fuel”.")}`;
+}
+function accountBars(tx){
+  const acc={};tx.filter(t=>t.type!=="income"&&t.type!=="refund").forEach(t=>acc[t.account||"Unassigned"]=(acc[t.account||"Unassigned"]||0)+(+t.amount||0));
+  return catBars(acc);
+}
+
+function table(rows,heads,cells,col,rightIdx=[],emptyMsg){
+  if(!rows.length)return `<div class="empty">${emptyMsg}</div>`;
+  return `<div class="tablewrap"><table><thead><tr>${heads.map((h,i)=>`<th class="${rightIdx.includes(i)?"r":""}">${h}</th>`).join("")}</tr></thead><tbody>
+    ${rows.map(r=>`<tr tabindex="0" class="${r.status==="archived"?"archived":""}" data-edit="${col}:${r.id}">${cells(r).map((c,i)=>`<td class="${rightIdx.includes(i)?"r":""}">${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+
+function spark(vals){
+  if(vals.length<2)return "";
+  const mn=Math.min(...vals),mx=Math.max(...vals),r=mx-mn||1,W=160,H=34;
+  const pts=vals.map((v,i)=>[i/(vals.length-1)*W,H-3-((v-mn)/r)*(H-6)]);
+  const d=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+  const last=pts[pts.length-1];
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${d} L${W} ${H} L0 ${H}Z" fill="var(--paper-2)"/><path d="${d}" fill="none" stroke="var(--ink)" stroke-width="1.6"/><circle cx="${last[0]}" cy="${last[1]}" r="3" fill="var(--ink)"/></svg>`;
+}
+
+function healthView(){
+  const rows=visible("health").sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const tiles=Object.keys(HEALTH).map(mt=>{const series=active("health").filter(r=>r.metric===mt).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+    if(!series.length)return "";const l=series[series.length-1];
+    return `<div class="tile"><div class="lbl">${labelMetric(mt)}</div><div class="val">${fmtNum(l.value)}<small>${HEALTH[mt]}</small></div><div class="sub">${fmtDate(l.date)}</div>${spark(series.slice(-12).map(r=>r.value))}</div>`}).join("");
+  return header(`Body <em>& habits.</em>`,"Weight, sleep, steps and workouts. Hermes can log these from a one-line message.",`<button class="btn solid" data-add="health">+ Log health</button>`)+demoBanner()
+  +(tiles?`<div class="tiles">${tiles}</div>`:"")
+  +`<div class="toolbar"><span></span><div class="chips">${archToggle()}</div></div>`
+  +table(rows,["Date","Metric","Value","Note","Source"],r=>[`<span class="num">${fmtDate(r.date)}</span>`,labelMetric(r.metric),`<span class="num">${fmtNum(r.value)} ${esc(r.unit||"")}</span>`,esc(r.note||""),sourceBadge(r)],"health",[],"No health logs yet.");
+}
+
+function socialView(){
+  const rows=visible("social").sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const tiles=PLATFORMS.flatMap(p=>SOCIAL_METRICS.map(mt=>{const s=active("social").filter(r=>r.platform===p&&r.metric===mt).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+    if(!s.length)return "";const l=s[s.length-1],f=s.find(r=>r.date>=daysAgo(30))||s[0],delta=l.value-f.value;
+    return `<div class="tile"><div class="lbl">${cap(p)} · ${mt}</div><div class="val">${fmtNum(l.value)}</div><div class="sub ${delta>0?"pos":delta<0?"neg":""}">${s.length>1?(delta>=0?"+":"")+fmtNum(delta)+" in 30 days":fmtDate(l.date)}</div>${spark(s.slice(-12).map(r=>r.value))}</div>`})).join("");
+  return header(`Audience <em>& reach.</em>`,"Snapshots of your Instagram, YouTube and other channels over time.",`<button class="btn solid" data-add="social">+ Add snapshot</button>`)+demoBanner()
+  +(tiles?`<div class="tiles">${tiles}</div>`:"")
+  +`<div class="toolbar"><span></span><div class="chips">${archToggle()}</div></div>`
+  +table(rows,["Date","Platform","Metric","Value","Note","Source"],r=>[`<span class="num">${fmtDate(r.date)}</span>`,cap(r.platform),cap(r.metric),`<span class="num">${fmtNum(r.value)}</span>`,esc(r.note||""),sourceBadge(r)],"social",[3],"No snapshots yet.");
+}
+
+function projectsView(){
+  const rows=visible("projects");
+  return header(`Projects <em>in motion.</em>`,"Work, personal builds, content and the startup. Click a card to update it.",`<button class="btn solid" data-add="projects">+ New project</button>`)+demoBanner()
+  +`<div class="toolbar"><span></span><div class="chips">${archToggle()}</div></div>`
+  +`<div class="board">${[...P_STATUS,...(ui.showArchived?["archived"]:[])].map(s=>{const ps=s==="archived"?rows.filter(p=>p.status==="archived"):rows.filter(p=>p.status!=="archived"&&p.stage===s);return `<div class="col"><h3><span>${cap(s)}</span><span>${ps.length}</span></h3>
+    ${ps.map(p=>`<div class="pcard" tabindex="0" data-edit="projects:${p.id}" style="${p.status==="archived"?"opacity:.6":""}"><div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><b>${esc(p.name)}</b>${p.needs_review?`<span class="badge ai">AI</span>`:""}</div>
+      ${p.area?`<span class="badge" style="justify-self:start">${esc(p.area)}</span>`:""}<div class="prog"><i style="width:${p.progress||0}%"></i></div>
+      ${p.next_step?`<div class="next">Next: ${esc(p.next_step)}</div>`:""}${p.due?`<div class="mono" style="font-size:11px;color:var(--muted)">Due ${fmtDate(p.due)}</div>`:""}</div>`).join("")||`<div class="empty" style="padding:14px">None</div>`}</div>`}).join("")}</div>`;
+}
+
+function evHTML(e){
+  const diff=e.diff?Object.entries(e.diff).map(([k,[a,b]])=>`${esc(k)}: <s>${esc(fmtVal(a))}</s> → ${esc(fmtVal(b))}`).join(" · "):"";
+  return `<div class="ev"><time>${fmtTime(e.at)}</time><span class="dot ${e.actor==="AI"?"ai":""}"></span><div><div>${esc(e.summary)} <span class="mono" style="font-size:11px;color:var(--muted)">· ${esc(e.actor)}</span></div>${diff?`<div class="diff">${diff}</div>`:""}</div></div>`;
+}
+const fmtVal=v=>v===null||v===undefined||v===""?"empty":Array.isArray(v)?v.join(", "):String(v);
+function activityView(){
+  const evs=Object.values(store.activity).sort((a,b)=>b.at.localeCompare(a.at));
+  let html="",last="";
+  evs.forEach(e=>{const d=fmtDay(e.at);if(d!==last){html+=`<div class="day">${d}</div>`;last=d}html+=evHTML(e)});
+  return header(`Activity <em>log.</em>`,"Every add, correction, approval and archive, by you or the AI. Nothing is deleted.")+demoBanner()
+  +`<div class="card">${evs.length?`<div class="feed">${html}</div>`:`<div class="empty">No activity yet.</div>`}</div>`;
+}
+
+/* ================= Drawer ================= */
+function drawerHTML(){
+  const {col,id}=ui.drawer,s=SCHEMA[col],r=id?store[col][id]:null,v=ui.drawer.values,errs=ui.drawer.errs||{};
+  const input=f=>{const val=v[f.k]??"",e=errs[f.k];
+    let ctl;
+    if(f.t==="select")ctl=`<select id="f-${f.k}" name="${f.k}">${f.req?"":`<option value="">–</option>`}${f.o.map(o=>`<option value="${esc(o)}" ${o===val?"selected":""}>${esc(col==="health"&&f.k==="metric"?labelMetric(o):cap(o))}</option>`).join("")}</select>`;
+    else if(f.t==="textarea")ctl=`<textarea id="f-${f.k}" name="${f.k}">${esc(val)}</textarea>`;
+    else ctl=`<input id="f-${f.k}" name="${f.k}" type="${f.t==="tags"?"text":f.t}" ${f.t==="number"?'step="any" inputmode="decimal"':""} value="${esc(Array.isArray(val)?val.join(", "):val)}" ${f.t==="tags"?'placeholder="comma, separated"':""}>`;
+    return `<div class="field"><label for="f-${f.k}">${f.l}${f.req?"":" (optional)"}</label>${ctl}${e?`<span class="err">${e}</span>`:""}</div>`};
+  const pairs=[];const fs=s.fields;for(let i=0;i<fs.length;i++){const f=fs[i],n=fs[i+1];
+    if(["date","select","number"].includes(f.t)&&n&&["date","select","number"].includes(n.t)){pairs.push(`<div class="row2">${input(f)}${input(n)}</div>`);i++}else pairs.push(input(f))}
+  return `<div class="scrim" id="scrim"><aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="dtitle">
+    <h2 id="dtitle">${id?"Edit":"New"} <em>${s.one}.</em></h2>
+    ${r&&r.needs_review?`<div class="banner" style="margin:0"><span><b>Added by AI.</b> Saving any change marks it reviewed.</span></div>`:""}
+    <form class="form" id="form" novalidate>${pairs.join("")}</form>
+    ${r?`<div class="meta"><span>Source: ${r.source==="ai"?"AI agent":"You"} · created ${new Date(r.created_at).toLocaleString("en-IN")}</span><span>Last changed by ${esc(r.updated_by||"")} · ${new Date(r.updated_at).toLocaleString("en-IN")}</span>${r.status==="archived"?"<span>Archived</span>":""}</div>`:""}
+    ${ui.confirm?`<div class="confirm">Archive this ${s.one}? It leaves totals but stays in history.<button class="btn sm warn" id="doarch">Archive</button><button class="btn sm ghost" id="noarch">Keep</button></div>`:""}
+    <div class="foot"><div class="actions">
+      ${r&&r.status!=="archived"&&!ui.confirm?`<button class="btn ghost warn" id="askarch" type="button">Archive</button>`:""}
+      ${r&&r.status==="archived"?`<button class="btn ghost" id="restore" type="button">Restore</button>`:""}
+      ${r&&r.needs_review?`<button class="btn ghost" id="approve" type="button">Approve as is</button>`:""}
+    </div><div class="actions"><button class="btn ghost" id="cancel" type="button">Cancel</button><button class="btn solid" id="save" form="form" type="submit">${id?"Save changes":"Add"}</button></div></div>
+  </aside></div>`;
+}
+function openDrawer(col,id){
+  const r=id?store[col][id]:null;
+  const values=r?{...r}:{date:today(),...(col==="transactions"?{type:"expense",category:"Food",account:"UPI / Cash"}:col==="health"?{metric:"weight"}:col==="social"?{platform:"instagram",metric:"followers"}:{stage:"active",area:"personal",progress:0})};
+  ui.drawer={col,id,values,errs:{}};ui.confirm=false;render();
+  // Focus right away: a delayed focus could jump the cursor while someone is already typing.
+  const f=$("#form [name]");f&&f.focus();
+}
+function closeDrawer(){ui.drawer=null;ui.confirm=false;render()}
+
+/* ================= Events ================= */
+function bind(){
+  document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{ui.view=b.dataset.view;try{sessionStorage.setItem("premos_view",ui.view)}catch(e){}history.replaceState(null,"","#"+ui.view);render();window.scrollTo(0,0)});
+  document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>openDrawer(b.dataset.add));
+  document.querySelectorAll("[data-edit]").forEach(el=>{const[c,i]=el.dataset.edit.split(":");el.onclick=()=>openDrawer(c,i);el.onkeydown=e=>{if(e.key==="Enter")openDrawer(c,i)}});
+  document.querySelectorAll("[data-approve]").forEach(b=>b.onclick=async()=>{const[c,i]=b.dataset.approve.split(":");await run(()=>Repo.approve(c,i),"Approved")});
+  document.querySelectorAll("[data-archive]").forEach(b=>b.onclick=async()=>{const[c,i]=b.dataset.archive.split(":");await run(()=>Repo.archive(c,i),"Archived")});
+  document.querySelectorAll("[data-month]").forEach(b=>b.onclick=()=>{const [y,mo]=ui.month.split("-").map(Number);ui.month=localISO(new Date(y,mo-1+(+b.dataset.month),1)).slice(0,7);render()});
+  document.querySelectorAll("[data-txtype]").forEach(b=>b.onclick=()=>{ui.txType=b.dataset.txtype;render()});
+  const arch=$("#arch");if(arch)arch.onclick=()=>{ui.showArchived=!ui.showArchived;render()};
+  const so=$("#signout");if(so)so.onclick=()=>firebase.auth().signOut();
+  if(!ui.drawer)return;
+  const {col,id}=ui.drawer;
+  $("#scrim").onclick=e=>{if(e.target.id==="scrim")closeDrawer()};
+  $("#cancel").onclick=closeDrawer;
+  $("#form").oninput=e=>{ui.drawer.values[e.target.name]=e.target.value};
+  $("#form").onchange=e=>{ui.drawer.values[e.target.name]=e.target.value};
+  $("#form").onsubmit=async e=>{e.preventDefault();if(busy)return;const vals=Object.fromEntries(new FormData($("#form")));ui.drawer.values=vals;
+    busy=true;$("#save").disabled=true;
+    try{if(id)await Repo.update(col,id,vals);else await Repo.create(col,vals);busy=false;toast(id?"Saved":"Added");closeDrawer()}
+    catch(err){busy=false;if(err&&err.errs){ui.drawer.errs=err.errs;render()}else{toast("Could not save: "+(err.message||err));const s=$("#save");if(s)s.disabled=false}}};
+  const q=s=>$(s);
+  if(q("#askarch"))q("#askarch").onclick=()=>{ui.confirm=true;render()};
+  if(q("#noarch"))q("#noarch").onclick=()=>{ui.confirm=false;render()};
+  if(q("#doarch"))q("#doarch").onclick=()=>run(()=>Repo.archive(col,id),"Archived",true);
+  if(q("#restore"))q("#restore").onclick=()=>run(()=>Repo.restore(col,id),"Restored",true);
+  if(q("#approve"))q("#approve").onclick=()=>run(()=>Repo.approve(col,id),"Approved",true);
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&ui.drawer)closeDrawer()});
+let busy=false;
+async function run(fn,msg,close){if(busy)return;busy=true;try{await fn();toast(msg);if(close)closeDrawer()}catch(e){toast("Could not save: "+(e.message||e))}finally{busy=false}}
+let tt;function toast(m){let t=$(".toast");if(!t){t=document.createElement("div");t.className="toast";t.setAttribute("role","status");document.body.appendChild(t)}t.textContent=m;clearTimeout(tt);tt=setTimeout(()=>t.remove(),2200)}
+
+/* ================= Login gate ================= */
+let gateMsg="";
+function gateHTML(){return `<div class="gate"><div class="card"><span class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--muted)">PRIVATE</span><h1>PREM <em>OS.</em></h1>
+  <p style="margin:0;color:var(--ink-2)">My life, work, money and journey in one place.</p>
+  <form id="login" class="form" novalidate>
+    <div class="field"><label for="l-email">Email</label><input id="l-email" name="email" type="email" autocomplete="username" required></div>
+    <div class="field"><label for="l-pass">Password</label><input id="l-pass" name="password" type="password" autocomplete="current-password" required></div>
+    ${gateMsg?`<p style="margin:0;color:var(--neg);font-size:14px" role="alert">${esc(gateMsg)}</p>`:""}
+    <button class="btn solid" id="signin" type="submit" style="justify-content:center">Sign in</button>
+  </form>
+  <a href="../" style="font-size:13px;color:var(--muted)">← Back to portfolio</a></div></div>`}
+function bindGate(){
+  const email=$("#l-email");if(email&&!email.value)email.focus();
+  $("#login").onsubmit=async e=>{e.preventDefault();
+    const em=$("#l-email").value.trim(),pw=$("#l-pass").value;
+    if(!em||!pw){gateMsg="Enter your email and password.";render();return}
+    $("#signin").disabled=true;
+    try{await firebase.auth().signInWithEmailAndPassword(em,pw)}
+    catch(err){gateMsg=["auth/invalid-credential","auth/wrong-password","auth/user-not-found","auth/invalid-email"].includes(err.code)?"That email and password don't match.":err.code==="auth/too-many-requests"?"Too many attempts. Wait a few minutes and try again.":"Sign-in failed: "+(err.message||err);render();$("#l-email").value=em}}}
+
+/* ================= Boot ================= */
+function startDemo(){mode="demo";const b=new MemoryBackend(demoSeed());Repo.backend=b;b.watch(d=>{store=d;render()})}
+function boot(){
+  if(window.__noFirebase||typeof firebase==="undefined"||!firebase.apps||!firebase.apps.length){startDemo();return}
+  firebase.auth().onAuthStateChanged(u=>{
+    if(!u){user=null;mode="gate";render();return}
+    if(u.email!==OWNER_EMAIL){gateMsg=`${u.email} doesn't have access.`;firebase.auth().signOut();return}
+    gateMsg="";
+    user=u;mode="live";Repo.actor="Prem";
+    const b=new FirestoreBackend(firebase.firestore());Repo.backend=b;b.watch(d=>{store=d;if(!ui.drawer)render()});
+    render();
+  });
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
+</script>

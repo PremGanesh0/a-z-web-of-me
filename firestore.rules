@@ -1,0 +1,18 @@
+rules_version = '2';
+// PREM OS: only Prem's Google accounts can read or write.
+// The AI agent writes through premos-mcp with the Admin SDK, which bypasses these rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['premganesh2655@gmail.com', 'darabalapremganesh@gmail.com'];
+    }
+    match /{collection}/{id} {
+      allow read: if isOwner();
+      // Records are never hard-deleted: archive instead, so history stays intact.
+      allow create, update: if isOwner();
+      allow delete: if false;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "premos-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that lets an AI agent (Hermes) read and write PREM OS data in Firestore. Every AI write lands in the dashboard's review queue.",
+  "type": "module",
+  "bin": { "premos-mcp": "src/index.js" },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.12.1",
+    "firebase-admin": "12.7.0",
+    "zod": "3.23.8"
+  }
+}

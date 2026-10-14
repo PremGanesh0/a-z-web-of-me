@@ -2,8 +2,15 @@
   "hosting": {
     "public": "portfolio",
     "ignore": ["firebase.json", "**/.*"],
+    "redirects": [
+      { "source": "/premos", "destination": "/premos/", "type": 301 }
+    ],
     "headers": [
-      { "source": "**/*.@(webp|png|jpg)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
+      { "source": "**/*.@(webp|png|jpg)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] },
+      { "source": "/premos/**", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }

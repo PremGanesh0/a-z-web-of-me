@@ -1,0 +1,101 @@
+import { randomUUID } from "node:crypto";
+import { SCHEMA, COLLECTIONS, validate, clean } from "./schema.js";
+
+const ACTOR = "AI";
+export const todayIST = () => new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
+
+export class ValidationError extends Error {
+  constructor(errs) {
+    super("Invalid input: " + Object.entries(errs).map(([k, v]) => `${k} ${v}`).join("; "));
+    this.errs = errs;
+  }
+}
+
+// Business logic for AI writes. `db` is a Firestore instance (firebase-admin) or a compatible fake.
+// Every write: validated, marked source "ai" + needs_review, and recorded in the activity log.
+export class PremosRepo {
+  constructor(db) { this.db = db; }
+
+  assertCollection(col) {
+    if (!COLLECTIONS.includes(col)) throw new ValidationError({ collection: `must be one of: ${COLLECTIONS.join(", ")}` });
+  }
+
+  async log(action, col, id, summary, diff) {
+    const ev = { id: randomUUID(), at: new Date().toISOString(), actor: ACTOR, action, collection: col, record_id: id, summary };
+    if (diff && Object.keys(diff).length) ev.diff = diff;
+    await this.db.collection("activity").doc(ev.id).set(ev);
+  }
+
+  async create(col, input, chatMessage) {
+    this.assertCollection(col);
+    const data = { date: todayIST(), ...input };
+    const errs = validate(col, data);
+    if (Object.keys(errs).length) throw new ValidationError(errs);
+    const now = new Date().toISOString();
+    const doc = { ...clean(col, data), status: "active", source: "ai", needs_review: true,
+      created_at: now, updated_at: now, created_by: ACTOR, updated_by: ACTOR };
+    if (chatMessage) doc.chat_message = String(chatMessage).slice(0, 500);
+    const id = randomUUID();
+    await this.db.collection(col).doc(id).set(doc);
+    await this.log("create", col, id, `Added ${SCHEMA[col].one}: ${SCHEMA[col].title(doc)}`);
+    return { id, ...doc };
+  }
+
+  async get(col, id) {
+    this.assertCollection(col);
+    const snap = await this.db.collection(col).doc(id).get();
+    if (!snap.exists) throw new ValidationError({ id: `no ${SCHEMA[col].one} with id ${id}` });
+    return { id, ...snap.data() };
+  }
+
+  async correct(col, id, changes, reason) {
+    const old = await this.get(col, id);
+    const merged = { ...old, ...changes };
+    const errs = validate(col, merged);
+    if (Object.keys(errs).length) throw new ValidationError(errs);
+    const next = clean(col, merged), diff = {};
+    for (const f of SCHEMA[col].fields) {
+      const a = old[f.k], b = next[f.k];
+      if (JSON.stringify(a ?? "") !== JSON.stringify(b ?? "")) diff[f.k] = [a ?? null, b ?? null];
+    }
+    if (!Object.keys(diff).length) return { id, unchanged: true };
+    const now = new Date().toISOString();
+    // An AI correction always goes back to the review queue.
+    await this.db.collection(col).doc(id).set({ ...next, needs_review: true, updated_at: now, updated_by: ACTOR }, { merge: true });
+    await this.log("update", col, id, `AI corrected: ${SCHEMA[col].title(next)}${reason ? ` (${reason})` : ""}`, diff);
+    return { id, changed: diff };
+  }
+
+  async archive(col, id, reason) {
+    const old = await this.get(col, id);
+    const now = new Date().toISOString();
+    await this.db.collection(col).doc(id).set({ status: "archived", updated_at: now, updated_by: ACTOR }, { merge: true });
+    await this.log("archive", col, id, `AI archived: ${SCHEMA[col].title(old)}${reason ? ` (${reason})` : ""}`);
+    return { id, archived: true };
+  }
+
+  async list(col, { from, to, includeArchived = false, limit = 50, match } = {}) {
+    this.assertCollection(col);
+    const snap = await this.db.collection(col).get();
+    let rows = [];
+    snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+    if (!includeArchived) rows = rows.filter(r => r.status !== "archived");
+    if (from) rows = rows.filter(r => !r.date || r.date >= from);
+    if (to) rows = rows.filter(r => !r.date || r.date <= to);
+    if (match) { const m = match.toLowerCase(); rows = rows.filter(r => JSON.stringify(r).toLowerCase().includes(m)); }
+    rows.sort((a, b) => String(b.date || b.updated_at).localeCompare(String(a.date || a.updated_at)));
+    return rows.slice(0, Math.min(limit, 200));
+  }
+
+  async monthSummary(month = todayIST().slice(0, 7)) {
+    if (!/^\d{4}-\d{2}$/.test(month)) throw new ValidationError({ month: "must be YYYY-MM" });
+    const tx = (await this.list("transactions", { from: `${month}-01`, to: `${month}-31`, limit: 200 }));
+    const sum = t => tx.filter(x => x.type === t).reduce((a, x) => a + (Number(x.amount) || 0), 0);
+    const income = sum("income") + sum("refund"), spent = sum("expense") + sum("loan_payment"), invested = sum("investment");
+    const byCategory = {};
+    tx.filter(x => x.type === "expense" || x.type === "loan_payment").forEach(x => byCategory[x.category] = (byCategory[x.category] || 0) + Number(x.amount));
+    return { month, income, spent, invested, left: income - spent - invested, transactions: tx.length,
+      by_category: Object.fromEntries(Object.entries(byCategory).sort((a, b) => b[1] - a[1])),
+      awaiting_review: tx.filter(x => x.needs_review).length };
+  }
+}

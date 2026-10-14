@@ -21,7 +21,7 @@ export const SCHEMA = {
     { k:"date", t:"date", req:1 }, { k:"platform", t:"select", o:PLATFORMS, req:1 },
     { k:"metric", t:"select", o:SOCIAL_METRICS, req:1 }, { k:"value", t:"number", req:1, min:0 }, { k:"note", t:"textarea" } ] },
   projects: { one: "project", title: r => r.name, fields: [
-    { k:"name", t:"text", req:1 }, { k:"status", t:"select", o:P_STATUS, req:1 }, { k:"area", t:"select", o:P_AREA },
+    { k:"name", t:"text", req:1 }, { k:"stage", t:"select", o:P_STATUS, req:1 }, { k:"area", t:"select", o:P_AREA },
     { k:"progress", t:"number", min:0, max:100 }, { k:"due", t:"date" }, { k:"next_step", t:"text" },
     { k:"link", t:"url" }, { k:"notes", t:"textarea" } ] },
 };

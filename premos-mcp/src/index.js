@@ -9,8 +9,15 @@ import { getFirestore } from "firebase-admin/firestore";
 import { PremosRepo, ValidationError, todayIST } from "./repo.js";
 import { CATEGORIES, ACCOUNTS, TX_TYPES, HEALTH, PLATFORMS, SOCIAL_METRICS, P_STATUS, P_AREA, COLLECTIONS } from "./schema.js";
 
-initializeApp({ credential: applicationDefault(), projectId: process.env.FIREBASE_PROJECT_ID || "premganeshd" });
-const repo = new PremosRepo(getFirestore());
+// PREMOS_TEST_DB points at the e2e stand-in database (see e2e/); normal runs use Firestore.
+let db;
+if (process.env.PREMOS_TEST_DB) {
+  db = (await import("../e2e/http-db.js")).httpDb(process.env.PREMOS_TEST_DB);
+} else {
+  initializeApp({ credential: applicationDefault(), projectId: process.env.FIREBASE_PROJECT_ID || "premganeshd" });
+  db = getFirestore();
+}
+const repo = new PremosRepo(db);
 
 const server = new McpServer({ name: "premos", version: "0.1.0" }, {
   instructions:
@@ -52,12 +59,12 @@ server.tool("add_social_metric", "Record a snapshot of a social account number, 
 }, wrap(({ chat_message, ...a }) => repo.create("social", a, chat_message)));
 
 server.tool("add_project", "Create a project.", {
-  name: z.string().min(1), status: z.enum(P_STATUS).default("active"), area: z.enum(P_AREA).optional(),
+  name: z.string().min(1), stage: z.enum(P_STATUS).default("active"), area: z.enum(P_AREA).optional(),
   progress: z.number().min(0).max(100).optional(), due: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   next_step: z.string().optional(), link: z.string().url().optional(), notes: z.string().optional(), chat_message: chat,
 }, wrap(({ chat_message, ...a }) => repo.create("projects", a, chat_message)));
 
-server.tool("correct_record", "Change fields on an existing record (fix a wrong amount, mark a project done, etc.). Get the id from list_records first.", {
+server.tool("correct_record", "Change fields on an existing record (fix a wrong amount, set a project's stage to done, etc.). Get the id from list_records first.", {
   collection: z.enum(COLLECTIONS), id: z.string(),
   changes: z.record(z.any()).describe("Only the fields to change, e.g. {\"amount\": 380}"),
   reason: z.string().optional(),

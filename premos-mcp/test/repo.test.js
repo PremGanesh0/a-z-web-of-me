@@ -15,7 +15,8 @@ function fakeDb() {
       get: async () => ({ forEach: fn => Object.entries(data[name]).forEach(([id, v]) => fn({ id, data: () => ({ ...v }) })) }),
     };
   };
-  return { collection: col, data };
+  const batch = () => { const ops = []; return { set: (ref, v, opt) => ops.push([ref, v, opt]), commit: async () => { for (const [r, v, o] of ops) await r.set(v, o); } }; };
+  return { collection: col, batch, data };
 }
 
 test("AI expense lands in review queue with activity log", async () => {
@@ -63,4 +64,14 @@ test("health unit is derived, month summary adds up, archive excludes", async ()
   assert.deepEqual(Object.keys(s.by_category), ["Rent"]);
   const found = await repo.list("transactions", { match: "rent" });
   assert.equal(found.length, 1);
+});
+
+test("project stage is kept separate from archive status", async () => {
+  const db = fakeDb(), repo = new PremosRepo(db);
+  const p = await repo.create("projects", { name: "Shorebird spike", stage: "idea" });
+  assert.equal(p.stage, "idea");
+  assert.equal(p.status, "active");
+  await repo.archive("projects", p.id);
+  assert.equal(db.data.projects[p.id].stage, "idea");
+  assert.equal(db.data.projects[p.id].status, "archived");
 });

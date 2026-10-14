@@ -20,10 +20,14 @@ export class PremosRepo {
     if (!COLLECTIONS.includes(col)) throw new ValidationError({ collection: `must be one of: ${COLLECTIONS.join(", ")}` });
   }
 
-  async log(action, col, id, summary, diff) {
+  // Writes the record and its activity entry in one batch: both land or neither does.
+  async write(col, id, doc, merge, action, summary, diff) {
     const ev = { id: randomUUID(), at: new Date().toISOString(), actor: ACTOR, action, collection: col, record_id: id, summary };
     if (diff && Object.keys(diff).length) ev.diff = diff;
-    await this.db.collection("activity").doc(ev.id).set(ev);
+    const batch = this.db.batch();
+    batch.set(this.db.collection(col).doc(id), doc, merge ? { merge: true } : undefined);
+    batch.set(this.db.collection("activity").doc(ev.id), ev);
+    await batch.commit();
   }
 
   async create(col, input, chatMessage) {
@@ -36,8 +40,7 @@ export class PremosRepo {
       created_at: now, updated_at: now, created_by: ACTOR, updated_by: ACTOR };
     if (chatMessage) doc.chat_message = String(chatMessage).slice(0, 500);
     const id = randomUUID();
-    await this.db.collection(col).doc(id).set(doc);
-    await this.log("create", col, id, `Added ${SCHEMA[col].one}: ${SCHEMA[col].title(doc)}`);
+    await this.write(col, id, doc, false, "create", `Added ${SCHEMA[col].one}: ${SCHEMA[col].title(doc)}`);
     return { id, ...doc };
   }
 
@@ -61,16 +64,14 @@ export class PremosRepo {
     if (!Object.keys(diff).length) return { id, unchanged: true };
     const now = new Date().toISOString();
     // An AI correction always goes back to the review queue.
-    await this.db.collection(col).doc(id).set({ ...next, needs_review: true, updated_at: now, updated_by: ACTOR }, { merge: true });
-    await this.log("update", col, id, `AI corrected: ${SCHEMA[col].title(next)}${reason ? ` (${reason})` : ""}`, diff);
+    await this.write(col, id, { ...next, needs_review: true, updated_at: now, updated_by: ACTOR }, true, "update", `AI corrected: ${SCHEMA[col].title(next)}${reason ? ` (${reason})` : ""}`, diff);
     return { id, changed: diff };
   }
 
   async archive(col, id, reason) {
     const old = await this.get(col, id);
     const now = new Date().toISOString();
-    await this.db.collection(col).doc(id).set({ status: "archived", updated_at: now, updated_by: ACTOR }, { merge: true });
-    await this.log("archive", col, id, `AI archived: ${SCHEMA[col].title(old)}${reason ? ` (${reason})` : ""}`);
+    await this.write(col, id, { status: "archived", updated_at: now, updated_by: ACTOR }, true, "archive", `AI archived: ${SCHEMA[col].title(old)}${reason ? ` (${reason})` : ""}`);
     return { id, archived: true };
   }
 

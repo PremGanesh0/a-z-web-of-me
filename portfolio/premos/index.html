@@ -108,7 +108,7 @@ td.r,th.r{text-align:right}
 .ritem .what span{color:var(--muted);font-size:13px}
 @media (max-width:640px){.ritem{grid-template-columns:1fr}}
 
-.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
 @media (max-width:1100px){.board{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.board{grid-template-columns:1fr}}
 .col h3{margin:0 0 10px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400;display:flex;justify-content:space-between}
@@ -205,7 +205,7 @@ const SCHEMA = {
     fields:[{k:"date",l:"Date",t:"date",req:1},{k:"platform",l:"Platform",t:"select",o:PLATFORMS,req:1},
       {k:"metric",l:"Metric",t:"select",o:SOCIAL_METRICS,req:1},{k:"value",l:"Value",t:"number",req:1,min:0},{k:"note",l:"Note",t:"textarea"}]},
   projects:{label:"Projects",one:"project",title:r=>r.name,
-    fields:[{k:"name",l:"Name",t:"text",req:1},{k:"status",l:"Status",t:"select",o:P_STATUS,req:1},{k:"area",l:"Area",t:"select",o:P_AREA},
+    fields:[{k:"name",l:"Name",t:"text",req:1},{k:"stage",l:"Stage",t:"select",o:P_STATUS,req:1},{k:"area",l:"Area",t:"select",o:P_AREA},
       {k:"progress",l:"Progress %",t:"number",min:0,max:100},{k:"due",l:"Due",t:"date"},{k:"next_step",l:"Next step",t:"text"},
       {k:"link",l:"Link",t:"url"},{k:"notes",l:"Notes",t:"textarea"}]},
 };
@@ -218,8 +218,9 @@ const cap = s=>s?String(s)[0].toUpperCase()+String(s).slice(1).replace(/_/g," ")
 const labelMetric = m=>({resting_hr:"Resting HR"}[m]||cap(m));
 const inr = new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0});
 const fmtNum = n=>new Intl.NumberFormat("en-IN",{maximumFractionDigits:1}).format(+n||0);
-const today = ()=>new Date().toISOString().slice(0,10);
-const daysAgo = n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().slice(0,10)};
+const localISO = d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const today = ()=>localISO(new Date());
+const daysAgo = n=>{const d=new Date();d.setDate(d.getDate()-n);return localISO(d)};
 const monthKey = d=>String(d).slice(0,7);
 const fmtDate = d=>d?new Date(d+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"}):"";
 const fmtTime = iso=>new Date(iso).toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
@@ -261,8 +262,7 @@ class MemoryBackend{
   constructor(seed){this.data=seed;this.subs=[]}
   watch(cb){this.subs.push(cb);cb(this.data)}
   emit(){this.subs.forEach(cb=>cb(this.data))}
-  async put(col,id,doc){this.data[col]=this.data[col]||{};this.data[col][id]={...(this.data[col][id]||{}),...doc};this.emit()}
-  async log(ev){this.data.activity[ev.id]=ev;this.emit()}
+  async write(col,id,doc,ev){this.data[col]=this.data[col]||{};this.data[col][id]={...(this.data[col][id]||{}),...doc};this.data.activity[ev.id]=ev;this.emit()}
 }
 class FirestoreBackend{
   constructor(db){this.db=db;this.data={activity:{}};COLS.forEach(c=>this.data[c]={})}
@@ -271,8 +271,8 @@ class FirestoreBackend{
     COLS.forEach(c=>listen(c,this.db.collection(c)));
     listen("activity",this.db.collection("activity").orderBy("at","desc").limit(300));
   }
-  async put(col,id,doc){await this.db.collection(col).doc(id).set(doc,{merge:true})}
-  async log(ev){await this.db.collection("activity").doc(ev.id).set(ev)}
+  // Record and its activity entry commit together, or not at all.
+  async write(col,id,doc,ev){const b=this.db.batch();b.set(this.db.collection(col).doc(id),doc,{merge:true});b.set(this.db.collection("activity").doc(ev.id),ev);await b.commit()}
 }
 
 /* ================= Repository: every write goes through here ================= */
@@ -283,8 +283,7 @@ const Repo={
     const errs=validate(col,data);if(Object.keys(errs).length)throw{errs};
     const now=new Date().toISOString(),id=uid();
     const doc={...clean(col,data),status:"active",source:"manual",needs_review:false,created_at:now,updated_at:now,created_by:this.actor,updated_by:this.actor};
-    await this.backend.put(col,id,doc);
-    await this.log("create",col,id,`Added ${SCHEMA[col].one}: ${SCHEMA[col].title(doc)}`);
+    await this.backend.write(col,id,doc,this.ev("create",col,id,`Added ${SCHEMA[col].one}: ${SCHEMA[col].title(doc)}`));
     return id;
   },
   async update(col,id,data){
@@ -295,28 +294,24 @@ const Repo={
     SCHEMA[col].fields.forEach(f=>{if(!(f.k in next))patch[f.k]=null});
     if(old.needs_review){patch.needs_review=false;patch.reviewed_at=patch.updated_at}
     if(!Object.keys(diff).length&&!old.needs_review)return;
-    await this.backend.put(col,id,patch);
-    await this.log(old.needs_review?"correct":"update",col,id,`${old.needs_review?"Corrected AI entry":"Edited"}: ${SCHEMA[col].title({...old,...next})}`,diff);
+    await this.backend.write(col,id,patch,this.ev(old.needs_review?"correct":"update",col,id,`${old.needs_review?"Corrected AI entry":"Edited"}: ${SCHEMA[col].title({...old,...next})}`,diff));
   },
   async approve(col,id){
     const now=new Date().toISOString();
-    await this.backend.put(col,id,{needs_review:false,reviewed_at:now,updated_at:now,updated_by:this.actor});
-    await this.log("approve",col,id,`Approved AI entry: ${SCHEMA[col].title(store[col][id])}`);
+    await this.backend.write(col,id,{needs_review:false,reviewed_at:now,updated_at:now,updated_by:this.actor},this.ev("approve",col,id,`Approved AI entry: ${SCHEMA[col].title(store[col][id])}`));
   },
   async archive(col,id){
     const now=new Date().toISOString();
-    await this.backend.put(col,id,{status:"archived",needs_review:false,updated_at:now,updated_by:this.actor});
-    await this.log("archive",col,id,`Archived: ${SCHEMA[col].title(store[col][id])}`);
+    await this.backend.write(col,id,{status:"archived",needs_review:false,updated_at:now,updated_by:this.actor},this.ev("archive",col,id,`Archived: ${SCHEMA[col].title(store[col][id])}`));
   },
   async restore(col,id){
     const now=new Date().toISOString();
-    await this.backend.put(col,id,{status:"active",updated_at:now,updated_by:this.actor});
-    await this.log("restore",col,id,`Restored: ${SCHEMA[col].title(store[col][id])}`);
+    await this.backend.write(col,id,{status:"active",updated_at:now,updated_by:this.actor},this.ev("restore",col,id,`Restored: ${SCHEMA[col].title(store[col][id])}`));
   },
-  async log(action,col,id,summary,diff){
+  ev(action,col,id,summary,diff){
     const ev={id:uid(),at:new Date().toISOString(),actor:this.actor,action,collection:col,record_id:id,summary};
     if(diff&&Object.keys(diff).length)ev.diff=diff;
-    await this.backend.log(ev);
+    return ev;
   },
 };
 
@@ -340,7 +335,7 @@ function demoSeed(){
   add("social",{date:daysAgo(2),platform:"youtube",metric:"views",value:3120,note:"Last ride vlog, first 48h"});
   [["PREM OS","active","personal",35,"Connect Hermes to the MCP server","https://github.com/PremGanesh0/a-z-web-of-me"],["Portfolio redesign","done","personal",100,"Deploy to Firebase",""],["BikeGuardian","active","personal",50,"Rotate MongoDB Atlas credentials",""],
    ["Balancer","paused","startup",60,"Decide on launch scope",""],["Dusty Tires: Araku vlog","active","content",20,"Edit A-roll from Insta360",""],["Shorebird code push","idea","work",0,"Spike on a test app",""]]
-   .forEach(([name,status,area,progress,next_step,link])=>add("projects",{name,status,area,progress,next_step,...(link?{link}:{})}));
+   .forEach(([name,status,area,progress,next_step,link])=>add("projects",{name,stage:status,area,progress,next_step,...(link?{link}:{})}));
   return d;
 }
 
@@ -413,7 +408,7 @@ function overviewView(){
   const sleep=active("health").filter(r=>r.metric==="sleep"&&r.date>=daysAgo(6));
   const avgSleep=sleep.length?sleep.reduce((a,r)=>a+r.value,0)/sleep.length:null;
   const steps=latest("health",r=>r.metric==="steps");
-  const proj=active("projects").filter(p=>p.status==="active");
+  const proj=active("projects").filter(p=>p.stage==="active");
   const ig=latest("social",r=>r.platform==="instagram"&&r.metric==="followers"),yt=latest("social",r=>r.platform==="youtube"&&r.metric==="subscribers");
   const recent=Object.values(store.activity).sort((a,b)=>b.at.localeCompare(a.at)).slice(0,6);
   const monthName=new Date(ui.month+"-01").toLocaleDateString("en-IN",{month:"long"});
@@ -524,8 +519,8 @@ function projectsView(){
   const rows=visible("projects");
   return header(`Projects <em>in motion.</em>`,"Work, personal builds, content and the startup. Click a card to update it.",`<button class="btn solid" data-add="projects">+ New project</button>`)+demoBanner()
   +`<div class="toolbar"><span></span><div class="chips">${archToggle()}</div></div>`
-  +`<div class="board">${P_STATUS.map(s=>{const ps=rows.filter(p=>p.status===s);return `<div class="col"><h3><span>${cap(s)}</span><span>${ps.length}</span></h3>
-    ${ps.map(p=>`<div class="pcard ${p.status_r||""}" tabindex="0" data-edit="projects:${p.id}" style="${p.status==="archived"?"opacity:.5":""}"><div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><b>${esc(p.name)}</b>${p.needs_review?`<span class="badge ai">AI</span>`:""}</div>
+  +`<div class="board">${[...P_STATUS,...(ui.showArchived?["archived"]:[])].map(s=>{const ps=s==="archived"?rows.filter(p=>p.status==="archived"):rows.filter(p=>p.status!=="archived"&&p.stage===s);return `<div class="col"><h3><span>${cap(s)}</span><span>${ps.length}</span></h3>
+    ${ps.map(p=>`<div class="pcard" tabindex="0" data-edit="projects:${p.id}" style="${p.status==="archived"?"opacity:.6":""}"><div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><b>${esc(p.name)}</b>${p.needs_review?`<span class="badge ai">AI</span>`:""}</div>
       ${p.area?`<span class="badge" style="justify-self:start">${esc(p.area)}</span>`:""}<div class="prog"><i style="width:${p.progress||0}%"></i></div>
       ${p.next_step?`<div class="next">Next: ${esc(p.next_step)}</div>`:""}${p.due?`<div class="mono" style="font-size:11px;color:var(--muted)">Due ${fmtDate(p.due)}</div>`:""}</div>`).join("")||`<div class="empty" style="padding:14px">None</div>`}</div>`}).join("")}</div>`;
 }
@@ -569,7 +564,7 @@ function drawerHTML(){
 }
 function openDrawer(col,id){
   const r=id?store[col][id]:null;
-  const values=r?{...r}:{date:today(),...(col==="transactions"?{type:"expense",category:"Food",account:"UPI / Cash"}:col==="health"?{metric:"weight"}:col==="social"?{platform:"instagram",metric:"followers"}:{status:"active",area:"personal",progress:0})};
+  const values=r?{...r}:{date:today(),...(col==="transactions"?{type:"expense",category:"Food",account:"UPI / Cash"}:col==="health"?{metric:"weight"}:col==="social"?{platform:"instagram",metric:"followers"}:{stage:"active",area:"personal",progress:0})};
   ui.drawer={col,id,values,errs:{}};ui.confirm=false;render();
   setTimeout(()=>{const f=$("#form [name]");f&&f.focus()},30);
 }
@@ -582,7 +577,7 @@ function bind(){
   document.querySelectorAll("[data-edit]").forEach(el=>{const[c,i]=el.dataset.edit.split(":");el.onclick=()=>openDrawer(c,i);el.onkeydown=e=>{if(e.key==="Enter")openDrawer(c,i)}});
   document.querySelectorAll("[data-approve]").forEach(b=>b.onclick=async()=>{const[c,i]=b.dataset.approve.split(":");await run(()=>Repo.approve(c,i),"Approved")});
   document.querySelectorAll("[data-archive]").forEach(b=>b.onclick=async()=>{const[c,i]=b.dataset.archive.split(":");await run(()=>Repo.archive(c,i),"Archived")});
-  document.querySelectorAll("[data-month]").forEach(b=>b.onclick=()=>{const d=new Date(ui.month+"-01");d.setMonth(d.getMonth()+(+b.dataset.month));ui.month=d.toISOString().slice(0,7);render()});
+  document.querySelectorAll("[data-month]").forEach(b=>b.onclick=()=>{const [y,mo]=ui.month.split("-").map(Number);ui.month=localISO(new Date(y,mo-1+(+b.dataset.month),1)).slice(0,7);render()});
   document.querySelectorAll("[data-txtype]").forEach(b=>b.onclick=()=>{ui.txType=b.dataset.txtype;render()});
   const arch=$("#arch");if(arch)arch.onclick=()=>{ui.showArchived=!ui.showArchived;render()};
   const so=$("#signout");if(so)so.onclick=()=>firebase.auth().signOut();
@@ -592,9 +587,10 @@ function bind(){
   $("#cancel").onclick=closeDrawer;
   $("#form").oninput=e=>{ui.drawer.values[e.target.name]=e.target.value};
   $("#form").onchange=e=>{ui.drawer.values[e.target.name]=e.target.value};
-  $("#form").onsubmit=async e=>{e.preventDefault();const vals=Object.fromEntries(new FormData($("#form")));ui.drawer.values=vals;
-    try{if(id)await Repo.update(col,id,vals);else await Repo.create(col,vals);toast(id?"Saved":"Added");closeDrawer()}
-    catch(err){if(err&&err.errs){ui.drawer.errs=err.errs;render()}else toast("Could not save: "+(err.message||err))}};
+  $("#form").onsubmit=async e=>{e.preventDefault();if(busy)return;const vals=Object.fromEntries(new FormData($("#form")));ui.drawer.values=vals;
+    busy=true;$("#save").disabled=true;
+    try{if(id)await Repo.update(col,id,vals);else await Repo.create(col,vals);busy=false;toast(id?"Saved":"Added");closeDrawer()}
+    catch(err){busy=false;if(err&&err.errs){ui.drawer.errs=err.errs;render()}else{toast("Could not save: "+(err.message||err));const s=$("#save");if(s)s.disabled=false}}};
   const q=s=>$(s);
   if(q("#askarch"))q("#askarch").onclick=()=>{ui.confirm=true;render()};
   if(q("#noarch"))q("#noarch").onclick=()=>{ui.confirm=false;render()};
@@ -603,7 +599,8 @@ function bind(){
   if(q("#approve"))q("#approve").onclick=()=>run(()=>Repo.approve(col,id),"Approved",true);
 }
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&ui.drawer)closeDrawer()});
-async function run(fn,msg,close){try{await fn();toast(msg);if(close)closeDrawer()}catch(e){toast("Could not save: "+(e.message||e))}}
+let busy=false;
+async function run(fn,msg,close){if(busy)return;busy=true;try{await fn();toast(msg);if(close)closeDrawer()}catch(e){toast("Could not save: "+(e.message||e))}finally{busy=false}}
 let tt;function toast(m){let t=$(".toast");if(!t){t=document.createElement("div");t.className="toast";t.setAttribute("role","status");document.body.appendChild(t)}t.textContent=m;clearTimeout(tt);tt=setTimeout(()=>t.remove(),2200)}
 
 /* ================= Login gate ================= */

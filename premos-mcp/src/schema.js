@@ -27,6 +27,15 @@ export const SCHEMA = {
 };
 export const COLLECTIONS = Object.keys(SCHEMA);
 
+// Real calendar date in YYYY-MM-DD (rejects 2026-02-31).
+export const isDate = v => {
+  if (typeof v !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
+  const d = new Date(v + "T00:00:00Z");
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v;
+};
+// Numbers or numeric strings only (rejects true/false/null, which Number() would turn into 1/0).
+export const isNum = v => (typeof v === "number" && Number.isFinite(v)) || (typeof v === "string" && v.trim() !== "" && Number.isFinite(Number(v)));
+
 export function validate(col, data) {
   const errs = {};
   for (const f of SCHEMA[col].fields) {
@@ -36,11 +45,11 @@ export function validate(col, data) {
     if (empty) continue;
     if (f.t === "number") {
       const n = Number(v);
-      if (!Number.isFinite(n)) errs[f.k] = "must be a number";
+      if (!isNum(v)) errs[f.k] = "must be a number";
       else if (f.min !== undefined && n < f.min) errs[f.k] = `must be at least ${f.min}`;
       else if (f.max !== undefined && n > f.max) errs[f.k] = `must be at most ${f.max}`;
     }
-    if (f.t === "date" && !/^\d{4}-\d{2}-\d{2}$/.test(v)) errs[f.k] = "must be YYYY-MM-DD";
+    if (f.t === "date" && !isDate(v)) errs[f.k] = "must be a real date, YYYY-MM-DD";
     if (f.t === "select" && !f.o.includes(v)) errs[f.k] = `must be one of: ${f.o.join(", ")}`;
     if (f.t === "url" && !/^https?:\/\//.test(v)) errs[f.k] = "must start with https://";
   }

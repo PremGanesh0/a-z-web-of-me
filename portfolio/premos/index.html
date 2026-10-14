@@ -219,8 +219,11 @@ const labelMetric = m=>({resting_hr:"Resting HR"}[m]||cap(m));
 const inr = new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0});
 const fmtNum = n=>new Intl.NumberFormat("en-IN",{maximumFractionDigits:1}).format(+n||0);
 const localISO = d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-const today = ()=>localISO(new Date());
-const daysAgo = n=>{const d=new Date();d.setDate(d.getDate()-n);return localISO(d)};
+// "Today" is always the IST calendar day, the same as the MCP server, wherever the browser is.
+const today = ()=>new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Kolkata"}).format(new Date());
+const daysAgo = n=>{const d=new Date(today()+"T00:00:00Z");d.setUTCDate(d.getUTCDate()-n);return d.toISOString().slice(0,10)};
+const isDate = v=>{if(typeof v!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(v))return false;const d=new Date(v+"T00:00:00Z");return !isNaN(d.getTime())&&d.toISOString().slice(0,10)===v};
+const isNum = v=>(typeof v==="number"&&isFinite(v))||(typeof v==="string"&&v.trim()!==""&&isFinite(Number(v)));
 const monthKey = d=>String(d).slice(0,7);
 const fmtDate = d=>d?new Date(d+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"}):"";
 const fmtTime = iso=>new Date(iso).toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
@@ -237,8 +240,8 @@ function validate(col,data){
     const empty=v===undefined||v===null||v===""||(Array.isArray(v)&&!v.length);
     if(f.req&&empty){errs[f.k]="Required";continue}
     if(empty)continue;
-    if(f.t==="number"){const n=Number(v);if(!isFinite(n))errs[f.k]="Enter a number";else if(f.min!==undefined&&n<f.min)errs[f.k]=`Must be at least ${f.min}`;else if(f.max!==undefined&&n>f.max)errs[f.k]=`Must be at most ${f.max}`}
-    if(f.t==="date"&&!/^\d{4}-\d{2}-\d{2}$/.test(v))errs[f.k]="Use YYYY-MM-DD";
+    if(f.t==="number"){const n=Number(v);if(!isNum(v))errs[f.k]="Enter a number";else if(f.min!==undefined&&n<f.min)errs[f.k]=`Must be at least ${f.min}`;else if(f.max!==undefined&&n>f.max)errs[f.k]=`Must be at most ${f.max}`}
+    if(f.t==="date"&&!isDate(v))errs[f.k]="Enter a real date";
     if(f.t==="select"&&!f.o.includes(v))errs[f.k]="Pick one of the options";
     if(f.t==="url"&&!/^https?:\/\//.test(v))errs[f.k]="Start with https://";
   }

@@ -75,3 +75,21 @@ test("project stage is kept separate from archive status", async () => {
   assert.equal(db.data.projects[p.id].stage, "idea");
   assert.equal(db.data.projects[p.id].status, "archived");
 });
+
+test("rejects impossible dates, non-numbers and bad months", async () => {
+  const repo = new PremosRepo(fakeDb());
+  await assert.rejects(repo.create("health", { metric: "weight", value: 70, date: "2026-02-31" }), /real date/);
+  await assert.rejects(repo.create("transactions", { amount: true, type: "expense", category: "Fuel", description: "x" }), /amount must be a number/);
+  await assert.rejects(repo.monthSummary("2026-13"), /real month/);
+});
+
+test("correction writes only changed fields; summary counts every transaction", async () => {
+  const db = fakeDb(), repo = new PremosRepo(db);
+  const r = await repo.create("transactions", { amount: 450, type: "expense", category: "Food", description: "Lunch", date: "2026-10-13" });
+  db.data.transactions[r.id].notes = "edited elsewhere meanwhile";
+  await repo.correct("transactions", r.id, { amount: 380 });
+  assert.equal(db.data.transactions[r.id].notes, "edited elsewhere meanwhile");
+  for (let i = 0; i < 250; i++) await repo.create("transactions", { amount: 10, type: "expense", category: "Food", description: "Tea", date: "2026-11-02" });
+  const s = await repo.monthSummary("2026-11");
+  assert.equal(s.transactions, 250); assert.equal(s.spent, 2500);
+});

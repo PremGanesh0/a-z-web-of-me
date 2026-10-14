@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { SCHEMA, COLLECTIONS, validate, clean } from "./schema.js";
+import { SCHEMA, COLLECTIONS, validate, clean, isDate } from "./schema.js";
 
 const ACTOR = "AI";
 export const todayIST = () => new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
@@ -63,8 +63,11 @@ export class PremosRepo {
     }
     if (!Object.keys(diff).length) return { id, unchanged: true };
     const now = new Date().toISOString();
+    // Write only the changed fields, so a concurrent edit to another field isn't overwritten.
     // An AI correction always goes back to the review queue.
-    await this.write(col, id, { ...next, needs_review: true, updated_at: now, updated_by: ACTOR }, true, "update", `AI corrected: ${SCHEMA[col].title(next)}${reason ? ` (${reason})` : ""}`, diff);
+    const patch = Object.fromEntries(Object.keys(diff).map(k => [k, next[k] ?? null]));
+    if (diff.metric) patch.unit = next.unit;
+    await this.write(col, id, { ...patch, needs_review: true, updated_at: now, updated_by: ACTOR }, true, "update", `AI corrected: ${SCHEMA[col].title(next)}${reason ? ` (${reason})` : ""}`, diff);
     return { id, changed: diff };
   }
 
@@ -76,6 +79,11 @@ export class PremosRepo {
   }
 
   async list(col, { from, to, includeArchived = false, limit = 50, match } = {}) {
+    return (await this.query(col, { from, to, includeArchived, match })).slice(0, Math.min(limit, 200));
+  }
+
+  // All matching rows, newest first, no cap (for totals).
+  async query(col, { from, to, includeArchived = false, match } = {}) {
     this.assertCollection(col);
     const snap = await this.db.collection(col).get();
     let rows = [];
@@ -85,12 +93,12 @@ export class PremosRepo {
     if (to) rows = rows.filter(r => !r.date || r.date <= to);
     if (match) { const m = match.toLowerCase(); rows = rows.filter(r => JSON.stringify(r).toLowerCase().includes(m)); }
     rows.sort((a, b) => String(b.date || b.updated_at).localeCompare(String(a.date || a.updated_at)));
-    return rows.slice(0, Math.min(limit, 200));
+    return rows;
   }
 
   async monthSummary(month = todayIST().slice(0, 7)) {
-    if (!/^\d{4}-\d{2}$/.test(month)) throw new ValidationError({ month: "must be YYYY-MM" });
-    const tx = (await this.list("transactions", { from: `${month}-01`, to: `${month}-31`, limit: 200 }));
+    if (!/^\d{4}-\d{2}$/.test(month) || !isDate(`${month}-01`)) throw new ValidationError({ month: "must be a real month, YYYY-MM" });
+    const tx = await this.query("transactions", { from: `${month}-01`, to: `${month}-31` });
     const sum = t => tx.filter(x => x.type === t).reduce((a, x) => a + (Number(x.amount) || 0), 0);
     const income = sum("income") + sum("refund"), spent = sum("expense") + sum("loan_payment"), invested = sum("investment");
     const byCategory = {};

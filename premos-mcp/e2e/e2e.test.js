@@ -85,6 +85,9 @@ test("double-clicking Add creates one record, not two", async () => {
   await page.fill("#f-amount", "120");
   await page.fill("#f-description", "Chai");
   await page.dblclick("#save");
+  // If the save finishes before the second click, that click can land on the table behind and open a row; close it.
+  await page.waitForTimeout(300);
+  if (await page.$(".scrim")) await page.keyboard.press("Escape");
   await page.waitForSelector(".scrim", { state: "detached" });
   assert.equal(records("transactions").filter(t => t.description === "Chai").length, 1);
 });

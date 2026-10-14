@@ -6,14 +6,14 @@
   Run from the repo folder in PowerShell (no admin needed):
     cd C:\Users\Ganesh\projects\a-z-web-of-me
     powershell -ExecutionPolicy Bypass -File hermes\setup-windows.ps1 `
-      -TelegramToken "123:ABC" -TelegramUserId 123456789 `
       -OmniRouteKey "sk-..." -Model "auto"
+    (add -TelegramToken / -TelegramUserId only if Telegram isn't connected yet)
 
   Safe to re-run: it backs up your existing Hermes config and SOUL.md first.
 #>
 param(
-  [Parameter(Mandatory)] [string] $TelegramToken,
-  [Parameter(Mandatory)] [string] $TelegramUserId,
+  [string] $TelegramToken,      # leave out if Telegram is already connected to Hermes
+  [string] $TelegramUserId,
   [Parameter(Mandatory)] [string] $OmniRouteKey,
   [Parameter(Mandatory)] [string] $Model,
   [string] $OmniRouteUrl   = "http://localhost:20128/v1",
@@ -80,11 +80,15 @@ $fwd = { param($p) $p -replace '\\','/' }
 Copy-Item "$PSScriptRoot\SOUL.md" "$home_\SOUL.md" -Force
 Ok "config.yaml and SOUL.md written to $home_"
 
-hermes config set TELEGRAM_BOT_TOKEN $TelegramToken | Out-Null
-hermes config set TELEGRAM_ALLOWED_USERS $TelegramUserId | Out-Null
-hermes config set TELEGRAM_HOME_CHANNEL $TelegramUserId | Out-Null
 hermes config set HERMES_TIMEZONE "Asia/Kolkata" | Out-Null
-Ok "Telegram locked to user $TelegramUserId"
+if ($TelegramToken) { hermes config set TELEGRAM_BOT_TOKEN $TelegramToken | Out-Null }
+if ($TelegramUserId) {
+  hermes config set TELEGRAM_ALLOWED_USERS $TelegramUserId | Out-Null
+  hermes config set TELEGRAM_HOME_CHANNEL $TelegramUserId | Out-Null
+  Ok "Telegram locked to user $TelegramUserId"
+} else {
+  Ok "Kept your existing Telegram connection (check TELEGRAM_ALLOWED_USERS is set to your user ID in $home_\.env)"
+}
 
 Step "Testing the PREM OS connection"
 hermes mcp test premos

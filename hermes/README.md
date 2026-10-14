@@ -29,9 +29,8 @@ Telegram ──► Hermes gateway (laptop, starts at login) ──► OmniRoute 
 ```powershell
 cd C:\Users\Ganesh\projects\a-z-web-of-me
 git pull
-powershell -ExecutionPolicy Bypass -File hermes\setup-windows.ps1 `
-  -TelegramToken "<bot token>" -TelegramUserId <your id> `
-  -OmniRouteKey "<key>" -Model "<model or combo>"
+powershell -ExecutionPolicy Bypass -File hermes\setup-windows.ps1 -OmniRouteKey "<key>" -Model "<model or combo>"
+# Telegram already connected? Leave it out. Otherwise add: -TelegramToken "<bot token>" -TelegramUserId <your id>
 ```
 
 The script installs Node (if missing), the premos MCP server and Hermes; writes `%LOCALAPPDATA%\hermes\config.yaml` and `SOUL.md` (backing up old ones); locks Telegram to your user ID; tests the PREM OS connection; adds a 9:30 pm daily check-in and a Sunday 10 am money summary; and registers the gateway to start at login.

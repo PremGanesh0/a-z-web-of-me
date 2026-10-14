@@ -16,6 +16,13 @@ Telegram ──► Hermes gateway (laptop, starts at login) ──► OmniRoute 
 3. **Firebase** (`premganeshd` console):
    - Authentication → Sign-in method → enable **Email/Password**. Then Users → **Add user** with `premganesh2655@gmail.com` and your own password (this is the only account the dashboard and the security rules accept). Then Settings → User actions → untick **Enable create (sign-up)** so nobody else can register.
    - Firestore Database → **Create database**.
+   - Publish the site and the security rules (without this, the dashboard is either locked out or left on Firestore's default rules):
+     ```powershell
+     cd C:\Users\Ganesh\projects\a-z-web-of-me
+     npm install -g firebase-tools; firebase login
+     firebase deploy --only hosting,firestore
+     ```
+     Then check the rules: open `/premos/` signed out — nothing loads; sign in — your data loads. In the console's Firestore → Rules → **Rules Playground**, a read of `/transactions/x` while unauthenticated should be **denied**.
    - Service-account key: Project settings → Service accounts → **Generate new private key**, saved as `%USERPROFILE%\.config\premos\service-account.json`. Or, if you use the Google Cloud CLI:
      ```powershell
      gcloud auth login

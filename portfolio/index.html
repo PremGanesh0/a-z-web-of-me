@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Prem Ganesh</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,34 +64,35 @@ nav .pill{position:absolute;z-index:0;top:5px;height:calc(100% - 10px);border-ra
 
 /* hero */
 .hero{padding-top:calc(110px + env(safe-area-inset-top,0px));padding-bottom:40px;min-height:min(880px,100svh);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.hero>.wrap{width:100%}
 .ghost-name{position:absolute;left:0;right:0;top:12%;text-align:center;font-weight:800;font-size:clamp(150px,30vw,440px);letter-spacing:-.07em;line-height:.8;color:var(--paper-2);white-space:nowrap;user-select:none;pointer-events:none}
 .ghost-name span{display:inline-block}
-.hero-grid{position:relative;display:grid;grid-template-columns:1.2fr .8fr;align-items:end;gap:24px}
-.hero h1{font-size:clamp(58px,9vw,132px);position:relative;z-index:2}
+.hero-grid{position:static;display:grid;grid-template-columns:minmax(0,1fr);align-items:end;gap:28px;max-width:62%}
+.hero h1{font-size:clamp(58px,8.4vw,124px);position:relative;z-index:2}
 .hero-grid>div:first-child,.hero-cta{position:relative;z-index:2}
 .hero h1 .dot{color:var(--muted)}
 .hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em}
 .hero h1 .line>span{display:inline-block}
 .hero .sub{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;color:var(--ink-2)}
 .hero .sub em{font-size:22px;color:var(--ink)}
-.portrait{position:absolute;left:57%;bottom:0;transform:translateX(-50%);z-index:1;width:clamp(220px,25vw,330px);aspect-ratio:3/5;max-width:100%;pointer-events:none}
+.portrait{position:absolute;left:auto;right:max(16px,4vw);bottom:0;z-index:1;width:clamp(240px,29vw,390px);aspect-ratio:4/5;max-width:100%;pointer-events:none}
 .portrait .frame{position:absolute;inset:0;border-radius:200px 200px 24px 24px;background:linear-gradient(180deg,var(--paper-2),var(--glow));overflow:hidden;border:1px solid var(--line)}
-.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:38% 0;filter:contrast(1.05)}
 .portrait .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted)}
 .portrait .ph b{font-size:96px;font-weight:800;letter-spacing:-.06em;color:var(--ink);opacity:.9}
 .portrait .ph small{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
-.hero-cta{display:flex;flex-direction:column;align-items:flex-end;gap:12px;padding-bottom:12px}
-.hero-cta .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding-bottom:12px}
+.hero-cta .row{display:flex;gap:10px;flex-wrap:wrap}
 .status{display:inline-flex;gap:8px;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
 .status i{width:8px;height:8px;border-radius:50%;background:#4E9A6A;box-shadow:0 0 0 0 #4E9A6A;animation:ping 2s infinite}
 @keyframes ping{70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
 .scroll-cue{margin-top:34px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
 @media (max-width:860px){
   .hero{min-height:auto}
-  .hero-grid{grid-template-columns:1fr}
-  .portrait{position:relative;left:auto;transform:none;margin:0 auto 10px;width:58%;order:-1}
+  .hero-grid{grid-template-columns:1fr;max-width:none}
+  .portrait{position:relative;left:auto;right:auto;transform:none;margin:0 auto 10px;width:62%;order:-1}
   .ghost-name{top:90px}
-  .hero-cta{align-items:flex-start}.hero-cta .row{justify-content:flex-start}
+  
 }
 
 /* about */
@@ -113,7 +115,7 @@ nav .pill{position:absolute;z-index:0;top:5px;height:calc(100% - 10px);border-ra
 .card-id .top small{font-family:var(--mono);font-size:9.5px;opacity:.65}
 .card-id .hole{width:46px;height:8px;border-radius:9px;background:var(--paper);margin:-4px auto 0;position:relative;top:-6px}
 .card-id .pic{width:118px;height:140px;margin:14px auto 12px;border-radius:14px;background:linear-gradient(180deg,var(--paper-2),var(--glow));display:grid;place-items:center;font-size:44px;font-weight:800;letter-spacing:-.05em;border:1px solid var(--line);overflow:hidden}
-.card-id .pic img{width:100%;height:100%;object-fit:cover}
+.card-id .pic img{width:100%;height:100%;object-fit:cover;object-position:38% 0}
 .card-id .nm{text-align:center;font-weight:800;letter-spacing:-.01em;font-size:16px}
 .card-id .rl{text-align:center;font-family:var(--serif);font-style:italic;color:var(--muted);font-size:16px;margin-top:2px}
 .card-id .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:14px 16px 6px;font-family:var(--mono);font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
@@ -186,6 +188,16 @@ nav .pill{position:absolute;z-index:0;top:5px;height:calc(100% - 10px);border-ra
 .scr .ink{background:var(--ink)}
 .heat{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;width:80%}
 .heat i{aspect-ratio:1;border-radius:3px;background:var(--ink)}
+.viz img.shot{width:auto;height:92%;max-width:100%;object-fit:contain;filter:grayscale(1) contrast(1.05);transition:filter .8s .3s}
+.panel.open .viz img.shot{filter:none}
+.viz .tagline{position:absolute;left:16px;bottom:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.more{margin-top:18px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.more a,.more div{border-radius:18px;border:1px solid var(--line);background:var(--card);padding:18px;text-decoration:none;min-width:0;display:flex;flex-direction:column;gap:8px}
+.more b{font-size:18px;letter-spacing:-.02em}
+.more span{font-size:13.5px;color:var(--ink-2)}
+.more small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:1000px){.more{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.more{grid-template-columns:1fr}}
 .body .actions{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
 @media (max-width:900px){
   .acc{flex-direction:column;height:auto}
@@ -318,10 +330,10 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
           <a class="btn solid mag" href="#work">Explore work <span aria-hidden="true">→</span></a>
           <a class="btn ghost mag" href="#contact">Let's talk</a>
         </div>
-        <a class="btn ghost mag" href="https://github.com/PremGanesh0/resume" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+        <a class="btn ghost mag" href="https://firebasestorage.googleapis.com/v0/b/premganeshd.appspot.com/o/PremGaneshResume.pdf?alt=media&amp;token=e65a7fe3-3f91-4368-b94c-0c56b65490e4" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
       </div>
     </div>
-    <div class="scroll-cue"><span>4.7 years shipping Flutter</span><span>Scroll ↓</span></div>
+    <div class="scroll-cue"><span><b id="exp-live" style="font-weight:500">4.8</b> years shipping Flutter</span><span>Scroll ↓</span></div>
   </div>
 </section>
 
@@ -331,10 +343,10 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
     <div>
       <div class="eyebrow"><b>About</b><span>Who's building this</span></div>
       <h2 class="rv" style="margin-top:22px">Hi, I'm <em>Prem.</em></h2>
-      <p class="lede rv">I build cross-platform apps in Flutter and Dart, from a cattle-farm tracker to a US investment platform on Flutter Web. I care about clean architecture, predictable BLoC state, and releases that don't break on Friday.</p>
-      <p class="lede rv" style="font-size:15px;color:var(--muted);margin-top:14px">Day to day I work with UI/UX teams, run R&amp;D spikes, support clients and test what ships.</p>
+      <p class="lede rv">I build cross-platform apps in Flutter and Dart. Since December 2021 I've shipped chat, pet-finder, blood-donor and learning apps to the Play Store, a Flutter Web investment platform for a US client, and AI models for a compliance product. I care about clean architecture, predictable BLoC state, and releases that don't break on Friday.</p>
+      <p class="lede rv" style="font-size:15px;color:var(--muted);margin-top:14px">I design in Figma, build in Flutter, test hard and keep maintaining after launch. Day to day I work with UI/UX teams, run R&amp;D spikes and support clients.</p>
       <div class="row rv">
-        <a class="btn solid mag" href="https://github.com/PremGanesh0/resume" target="_blank" rel="noopener">Résumé ↓</a>
+        <a class="btn solid mag" href="https://firebasestorage.googleapis.com/v0/b/premganeshd.appspot.com/o/PremGaneshResume.pdf?alt=media&amp;token=e65a7fe3-3f91-4368-b94c-0c56b65490e4" target="_blank" rel="noopener">Résumé ↗</a>
         <a class="btn ghost mag" href="https://github.com/PremGanesh0" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
@@ -343,7 +355,7 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
         <div class="strap"></div>
         <div class="clip"></div>
         <div class="card-id">
-          <div class="top"><span class="mono-badge">PG</span><div><b>DEVELOPER ID</b><small>Flutter · Dart · BLoC</small></div></div>
+          <div class="top"><span class="mono-badge">PG</span><div><b>DEVELOPER ID</b><small>Flutter · since 2021</small></div></div>
           <div class="pic" id="idpic">PG</div>
           <div class="nm">DARABALA PREM GANESH</div>
           <div class="rl">Flutter Developer</div>
@@ -358,6 +370,7 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
         <div><dt>From</dt><dd>Kakinada, AP</dd></div>
         <div><dt>Now</dt><dd>Ahex Technologies</dd></div>
         <div><dt>Before</dt><dd>Krify · Team Lead</dd></div>
+        <div><dt>Studied</dt><dd>B.Tech ECE</dd></div>
         <div><dt>Focus</dt><dd>Clean arch · BLoC</dd></div>
         <div><dt>Off-screen</dt><dd>@DustyTires</dd></div>
       </dl>
@@ -392,9 +405,11 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
         <div class="eyebrow"><b>Work</b><span>Selected builds</span></div>
         <h2 class="h2 rv" style="margin-top:20px">Things I've <em>built.</em></h2>
       </div>
-      <p class="rv">Client platforms, my own startup and side projects. Open a panel to see what's inside.</p>
+      <p class="rv">Apps on the Play Store, client platforms and AI work. Open a panel to see what's inside.</p>
     </div>
     <div class="acc" id="acc"></div>
+    <div class="eyebrow" style="margin-top:46px"><b>Also built</b><span>Client and personal work</span></div>
+    <div class="more" id="more"></div>
   </div>
 </section>
 
@@ -411,8 +426,8 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
 <!-- JOURNEY -->
 <section id="journey">
   <div class="wrap">
-    <div class="eyebrow"><b>Journey</b><span>Intern to lead to now</span></div>
-    <h2 class="h2 rv" style="margin-top:20px">Experience &amp; <em>growth.</em></h2>
+    <div class="eyebrow"><b>Journey</b><span>School to Ahex</span></div>
+    <h2 class="h2 rv" style="margin-top:20px">Education &amp; <em>experience.</em></h2>
     <div class="tl" id="tl"><div class="prog" id="prog"></div></div>
   </div>
 </section>
@@ -433,7 +448,7 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
     <h2 class="h2 rv" style="margin-top:20px">Off the keyboard, <em>on the road.</em></h2>
     <p class="lede rv" style="margin-top:20px">Photography, videography and motovlogging. I ride, shoot on an Insta360 X3 and cut the stories myself.</p>
     <div class="road-grid">
-      <a class="road-card yt rv" href="https://www.youtube.com/@DustyTires" target="_blank" rel="noopener">
+      <a class="road-card yt rv" href="https://www.youtube.com/channel/UC8c33A559Qll6D4WZV1GdqQ" target="_blank" rel="noopener">
         <svg class="road-svg" viewBox="0 0 400 200" preserveAspectRatio="none" aria-hidden="true"><path d="M0 200 C120 140 160 120 200 60 S300 0 400 10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="10 10"/></svg>
         <div><div class="eyebrow" style="color:var(--t3)"><b style="color:var(--on-ink)">YouTube</b><span>@DustyTires</span></div>
         <div class="h" style="margin-top:18px">Dusty <em>Tires.</em></div></div>
@@ -454,10 +469,13 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
     <div class="eyebrow"><b>Contact</b><span>Replies within a day</span></div>
     <h2 style="margin-top:20px" class="rv">Let's build <em>something together.</em></h2>
     <div class="c-row">
-      <div class="mail"><code id="mail">premganesh2655@gmail.com</code><button class="btn ghost" id="copy" type="button">Copy</button></div>
+      <div class="mail"><code id="mail">darabalapremganesh@gmail.com</code><button class="btn ghost" id="copy" type="button">Copy</button></div>
       <div class="socials">
+        <a class="btn solid mag" href="https://api.whatsapp.com/send/?phone=917075009801" target="_blank" rel="noopener">WhatsApp ↗</a>
+        <a class="btn ghost mag" href="https://www.linkedin.com/in/darabala-premganesh-249251221/" target="_blank" rel="noopener">LinkedIn ↗</a>
         <a class="btn ghost mag" href="https://github.com/PremGanesh0" target="_blank" rel="noopener">GitHub ↗</a>
-        <a class="btn ghost mag" href="https://www.youtube.com/@DustyTires" target="_blank" rel="noopener">YouTube ↗</a>
+        <a class="btn ghost mag" href="https://www.freelancer.com/u/premganesh2655" target="_blank" rel="noopener">Freelancer ↗</a>
+        <a class="btn ghost mag" href="https://www.youtube.com/channel/UC8c33A559Qll6D4WZV1GdqQ" target="_blank" rel="noopener">YouTube ↗</a>
         <a class="btn ghost mag" href="https://www.instagram.com/prem._.ganesh/" target="_blank" rel="noopener">Instagram ↗</a>
       </div>
     </div>
@@ -471,7 +489,8 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 /* ===== Content: edit here, not in the markup ===== */
-const PHOTO = ""; // e.g. "me-cutout.png" (transparent PNG, published next to this page)
+const PHOTO = "assets/me.webp"; // transparent cutout
+const CAREER_START = new Date(2021, 11, 1); // Dec 2021, first Flutter role
 
 const FAMS = {lang:["Languages","var(--t1)"],mobile:["Mobile","var(--t2)"],backend:["Backend","var(--t3)"],data:["Data","var(--t3)"],tools:["Tools & CI","var(--t4)"],ai:["AI","var(--card)"]};
 const ELEMENTS = [
@@ -482,6 +501,7 @@ const ELEMENTS = [
   ["Ht","HTML / CSS","lang","For Flutter Web shells and quick sites like this one."],
   ["Fl","Flutter","mobile","Cross-platform apps for Android, iOS and Web. 4.7 years and counting."],
   ["Bl","BLoC","mobile","My default state management. Events in, states out, easy to test."],
+  ["Pv","Provider","mobile","Where I started with state management at Krify."],
   ["Th","Themes","mobile","Custom Flutter theme systems so the UI team's tokens survive into code."],
   ["Fw","Flutter Web","mobile","Shipped a large investment platform for a US client on Flutter Web."],
   ["Fv","FVM","mobile","Pinning Flutter versions per project so builds stay reproducible."],
@@ -493,6 +513,7 @@ const ELEMENTS = [
   ["Sy","Sync","data","An offline-first sync engine for a multi-seller commerce app."],
   ["Pg","Postgres","data","The planned home for PREM OS data."],
   ["Gt","Git","tools","Branches, reviews and clean history."],
+  ["Fg","Figma","tools","Wireframes and prototypes before a line of code."],
   ["Cm","Codemagic","tools","CI/CD for Flutter builds and store releases."],
   ["Sb","Shorebird","tools","Over-the-air code push for Flutter."],
   ["Ad","ADB","tools","Android debugging, Shizuku and MacroDroid tinkering."],
@@ -500,31 +521,41 @@ const ELEMENTS = [
   ["Cu","Cursor","ai","AI-assisted coding, along with Windsurf and Copilot."],
   ["Cl","Claude","ai","Pair-programming partner and the brain behind PREM OS planning."],
   ["Mc","MCP","ai","Model Context Protocol servers that let agents use my tools."],
+  ["Tf","TensorFlow","ai","Built AI and ML models for CyVidia's compliance platform."],
   ["Ml","AI in Flutter","ai","Bringing ML features and on-device models into apps."],
   ["Ag","Agents","ai","Hermes on Telegram to update my life dashboard."],
 ];
 
 const PROJECTS = [
-  {name:"BarnHub",kicker:["Client · US","Flutter Web"],title:"BarnHub",desc:"A large-scale Flutter Web platform for a US client covering barn purchasing, EMI financing and investment management.",points:["Barn purchase flows","EMI financing","Investment management","Large Flutter Web codebase"],chips:["Flutter Web","BLoC","REST"],viz:"web"},
-  {name:"Balancer",kicker:["My startup","Mobile"],title:"Balancer",desc:"My own startup app. Built with BLoC, a custom Flutter theme system and Firebase push notifications.",points:["Founder-built","Custom theme system","Push notifications","BLoC architecture"],chips:["Flutter","BLoC","Firebase","FCM"],viz:"phone"},
-  {name:"AgriTrack",kicker:["Agritech","Mobile"],title:"AgriTrack",desc:"Cattle farm management for the people who run the farm: animals, records and daily work in one app.",points:["Cattle records","Farm operations","Offline-friendly","Field-first UI"],chips:["Flutter","Dart"],viz:"heat"},
-  {name:"Multi-seller",kicker:["Commerce","Offline-first"],title:"Multi-seller commerce",desc:"A multi-seller e-commerce platform with an offline-to-online sync engine, so sellers keep working without a signal.",points:["Many sellers, one store","Offline-to-online sync","Conflict handling","Order flows"],chips:["Flutter","Sync engine"],viz:"phone"},
-  {name:"BikeGuardian",kicker:["Side project","Full stack"],title:"BikeGuardian",desc:"A personal project for riders, built with Flutter and a NestJS + MongoDB backend, developed alongside AI agents over MCP.",points:["Flutter app","NestJS API","MongoDB Atlas","MCP-driven workflow"],chips:["Flutter","NestJS","MongoDB","MCP"],viz:"phone"},
-  {name:"PREM OS",kicker:["In progress","AI + dashboard"],title:"PREM OS",desc:"My private life dashboard. An AI agent updates finance, health, social and projects from chat; I review and fix everything in the dashboard.",points:["Hermes agent on Telegram","MCP tools","Editable records","Self-hosted"],chips:["Next.js","Postgres","MCP","OmniRoute"],viz:"heat"},
+  {name:"Kukuq",kicker:["Play Store","Krify"],title:"Kukuq",desc:"A messaging app with audio and video calls, document sharing and end-to-end encrypted chat. I developed the complete application.",points:["HD audio & video calls","End-to-end encryption","Per-chat locks","Picture-in-picture"],chips:["Flutter","Firebase","Giphy","AdMob"],img:"assets/kukuq.webp",link:"https://play.google.com/store/apps/details?id=com.krify.kukuq",linkLabel:"Google Play"},
+  {name:"Locate My Pet",kicker:["Play Store","Krify"],title:"Locate My Pet",desc:"Pet owners register each pet with photos, habits, diet and health notes. Whoever finds a lost pet can reach the owner in a tap.",points:["Pet profiles","Finder-to-owner contact","Health & diet notes","Lost-pet alerts"],chips:["Flutter","Firebase"],img:"assets/pet.webp",link:"https://play.google.com/store/apps/details?id=com.krify.locate_me",linkLabel:"Google Play"},
+  {name:"Anaparthi Blood Donors",kicker:["Play Store","Krify"],title:"Anaparthi Blood Donors",desc:"Connects patients with willing blood donors nearby. Donors toggle their availability; patients search by blood group and location in real time.",points:["Search by blood group","Live donor availability","Location-based","Direct contact"],chips:["Flutter","Firebase"],img:"assets/blood.webp",link:"https://play.google.com/store/apps/details?id=com.krify.ABD",linkLabel:"Google Play"},
+  {name:"LMS",kicker:["Play Store","Krify"],title:"Learning Management System",desc:"A student app for courses: content, assessments, roles and progress tracking for schools and companies.",points:["Course catalogue","Assessments","Roles & permissions","Progress tracking"],chips:["Flutter","REST"],img:"assets/lms.webp",link:"https://play.google.com/store/apps/details?id=lms.krify.student",linkLabel:"Google Play"},
+  {name:"CyVidia",kicker:["AI / ML","Krify"],title:"CyVidia",desc:"A compliance platform for cybersecurity and privacy. I developed the AI and ML models that map contracts, policies and regulations into one controls view.",points:["Contract & regulation mapping","Unified controls view","Neural models","Compliance-as-a-service"],chips:["Python","TensorFlow","ML"],viz:"heat",link:"https://www.cyvidia.com/",linkLabel:"cyvidia.com"},
+  {name:"BarnHub",kicker:["Client · US","Ahex"],title:"BarnHub",desc:"A large-scale Flutter Web platform for a US client covering barn purchasing, EMI financing and investment management.",points:["Barn purchase flows","EMI financing","Investment management","Large Flutter Web codebase"],chips:["Flutter Web","BLoC","REST"],viz:"web"},
+];
+const MORE = [
+  ["Balancer","My startup","Built with BLoC, custom themes and Firebase push notifications."],
+  ["AgriTrack","Agritech","Cattle farm management in one app."],
+  ["Multi-seller commerce","Offline-first","Many sellers, one store, with an offline-to-online sync engine."],
+  ["BikeGuardian","Side project","Flutter app with a NestJS + MongoDB backend, built with AI agents over MCP."],
+  ["PREM OS","In progress","My private life dashboard that an AI agent keeps up to date."],
 ];
 
-// year: fill in real years (e.g. "2021") — leave "" to show the label instead
 const JOURNEY = [
-  {year:"",label:"Start",tag:"Internship",role:"Flutter Intern",co:"Krify Software Technologies",text:"Started with an internship and shipped my first production Flutter screens."},
-  {year:"",label:"Grow",tag:"Full-time",role:"Flutter Developer → Team Lead",co:"Krify Software Technologies",text:"Moved from developer to team lead, owning delivery and reviewing the team's code."},
-  {year:"",label:"Now",tag:"Current",role:"Flutter Developer",co:"Ahex Technologies",text:"Cross-platform apps with BLoC, custom themes and Firebase. Working with UI/UX, R&D, client support and testing."},
+  {year:"2014",tag:"School",role:"Secondary education (SSC)",co:"Roy High School",text:"A strong foundation in core subjects. 2014 – 2015."},
+  {year:"2015",tag:"Intermediate",role:"MPC: Maths, Physics, Chemistry",co:"K.S.N Junior College",text:"Intermediate with a focus on Mathematics, Physics and Chemistry. 2015 – 2017."},
+  {year:"2017",tag:"Degree",role:"B.Tech, Electronics & Communication",co:"Ideal College of Engineering",text:"ECE with a focus on robotics and software development. 2017 – 2021."},
+  {year:"2021",tag:"Experience",role:"Flutter Developer → Team Lead",co:"Krify Software Technologies",text:"Started with an internship and grew into team lead. Built apps end to end with Flutter and Firebase, shipped Flutter Web, used Provider and BLoC, and built ML models with TensorFlow and Python. 2021 – 2023."},
+  {year:"2023",tag:"Current",role:"Flutter Developer",co:"Ahex Technologies",text:"Cross-platform mobile and web apps with Flutter, advanced Firebase and BLoC. Researching performance and UI/UX best practice. 2023 – present."},
 ];
 
+const expYears = Math.floor(((new Date()-CAREER_START)/(365.25*864e5))*10)/10;
 const STATS = [
-  {n:4.7,dec:1,suf:"yrs",lbl:"Flutter experience",p:"Building and shipping apps every day."},
-  {n:6,dec:0,suf:"+",lbl:"Products built",p:"Client platforms, a startup and side projects."},
-  {n:2,dec:0,suf:"",lbl:"Companies",p:"Krify, then Ahex Technologies."},
-  {n:1,dec:0,suf:"",lbl:"Startup",p:"Balancer, my own product."},
+  {n:expYears,dec:1,suf:"yrs",lbl:"Flutter experience",p:"Counting from December 2021."},
+  {n:10,dec:0,suf:"+",lbl:"Products built",p:"Play Store apps, client platforms and my own."},
+  {n:3,dec:0,suf:"",lbl:"Clients",p:"Direct client engagements."},
+  {n:2,dec:0,suf:"",lbl:"Awards",p:"Recognition along the way."},
 ];
 const LEARN1 = [["Clean","architecture"],["CI/CD with","Codemagic"],["Code push via","Shorebird"],["AI inside","Flutter apps"],["MCP","agents"]];
 const LEARN2 = [["On-device","models"],["Next.js","for PREM OS"],["Self-hosting","with Docker"],["Better","BLoC tests"],["Storytelling","on video"]];
@@ -568,13 +599,16 @@ PROJECTS.forEach((p,i)=>{
   const el=document.createElement("article");el.className="panel"+(i===0?" open":"");el.tabIndex=0;el.setAttribute("aria-expanded",i===0);
   el.innerHTML=`<div class="tab"><span class="no">${String(i+1).padStart(2,"0")}</span><span class="ttl">${p.name}</span><span class="no">+</span></div>
   <div class="body"><div style="min-width:0;display:flex;flex-direction:column;justify-content:center"><div class="kicker"><span>${String(i+1).padStart(2,"0")}</span><span>${p.kicker.join(" · ")}</span></div>
-  <h3>${p.title}</h3><p>${p.desc}</p><ul>${p.points.map(x=>`<li>${x}</li>`).join("")}</ul><div class="chips">${p.chips.map(x=>`<span>${x}</span>`).join("")}</div></div>
-  <div class="viz">${vizHTML(p.viz)}</div></div>`;
+  <h3>${p.title}</h3><p>${p.desc}</p><ul>${p.points.map(x=>`<li>${x}</li>`).join("")}</ul><div class="chips">${p.chips.map(x=>`<span>${x}</span>`).join("")}</div>${p.link?`<div class="actions"><a class="btn solid" href="${p.link}" target="_blank" rel="noopener">${p.linkLabel} ↗</a></div>`:""}</div>
+  <div class="viz">${p.img?`<img class="shot" src="${p.img}" alt="${p.title} app screens" loading="lazy">`:vizHTML(p.viz)}</div></div>`;
   const open=()=>{acc.querySelectorAll(".panel").forEach(x=>{x.classList.remove("open");x.setAttribute("aria-expanded","false")});el.classList.add("open");el.setAttribute("aria-expanded","true");window.ScrollTrigger&&setTimeout(()=>ScrollTrigger.refresh(),750)};
   el.addEventListener("click",open);el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open()}});
   if(matchMedia("(hover:hover) and (min-width:901px)").matches) el.addEventListener("mouseenter",open);
   acc.appendChild(el);
 });
+
+$("#more").innerHTML=MORE.map(([n,k,d])=>`<div><small>${k}</small><b>${n}</b><span>${d}</span></div>`).join("");
+$("#exp-live").textContent=expYears.toFixed(1);
 
 // marquees
 const mq=(id,arr,darkEvery)=>{const h=arr.map(([a,b],i)=>`<span class="${i%darkEvery===1?'d':''}">${a} <em>${b}</em></span>`).join("");$(id).innerHTML=h+h};
@@ -583,7 +617,7 @@ mq("#mq1",LEARN1,3);mq("#mq2",LEARN2,2);
 // journey
 const tl=$("#tl");
 JOURNEY.forEach(j=>{const s=document.createElement("div");s.className="stop";
-  s.innerHTML=`<div class="yr">${j.year||j.label}<small>${j.co}</small></div><div class="xp rv"><span class="tag">${j.tag}</span><h3>${j.role}</h3><div class="co">${j.co}</div><p>${j.text}</p></div>`;tl.appendChild(s)});
+  s.innerHTML=`<div class="yr">${j.year}<small>${j.co}</small></div><div class="xp rv"><span class="tag">${j.tag}</span><h3>${j.role}</h3><div class="co">${j.co}</div><p>${j.text}</p></div>`;tl.appendChild(s)});
 
 // stats
 $("#stats").innerHTML=STATS.map(s=>`<div class="stat rv"><span class="lbl">${s.lbl}</span><div><div class="num" data-n="${s.n}" data-d="${s.dec}">${s.n.toFixed(s.dec)}<sup>${s.suf}</sup></div><p>${s.p}</p></div></div>`).join("");

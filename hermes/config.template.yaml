@@ -1,0 +1,37 @@
+# Hermes config for Prem's laptop. setup-windows.ps1 fills the {{…}} values.
+model:
+  provider: omniroute
+  default: "{{MODEL}}"
+
+providers:
+  omniroute:
+    api: "{{OMNIROUTE_URL}}"
+    api_key: "{{OMNIROUTE_KEY}}"
+
+timezone: "Asia/Kolkata"
+
+terminal:
+  backend: local
+  timeout: 180
+
+approvals:
+  mode: smart              # low-risk commands run, dangerous ones ask you on Telegram
+  timeout: 300
+  cron_mode: deny          # scheduled jobs never run dangerous commands unattended
+  deny:
+    - "format *"
+    - "diskpart*"
+    - "*Remove-Item*-Recurse*C:\\Users\\Ganesh\\*"
+    - "rm -rf *"
+    - "git push --force*"
+
+mcp_servers:
+  premos:
+    command: "{{NODE}}"
+    args: ["{{REPO}}/premos-mcp/src/index.js"]
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: "{{SERVICE_ACCOUNT}}"
+      FIREBASE_PROJECT_ID: "premganeshd"
+    tools:
+      prompts: false
+      resources: false

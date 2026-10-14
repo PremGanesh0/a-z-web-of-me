@@ -1,0 +1,9 @@
+{
+  "hosting": {
+    "public": "portfolio",
+    "ignore": ["firebase.json", "**/.*"],
+    "headers": [
+      { "source": "**/*.@(webp|png|jpg)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
+    ]
+  }
+}

@@ -3,9 +3,10 @@
    Wraps Database with validation, computed values, and rules.
    ============================================================ */
 
+import { Database } from '../core/Database.js';
+import { Models } from '../core/Models.js';
+
 const Services = (() => {
-  const { Models } = window;
-  const { Database } = window;
 
   /* ---- Profile Service ---- */
   const Profile = {
@@ -1021,3 +1022,6 @@ const Services = (() => {
 })();
 
 if (typeof window !== 'undefined') window.Services = Services;
+
+export default Services;
+export { Services };

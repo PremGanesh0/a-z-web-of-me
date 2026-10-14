@@ -8,7 +8,7 @@ const UI = (() => {
   function fmtCurrency(amount, currency = 'INR', showSymbol = true) {
     if (amount === null || amount === undefined) return '—';
     const num = parseFloat(amount) || 0;
-    const formatted = Math.abs(num).toLocaleString('en-IN', {
+    let formatted = Math.abs(num).toLocaleString('en-IN', {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     });
@@ -394,3 +394,6 @@ const UI = (() => {
 })();
 
 if (typeof window !== 'undefined') window.UI = UI;
+
+export default UI;
+export { UI };

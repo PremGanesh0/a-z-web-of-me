@@ -13,7 +13,16 @@ Telegram ──► Hermes gateway (laptop, starts at login) ──► OmniRoute 
 
 1. **Telegram bot**: talk to @BotFather → `/newbot` → copy the token. Get your numeric user ID from @userinfobot.
 2. **OmniRoute** running on the laptop. Note its URL (default `http://localhost:20128/v1`), an API key, and the model or combo name to use.
-3. **Firebase**: in the `premganeshd` console, enable Authentication → Google and create a Firestore database. Then Project settings → Service accounts → *Generate new private key*, saved as `%USERPROFILE%\.config\premos\service-account.json`. Never commit this file.
+3. **Firebase** (`premganeshd` console):
+   - Authentication → Sign-in method → enable **Email/Password**. Then Users → **Add user** with `premganesh2655@gmail.com` and your own password (this is the only account the dashboard and the security rules accept). Then Settings → User actions → untick **Enable create (sign-up)** so nobody else can register.
+   - Firestore Database → **Create database**.
+   - Service-account key: Project settings → Service accounts → **Generate new private key**, saved as `%USERPROFILE%\.config\premos\service-account.json`. Or, if you use the Google Cloud CLI:
+     ```powershell
+     gcloud auth login
+     gcloud iam service-accounts list --project premganeshd   # find the firebase-adminsdk-… address
+     gcloud iam service-accounts keys create "$env:USERPROFILE\.config\premos\service-account.json" --iam-account <that address>
+     ```
+     (`firebase login` alone can't create this key.) Never commit or share this file.
 
 ## Run it
 

@@ -114,10 +114,26 @@ test("every write has a matching activity entry", async () => {
   for (const col of ["transactions", "projects"]) for (const r of records(col)) assert.ok(acts.some(a => a.record_id === r.id), `${col}/${r.id} has no activity`);
 });
 
-test("someone else's Google account is turned away", async () => {
+test("any other account is turned away", async () => {
   const p2 = await browser.newPage();
   await p2.goto(`${srv.url}/premos/?as=stranger@gmail.com`);
   await p2.waitForSelector("#signin");
   assert.match(await p2.textContent(".gate"), /stranger@gmail.com doesn't have access/);
   await p2.close();
+});
+
+test("email and password login: wrong password is refused, right one opens the dashboard", async () => {
+  const p3 = await browser.newPage();
+  await p3.goto(`${srv.url}/premos/?signedout`);
+  await p3.waitForSelector("#l-email");
+  await p3.fill("#l-email", "premganesh2655@gmail.com");
+  await p3.fill("#l-pass", "nope");
+  await p3.click("#signin");
+  await p3.waitForSelector("[role=alert]");
+  assert.match(await p3.textContent("[role=alert]"), /don't match/);
+  await p3.fill("#l-pass", "test-pass");
+  await p3.click("#signin");
+  await p3.waitForSelector(".mode.live");
+  assert.match(await p3.textContent("main"), /Good \w+, Prem/);
+  await p3.close();
 });

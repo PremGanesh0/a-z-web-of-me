@@ -1,12 +1,14 @@
 rules_version = '2';
-// PREM OS: only Prem's Google accounts can read or write.
+// PREM OS: only Prem's email/password account can read or write.
+// Create that account in Firebase console → Authentication → Users → Add user,
+// and turn off sign-ups (Authentication → Settings → User actions → uncheck "Enable create").
 // The AI agent writes through premos-mcp with the Admin SDK, which bypasses these rules.
 service cloud.firestore {
   match /databases/{database}/documents {
     function isOwner() {
       return request.auth != null
-        && request.auth.token.email_verified == true
-        && request.auth.token.email in ['premganesh2655@gmail.com', 'darabalapremganesh@gmail.com'];
+        && request.auth.token.firebase.sign_in_provider == 'password'
+        && request.auth.token.email == 'premganesh2655@gmail.com';
     }
     match /{collection}/{id} {
       allow read: if isOwner();

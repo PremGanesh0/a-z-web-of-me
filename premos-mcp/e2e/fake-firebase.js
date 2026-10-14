@@ -1,7 +1,9 @@
 // Browser stand-in for the Firebase compat SDK, served at /__/firebase/ during e2e tests.
 (function () {
-  const email = new URLSearchParams(location.search).get("as") || "premganesh2655@gmail.com";
-  let user = { email, emailVerified: true }, authCbs = [];
+  // ?as=<email> starts signed in as that account; ?signedout starts at the login form.
+  // The test password for the owner account is "test-pass".
+  const q = new URLSearchParams(location.search);
+  let user = q.has("signedout") ? null : { email: q.get("as") || "premganesh2655@gmail.com" }, authCbs = [];
   const es = new EventSource("/db/events"), subs = [];
   es.onmessage = e => { const cols = JSON.parse(e.data); subs.forEach(s => cols.includes(s.col) && s.refresh()); };
   function query(col, order, lim) {
@@ -26,7 +28,10 @@
   const auth = {
     onAuthStateChanged(cb) { authCbs.push(cb); setTimeout(() => cb(user), 0); },
     signOut() { user = null; authCbs.forEach(cb => cb(null)); return Promise.resolve(); },
-    signInWithPopup() { return Promise.resolve(); },
+    signInWithEmailAndPassword(email, pw) {
+      if (email !== "premganesh2655@gmail.com" || pw !== "test-pass") return Promise.reject({ code: "auth/invalid-credential" });
+      user = { email }; authCbs.forEach(cb => cb(user)); return Promise.resolve({ user });
+    },
   };
   auth.GoogleAuthProvider = function () {};
   window.firebase = { apps: [{}], auth: Object.assign(() => auth, { GoogleAuthProvider: function () {} }), firestore: () => fs };

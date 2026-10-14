@@ -179,7 +179,8 @@ td.r,th.r{text-align:right}
 <script>
 "use strict";
 /* ================= Config ================= */
-const OWNER_EMAILS = ["premganesh2655@gmail.com","darabalapremganesh@gmail.com"]; // keep in sync with firestore.rules
+// The one account allowed in. Create it in Firebase console → Authentication → Users → Add user (email + password).
+const OWNER_EMAIL = "premganesh2655@gmail.com"; // keep in sync with firestore.rules
 
 /* ================= Schema (shared shape with premos-mcp) ================= */
 const CATEGORIES = ["Salary","Freelance","Food","Rent","Fuel","Bike","Travel","Shopping","Subscriptions","EMI","Bills","Photography","Entertainment","Medical","Investment","Other"];
@@ -569,7 +570,8 @@ function openDrawer(col,id){
   const r=id?store[col][id]:null;
   const values=r?{...r}:{date:today(),...(col==="transactions"?{type:"expense",category:"Food",account:"UPI / Cash"}:col==="health"?{metric:"weight"}:col==="social"?{platform:"instagram",metric:"followers"}:{stage:"active",area:"personal",progress:0})};
   ui.drawer={col,id,values,errs:{}};ui.confirm=false;render();
-  setTimeout(()=>{const f=$("#form [name]");f&&f.focus()},30);
+  // Focus right away: a delayed focus could jump the cursor while someone is already typing.
+  const f=$("#form [name]");f&&f.focus();
 }
 function closeDrawer(){ui.drawer=null;ui.confirm=false;render()}
 
@@ -609,11 +611,22 @@ let tt;function toast(m){let t=$(".toast");if(!t){t=document.createElement("div"
 /* ================= Login gate ================= */
 let gateMsg="";
 function gateHTML(){return `<div class="gate"><div class="card"><span class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--muted)">PRIVATE</span><h1>PREM <em>OS.</em></h1>
-  <p style="margin:0;color:var(--ink-2)">My life, work, money and journey in one place. Sign in with the Google account this dashboard belongs to.</p>
-  ${gateMsg?`<p style="margin:0;color:var(--neg)">${esc(gateMsg)}</p>`:""}
-  <button class="btn solid" id="signin" style="justify-content:center">Sign in with Google</button>
+  <p style="margin:0;color:var(--ink-2)">My life, work, money and journey in one place.</p>
+  <form id="login" class="form" novalidate>
+    <div class="field"><label for="l-email">Email</label><input id="l-email" name="email" type="email" autocomplete="username" required></div>
+    <div class="field"><label for="l-pass">Password</label><input id="l-pass" name="password" type="password" autocomplete="current-password" required></div>
+    ${gateMsg?`<p style="margin:0;color:var(--neg);font-size:14px" role="alert">${esc(gateMsg)}</p>`:""}
+    <button class="btn solid" id="signin" type="submit" style="justify-content:center">Sign in</button>
+  </form>
   <a href="../" style="font-size:13px;color:var(--muted)">← Back to portfolio</a></div></div>`}
-function bindGate(){$("#signin").onclick=async()=>{try{await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())}catch(e){gateMsg=e.code==="auth/popup-closed-by-user"?"":"Sign-in failed: "+e.message;render()}}}
+function bindGate(){
+  const email=$("#l-email");if(email&&!email.value)email.focus();
+  $("#login").onsubmit=async e=>{e.preventDefault();
+    const em=$("#l-email").value.trim(),pw=$("#l-pass").value;
+    if(!em||!pw){gateMsg="Enter your email and password.";render();return}
+    $("#signin").disabled=true;
+    try{await firebase.auth().signInWithEmailAndPassword(em,pw)}
+    catch(err){gateMsg=["auth/invalid-credential","auth/wrong-password","auth/user-not-found","auth/invalid-email"].includes(err.code)?"That email and password don't match.":err.code==="auth/too-many-requests"?"Too many attempts. Wait a few minutes and try again.":"Sign-in failed: "+(err.message||err);render();$("#l-email").value=em}}}
 
 /* ================= Boot ================= */
 function startDemo(){mode="demo";const b=new MemoryBackend(demoSeed());Repo.backend=b;b.watch(d=>{store=d;render()})}
@@ -621,7 +634,8 @@ function boot(){
   if(window.__noFirebase||typeof firebase==="undefined"||!firebase.apps||!firebase.apps.length){startDemo();return}
   firebase.auth().onAuthStateChanged(u=>{
     if(!u){user=null;mode="gate";render();return}
-    if(!OWNER_EMAILS.includes(u.email)){gateMsg=`${u.email} doesn't have access.`;firebase.auth().signOut();return}
+    if(u.email!==OWNER_EMAIL){gateMsg=`${u.email} doesn't have access.`;firebase.auth().signOut();return}
+    gateMsg="";
     user=u;mode="live";Repo.actor="Prem";
     const b=new FirestoreBackend(firebase.firestore());Repo.backend=b;b.watch(d=>{store=d;if(!ui.drawer)render()});
     render();

@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta charset="utf-8">
 <title>Prem Ganesh</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -30,6 +34,10 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:auto}
+/* Lenis smooth scroll: required base styles */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
 body{background:var(--paper);color:var(--ink);font-family:var(--display);font-size:16px;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 ::selection{background:var(--ink);color:var(--on-ink)}
@@ -287,6 +295,8 @@ footer{padding-block:28px;font-family:var(--mono);font-size:11px;color:var(--mut
 @media (hover:hover) and (pointer:fine){.cursor{display:block;background:#EDEAE1}}
 @media (prefers-reduced-motion:reduce){.marquee{animation:none}.status i{animation:none}*{transition-duration:.01ms!important}}
 </style>
+</head>
+<body>
 
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"></div>
@@ -692,3 +702,5 @@ if(window.gsap && !reduce){
   document.querySelectorAll("a,button,.panel,.tile,.swing").forEach(el=>{el.addEventListener("mouseenter",()=>c.classList.add("big"));el.addEventListener("mouseleave",()=>c.classList.remove("big"))});
   (function f(){cx+=(x-cx)*.2;cy+=(y-cy)*.2;c.style.transform=`translate(${cx}px,${cy}px)`;requestAnimationFrame(f)})();})();
 </script>
+</body>
+</html>
